@@ -1,0 +1,191 @@
+/*### GLOBALS */
+body {
+	font-family: 'Asap';
+}
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+	font-family: 'Asap';	
+}
+ {
+	font-family: 'Asap';
+}
+.pull-right {
+	float: right;
+}
+.pull-left {
+	float: left;
+}
+.item {
+	letter-spacing: -1px;
+	color: #666;
+}
+/* Categories */
+.categories-list {
+	text-transform: uppercase;
+	color: #777;	
+}
+.categories-list .categories-item { 
+	padding: 5px;
+	display: table;
+}
+.categories-list .categories-item i{
+	vertical-align: middle;
+    	display: table-cell;
+    	width: 40px;
+    	height: 40px;
+    	text-align: center;
+    	border-radius: 40px;
+    	font-size: 24px;
+    	color: #fff;
+}
+.categories-list .categories-item span{
+	vertical-align: middle;
+	display: table-cell;
+	line-height: 100%;
+	padding-left: 7px;
+	font-size: 13px;
+	letter-spacing: 0;
+}
+
+/*### SIDE MENU */
+.menu {
+	background-color: #F2F2F2;
+}
+.menu .bar-header {
+	box-shadow: 0 1px 10px rgba(0,0,0,0.1);
+}
+.menu .bar-header {
+	height: 92px;
+	background-color: #fbc02d;
+	border-bottom: 3px solid #f4bb2c;
+}
+.menu .title {
+	padding-top: 15px;
+	height: 92px;
+	line-height: 30px
+}
+.menu .has-header {
+	top: 92px;
+}
+.menu .subtitle {
+	font-size: 20px;
+	line-height: 37px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.menu .list .icon{
+	font-size: 25px;
+	width: 31px;
+	text-align: center;
+	color: #bbb;
+}
+.menu .categories-list .categories-item{	
+	padding: 7px 15px; 	
+	width: 100%;	
+	background-color: transparent;
+	border: 0;
+}
+.menu .categories-list .item-content{	
+	background-color: transparent;
+	border: 0;
+}
+
+
+.menu label{
+	background-color: transparent;
+}
+.menu input {
+	background-color: transparent;
+}
+.menu .icon {
+	font-size: 26px;
+	padding-right: 10px;
+}
+
+
+/*### ESTILOS PORTADA */
+.view-home .bar{
+	background-color: rgba(255,255,255, 0) !important; 	
+	/*margin: 4px;*/
+	width: auto;
+}
+.view-home .scroll-content {
+	overflow: visible !important;
+	margin-top: -45px;
+}
+.view-home .header-city {
+	height: 220px;
+	background-color: #8CE0F4;
+	position: relative;
+	background-image: url(../img/city-vgb.jpg); 
+	background-size: cover;
+}
+.header-city h3 {
+	font-family: 'Kaushan';
+	font-size: 36px;
+	letter-spacing: -1px;
+	text-align: center;
+	color: rgba(255,255,255,1);
+	position: absolute;
+	bottom: 10px;
+	left: 10px;
+	right: 10px;
+	text-shadow: 0 0 5px rgba(0,0,0,.7);
+}
+.header-city h3 span {
+	font-size: 15px;
+	padding-bottom:  13px;
+	margin-bottom: 16px;
+	border-bottom: 1px solid rgba(255,255,255,.7);
+	font-family: 'Asap';	
+	text-transform: uppercase;
+	text-align: center;
+	display: block;
+	width: 40%;
+	margin-left: 30%;
+	text-shadow: none;
+ }
+.header-city .overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: -moz-linear-gradient(bottom,  rgba(0,0,0,.7) 0%, rgba(0,0,0,.16) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left bottom, left top, color-stop(0%,rgba(0,0,0,.7)), color-stop(100%,rgba(0,0,0,.16))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(bottom,  rgba(0,0,0,.7) 0%,rgba(0,0,0,.16) 100%); /* Chrome10+,Safari5.1+ */
+	background: linear-gradient(to top,  rgba(0,0,0,.7) 0%,rgba(0,0,0,.16) 100%); /* W3C */
+}
+.header-city  .bottom-line {
+	height: 3px;
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-size: 100% 100%;
+	background-image: url(../img/cityline-vgb.png);
+}
+
+.section-buttons {
+	background-color: rgba(0,0,0,.05);
+}
+.section-buttons .col {
+	padding: 13px 10px 13px 50px;
+	font-size: 13px;
+	letter-spacing: 0;
+	line-height: 14px;
+	color: #aaa;
+}
+.section-buttons h6 {
+	font-size: 14px;
+	text-transform: uppercase;
+	color: #666;
+}
+.section-buttons .item{
+	background-color: transparent;
+	border: 0; 
+}
+.section-buttons .icon {
+	color: #888;
+}
