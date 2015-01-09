@@ -1,5 +1,7 @@
 angular.module('spoter', ['ionic', 'spoter.config', 'spoter.controllers', 'spoter.services'])
 
+.value("appGlobals", {})
+
 .run(function($ionicPlatform) {
 		$ionicPlatform.ready(function() {
 			// Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -12,7 +14,7 @@ angular.module('spoter', ['ionic', 'spoter.config', 'spoter.controllers', 'spote
 			}
 		});
 	})
-	.config(function($stateProvider, $urlRouterProvider, appConfig) {
+	.config(function($stateProvider, $urlRouterProvider) {
 
 		// CONFIGURAMOS RUTAS Y VISTAS
 		$stateProvider

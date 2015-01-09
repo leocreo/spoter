@@ -2,46 +2,28 @@ angular.module('spoter.controllers', [])
 
 //############################################################################### 
 // Main App Layout Controller 
-.controller('AppController', ['$scope', 'appConfig', 'SpoterCategories', '$location', function($scope, appConfig, SpoterCategories, $location) {
+.controller('AppController', ['$scope', 'appConfig', 'SpoterCategories', '$location', 'appGlobals', function($scope, appConfig, SpoterCategories, $location, appGlobals) {
 	$scope.currentCityName = "Villa General Belgrano";
 
 	//SpoterCategories.clearCache();
-	$scope.categories = SpoterCategories.query();
-
-	$scope.goCategory = function(id) {
-		var path = '/categories';
-		if (id !== undefined && id !== null)
-			path += "/" + id;
-		$location.path(path);
-	}
+	appGlobals.categories = SpoterCategories.query();
+	$scope.categories = appGlobals.categories;
 
 }])
 
 //############################################################################### 
 // Home Front Controller 
-.controller('HomeController', ['$scope', 'appConfig', 'SpoterCategories', function($scope, appConfig, SpoterCategories) {
+.controller('HomeController', ['$scope', 'appConfig', 'SpoterCategories', 'appGlobals', function($scope, appConfig, SpoterCategories, appGlobals) {
 
-	//SpoterCategories.clearCache();
-	$scope.featuredCategories = SpoterCategories.getFetured();
-
+	for (var i in appGlobals.categories) {
+		if (appGlobals.categories[i].featured == '1')
+			$scope.categories.push(appGlobals.categories[i]);
+	}
 }])
 
 //############################################################################### 
 // Categories Controller 
 .controller('CategoriesController', ['$scope', '$stateParams', 'appConfig', 'SpoterCategories', function($scope, $stateParams, appConfig, SpoterCategories) {
 
-	$scope.goCategory = function(id) {
-		var path = '/categories';
-		if (id !== undefined && id !== null)
-			path += "/" + id;
-		$location.path(path);
-	}
-
-	//SpoterCategories.clearCache();
-	SpoterCategories.get({}, {
-		//id: $stateParams.id
-	}, function() {
-		$scope.name = "Gastronomía";
-	});
 
 }])

@@ -27,12 +27,10 @@
 			</div>
 		</div>
 
-  		<div class="categories-list">
-
-			<div class='row' ng-repeat="categories in featuredCategories track by $index" ng-if="$index%2==0">
-				<div class="col"  ng-repeat="i in [$index,$index+1]" ng-if="featuredCategories[i] != null">
-					<div class="categories-item"><i class="ion-fork" style="background-color: #92dd00;"></i><span>{{featuredCategories[i].category_esp}}</span></div>
-			 	</div>
+  		<div class="categories-list">  		
+			<div class='row' ng-repeat="category in categories track by $index" ng-if="$index%2==0">
+				<div class="col" ng-if="(categories[$index] != null) "><div class="categories-item"><i class="ion-fork" style="background-color: #92dd00;"></i><span>{{categories[$index].name}}</span></div></div>
+				<div class="col" ng-if="(categories[$index+1] != null) "><div class="categories-item"><i class="ion-fork" style="background-color: #92dd00;"></i><span>{{categories[$index+1].name}}</span></div></div>
 			 </div>
 		</div>
 
