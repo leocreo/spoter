@@ -2,28 +2,44 @@ angular.module('spoter.controllers', [])
 
 //############################################################################### 
 // Main App Layout Controller 
-.controller('AppController', ['$scope', 'appConfig', 'SpoterCategories', '$location', 'appGlobals', function($scope, appConfig, SpoterCategories, $location, appGlobals) {
+.controller('AppController', ['$scope', '$state', 'appGlobals', 'SpoterCategories', function($scope, $state, appGlobals, SpoterCategories) {
 	$scope.currentCityName = "Villa General Belgrano";
 
-	//SpoterCategories.clearCache();
-	appGlobals.categories = SpoterCategories.query();
-	$scope.categories = appGlobals.categories;
+	SpoterCategories.findAll().then(function(data) {
+		$scope.categories = data;
+	});
+
+	$scope.goCategory = function(id) {
+		$state.go('app.categories', {
+			id: id
+		});
+	};
 
 }])
 
 //############################################################################### 
 // Home Front Controller 
-.controller('HomeController', ['$scope', 'appConfig', 'SpoterCategories', 'appGlobals', function($scope, appConfig, SpoterCategories, appGlobals) {
+.controller('HomeController', ['$scope', '$state', 'appGlobals', 'SpoterCategories', function($scope, $state, appGlobals, SpoterCategories) {
 
-	for (var i in appGlobals.categories) {
-		if (appGlobals.categories[i].featured == '1')
-			$scope.categories.push(appGlobals.categories[i]);
-	}
 }])
 
 //############################################################################### 
 // Categories Controller 
-.controller('CategoriesController', ['$scope', '$stateParams', 'appConfig', 'SpoterCategories', function($scope, $stateParams, appConfig, SpoterCategories) {
+.controller('CategoriesController', ['$scope', '$stateParams', 'appGlobals', 'SpoterCategories', function($scope, $stateParams, appGlobals, SpoterCategories) {
 
+	SpoterCategories.get($stateParams.id).then(function(data) {
+		$scope.category = data;
+		SpoterCategories.find({
+			id: Number(data.parent_id)
+		}).then(function(data) {
+			$scope.parentCategory = data;
+		});
+	});
+
+	SpoterCategories.findAll({
+		parent_id: Number($stateParams.id)
+	}).then(function(data) {
+		$scope.childrenCategories = data;
+	});
 
 }])
