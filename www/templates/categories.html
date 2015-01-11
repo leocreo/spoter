@@ -21,10 +21,10 @@
   		<div class="categories-list big">  		
 			<div class='row' ng-repeat="child in childrenCategories track by $index" ng-if="$index%2==0">
 				<div class="col" ng-if="(childrenCategories[$index] != null)" ng-click="goCategory(childrenCategories[$index].id)">
-					<div class="categories-item"><i class="ion-fork" style="background-color: #92dd00;"></i><span>{{childrenCategories[$index].name}}</span></div>
+					<div class="categories-item"><i class="{{childrenCategories[$index].icon}}" style="background-color: {{childrenCategories[$index].color}};"></i><span>{{childrenCategories[$index].name}}</span></div>
 				</div>
 				<div class="col" ng-if="(childrenCategories[$index+1] != null)"  ng-click="goCategory(childrenCategories[$index+1].id)">
-					<div class="categories-item"><i class="ion-fork" style="background-color: #92dd00;"></i><span>{{childrenCategories[$index+1].name}}</span></div>
+					<div class="categories-item"><i class="{{childrenCategories[$index+1].icon}}" style="background-color: {{childrenCategories[$index+1].color}};"></i><span>{{childrenCategories[$index+1].name}}</span></div>
 				</div>
 			 </div>
 		</div>

@@ -42,19 +42,6 @@ angular.module('spoter.services', ['angular-data.DSCacheFactory'])
 			});
 		},
 
-		get: function(id) {
-			if (id === undefined) return false;
-			return $http({
-				url: resource_endpoint,
-				method: 'GET',
-				cache: localCache
-			}).then(function(result) {
-				return (_.findWhere(result.data, {
-					id: Number(id)
-				}));
-			});
-		},
-
 		clearCache: function() {
 			return localCache.removeAll();
 		}

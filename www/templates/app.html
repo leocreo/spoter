@@ -28,7 +28,7 @@
 					</label>
         			</div>        			
 				<ion-item class="categories-item" menu-close  ng-repeat="category in categories | filter : {parent_id: 0}"  ng-click="goCategory({{category.id}})">
-					<i class="ion-fork" style="background-color: #92dd00;" ></i><span>{{category.name}}</span>
+					<i class="{{category.icon}}" style="background-color: {{category.color}};" ></i><span>{{category.name}}</span>
 				</ion-item>
 			</ion-list>
 		</ion-content>
