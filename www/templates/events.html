@@ -1,6 +1,6 @@
 <ion-view view-title="Eventos" class="view-events">
 
-	<ion-nav-bar class="bar bar-positive">
+	<ion-nav-bar class="bar bar-energized">
 		<ion-nav-back-button class="button-clear">
 			<i class="icon ion-android-arrow-back"></i>
 		</ion-nav-back-button>
@@ -14,7 +14,7 @@
 
 	<ion-content >	
 
-		<div class="list card" ng-repeat="event in events">
+		<div class="list card" ng-repeat="event in events" ng-click="goEvent({{event.id}})">
 
 			<div class="item item-body">
 				<div class="image" style="background-image: url({{event.banner.url}})"></div>

@@ -122,6 +122,8 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 	color: inherit;
 	display: block;
 	padding: 15px;
+	border-left-style: solid;
+	border-left-width: 4px;
 }
 .menu .title {
 	padding-top: 15px;
@@ -164,6 +166,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 .menu .item-divider a{
 	padding: 7px 14px;	
+	border: 0;
 }
 .menu .categories-list .categories-item{	
 	padding: 7px 15px; 	
@@ -514,6 +517,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 	height: 150px;
 	background-size: cover;
 	background-position: center;	
+	border-radius: 3px 4px 0 0;
 }
 .view-events  .item-body .fecha {
 	font-size: 15px;
@@ -556,4 +560,48 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 	font-size: 18px;
 	padding-top: 13px;
 	padding-bottom: 0;
+}
+
+
+
+/* PLACES */
+.view-places  .item-body  {
+	padding: 0;
+}
+.view-places  .item-body  .image {
+	height: 150px;
+	background-size: cover;
+	background-position: center;	
+	border-radius: 3px 4px 0 0;
+}
+.view-places  .item-body  .overlay{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 150px;
+	background: -moz-linear-gradient(bottom,  rgba(0,0,0,.3) 0%, rgba(0,0,0,.16) 50%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left bottom, left top, color-stop(0%,rgba(0,0,0,.3)), color-stop(50%,rgba(0,0,0,.16))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(bottom,  rgba(0,0,0,.3) 0%,rgba(0,0,0,.16) 50%); /* Chrome10+,Safari5.1+ */
+	background: linear-gradient(to top,  rgba(0,0,0,.3) 0%,rgba(0,0,0,.16) 50%); /* W3C */
+}
+.view-places  .item-body .icon{
+	font-size: 25px;
+	color: #aaa;	
+	padding: 7px 20px;
+}
+.view-places  .item-body p {
+	margin: 0;
+	padding: 6px 12px 12px 10px;
+	line-height: 16px;
+	color: #999;	
+}
+.view-places  .item-body p.title {
+	color: #fff;
+	font-size: 20px;
+	padding-top: 13px;
+	padding-bottom: 25px	;
+	margin-top: -45px;
+	z-index: 1000;
+	position: relative;
 }

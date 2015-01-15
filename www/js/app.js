@@ -78,12 +78,48 @@ angular.module('spoter', ['ionic', 'spoter.controllers', 'spoter.services'])
 				}
 			}
 		})
+		.state('app.promo', {
+			url: "/promotions/:id",
+			views: {
+				"content": {
+					templateUrl: "templates/promotion.html",
+					controller: 'PromotionsController'
+				}
+			}
+		})
 		.state('app.events', {
 			url: "/events",
 			views: {
 				"content": {
 					templateUrl: "templates/events.html",
 					controller: 'EventsController'
+				}
+			}
+		})
+		.state('app.event', {
+			url: "/events/:id",
+			views: {
+				"content": {
+					templateUrl: "templates/event.html",
+					controller: 'EventsController'
+				}
+			}
+		})
+		.state('app.places', {
+			url: "/places",
+			views: {
+				"content": {
+					templateUrl: "templates/places.html",
+					controller: 'PlacesController'
+				}
+			}
+		})
+		.state('app.place', {
+			url: "/places/:id",
+			views: {
+				"content": {
+					templateUrl: "templates/place.html",
+					controller: 'PlacesController'
 				}
 			}
 		})

@@ -20,6 +20,42 @@ angular.module('spoter.controllers', ["leaflet-directive"])
 			id: id
 		});
 	};
+	$scope.goEvent = function(id) {
+		$state.go('app.event', {
+			id: id
+		});
+	};
+	$scope.goPromo = function(id) {
+		$state.go('app.promo', {
+			id: id
+		});
+	};
+	$scope.goPlace = function(id) {
+		$state.go('app.place', {
+			id: id
+		});
+	};
+
+	angular.extend($scope, {
+		map: {
+			center: {
+				lat: -63.4350586,
+				lng: -35.4427709,
+				zoom: 15
+			},
+			markers: {
+				ad: {
+					lat: -63.4350586,
+					lng: -35.4427709,
+					draggable: false
+				}
+			},
+			defaults: {
+				scrollWheelZoom: true
+			}
+		}
+	});
+
 
 }])
 
@@ -77,26 +113,6 @@ angular.module('spoter.controllers', ["leaflet-directive"])
 .controller('AdsController', ['$scope', '$stateParams', 'appGlobals', 'SpoterCategories', 'SpoterAds', '$ionicSlideBoxDelegate', function($scope, $stateParams, appGlobals, SpoterCategories, SpoterAds, $ionicSlideBoxDelegate) {
 
 
-	angular.extend($scope, {
-		map: {
-			center: {
-				lat: -63.4350586,
-				lng: -35.4427709,
-				zoom: 15
-			},
-			markers: {
-				ad: {
-					lat: -63.4350586,
-					lng: -35.4427709,
-					draggable: false
-				}
-			},
-			defaults: {
-				detectRetina: true,
-				scrollWheelZoom: true
-			}
-		}
-	});
 	// Traemos data completa del Anuncio
 	SpoterAds.get(Number($stateParams.id)).then(function(data) {
 		$scope.ad = data;
@@ -112,20 +128,59 @@ angular.module('spoter.controllers', ["leaflet-directive"])
 
 //############################################################################### 
 // Promotions Controller 
-.controller('PromotionsController', ['$scope', '$stateParams', 'appGlobals', 'SpoterPromotions', function($scope, $stateParams, appGlobals, SpoterPromotions) {
+.controller('PromotionsController', ['$scope', '$stateParams', 'appGlobals', 'SpoterPromotions', '$ionicSlideBoxDelegate', function($scope, $stateParams, appGlobals, SpoterPromotions, $ionicSlideBoxDelegate) {
 
-	SpoterPromotions.findAll().then(function(data) {
-		$scope.promotions = data;
-	});
+	if ($stateParams.id) {
+		SpoterPromotions.get($stateParams.id).then(function(data) {
+			$scope.promo = data;
+			$scope.map.center.lat = data.location.lat;
+			$scope.map.center.lng = data.location.lng;
+			$scope.map.markers.ad.lat = data.location.lat;
+			$scope.map.markers.ad.lng = data.location.lng;
+			$ionicSlideBoxDelegate.update();
+		});
+	} else {
+		SpoterPromotions.findAll().then(function(data) {
+			$scope.promotions = data;
+		});
+	}
 
 }])
 
 //############################################################################### 
 // Events Controller 
-.controller('EventsController', ['$scope', '$stateParams', 'appGlobals', 'SpoterEvents', function($scope, $stateParams, appGlobals, SpoterEvents) {
+.controller('EventsController', ['$scope', '$stateParams', 'appGlobals', 'SpoterEvents', '$ionicSlideBoxDelegate', function($scope, $stateParams, appGlobals, SpoterEvents, $ionicSlideBoxDelegate) {
+	if ($stateParams.id) {
+		SpoterEvents.get($stateParams.id).then(function(data) {
+			$scope.event = data;
+			$scope.map.center.lat = data.location.lat;
+			$scope.map.center.lng = data.location.lng;
+			$scope.map.markers.ad.lat = data.location.lat;
+			$scope.map.markers.ad.lng = data.location.lng;
+			$ionicSlideBoxDelegate.update();
+		});
+	} else {
+		SpoterEvents.findAll().then(function(data) {
+			$scope.events = data;
+		});
+	}
+}])
 
-	SpoterEvents.findAll().then(function(data) {
-		$scope.events = data;
-	});
-
+//############################################################################### 
+// Placess Controller 
+.controller('PlacesController', ['$scope', '$stateParams', 'appGlobals', 'SpoterPlaces', '$ionicSlideBoxDelegate', function($scope, $stateParams, appGlobals, SpoterPlaces, $ionicSlideBoxDelegate) {
+	if ($stateParams.id) {
+		SpoterPlaces.get($stateParams.id).then(function(data) {
+			$scope.place = data;
+			$scope.map.center.lat = data.location.lat;
+			$scope.map.center.lng = data.location.lng;
+			$scope.map.markers.ad.lat = data.location.lat;
+			$scope.map.markers.ad.lng = data.location.lng;
+			$ionicSlideBoxDelegate.update();
+		});
+	} else {
+		SpoterPlaces.findAll().then(function(data) {
+			$scope.places = data;
+		});
+	}
 }])
