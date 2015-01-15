@@ -109,3 +109,14 @@ angular.module('spoter.controllers', ["leaflet-directive"])
 	});
 
 }])
+
+
+//############################################################################### 
+// Promotions Controller 
+.controller('PromotionsController', ['$scope', '$stateParams', 'appGlobals', 'SpoterPromotions', function($scope, $stateParams, appGlobals, SpoterPromotions) {
+
+	SpoterPromotions.findAll().then(function(data) {
+		$scope.promotions = data;
+	});
+
+}])

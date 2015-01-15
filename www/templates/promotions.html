@@ -1,0 +1,32 @@
+<ion-view view-title="Promociones" class="view-promotions">
+
+	<ion-nav-bar class="bar bar-positive">
+		<ion-nav-back-button class="button-clear">
+			<i class="icon ion-android-arrow-back"></i>
+		</ion-nav-back-button>
+		<ion-nav-buttons side="left">
+			<button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+		</ion-nav-buttons>
+		<ion-nav-buttons side="right">
+			<button class="button button-icon button-clear ion-ios-search-strong"></button>
+		</ion-nav-buttons>
+	</ion-nav-bar>
+
+	<ion-content >	
+
+		<ion-list type="card" class="promotions">
+			<ion-item ng-repeat="promo in promotions">
+				<span class="due"><i class="icon-hot ion-ios-flame"></i> 20 Enero</span>
+				<div class="image" style="background-image: url({{promo.banner.url}})"></div>
+				<div class="overlay"></div>
+				<div class="info">
+					<h2>{{promo.title}}</h2>
+					<p>{{promo.description}}{{promo.description}}</p>
+				</div>
+
+			</ion-item>
+		</ion-list>
+
+	</ion-content>
+
+</ion-view>

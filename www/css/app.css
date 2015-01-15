@@ -296,11 +296,22 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 	border-bottom: 1px solid #eee;
 	padding-bottom: 10px;
 }
-.view-home .promotions .slider-slide {
+.view-promotions .promotions .item {
+	height: 100px;
+	padding: 10px;
+}
+.view-promotions .promotions .item p{
+	text-overflow: none; 
+	white-space: normal; 
+}
+.view-promotions .promotions .info {
+	top: 10px;
+}
+.promotions .slider-slide {
 	background-color: #fff;
 	position: relative;
 }
-.view-home .promotions .slider-slide .image{
+.promotions .image{
 	position: absolute;
 	z-index: 35;
 	left: 0;
@@ -310,40 +321,42 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 	background-size: cover;
 	background-position: center;	
 }
-.view-home .promotions .info{ 
+.promotions .info{ 
 	position: absolute;
 	z-index: 20;
 	left: 48%;
-	top: 0
+	top: 0;
 	bottom: 0;	
 	right: 10px;
+	overflow: hidden;
 }
-.view-home .promotions .info h2{ 
+.promotions .info h2{ 
 	font-size: 15px;
 	color: #666;
 	font-weight: bold;
 	margin: 0;
 }
-.view-home .promotions .info p{
+.promotions .info p{
 	color: #888;
 	font-size: 13px;
 	line-height: 14px;
 	margin: 0;
 	overflow: hidden;	
+	letter-spacing: -1px;
 }
-.view-home .promotions .overlay {
+.promotions .overlay {
 	z-index: 30;
 	position: absolute;
 	bottom: 0;
 	left: 0;
 	right: 0;
-	top: 20px;
+	top: 30px;
 	background: -moz-linear-gradient(bottom,  rgba(255,255,255,1) 0%, rgba(255,255,255,.16) 50%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left bottom, left top, color-stop(0%,rgba255,255,255,1), color-stop(50%,rgba(255,255,255,.16))); /* Chrome,Safari4+ */
 	background: -webkit-linear-gradient(bottom,  rgba(255,255,255,1) 0%,rgba(255,255,255,.16) 50%); /* Chrome10+,Safari5.1+ */
 	background: linear-gradient(to top,  rgba(255,255,255,1) 0%,rgba(255,255,255,.16) 50%); /* W3C */
 }
-.view-home .promotions .icon-hot {
+.promotions .icon-hot {
 	position: absolute;
 	z-index: 40;
 	height: 25px;
@@ -357,7 +370,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 	text-align: center;	
 }
 
-.view-home .promotions .due {
+.promotions .due {
 	position: absolute;
 	z-index: 40;
 	bottom: 0;
