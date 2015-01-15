@@ -78,5 +78,14 @@ angular.module('spoter', ['ionic', 'spoter.controllers', 'spoter.services'])
 				}
 			}
 		})
+		.state('app.events', {
+			url: "/events",
+			views: {
+				"content": {
+					templateUrl: "templates/events.html",
+					controller: 'EventsController'
+				}
+			}
+		})
 	$urlRouterProvider.otherwise('/home');
 });

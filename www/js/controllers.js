@@ -52,7 +52,6 @@ angular.module('spoter.controllers', ["leaflet-directive"])
 		SpoterCategories.find({
 			id: Number(data.parent_id)
 		}).then(function(data) {
-			console.log(data);
 			$scope.parentCategory = data;
 		});
 	});
@@ -117,6 +116,16 @@ angular.module('spoter.controllers', ["leaflet-directive"])
 
 	SpoterPromotions.findAll().then(function(data) {
 		$scope.promotions = data;
+	});
+
+}])
+
+//############################################################################### 
+// Events Controller 
+.controller('EventsController', ['$scope', '$stateParams', 'appGlobals', 'SpoterEvents', function($scope, $stateParams, appGlobals, SpoterEvents) {
+
+	SpoterEvents.findAll().then(function(data) {
+		$scope.events = data;
 	});
 
 }])

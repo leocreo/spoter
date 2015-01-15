@@ -151,3 +151,55 @@ angular.module('spoter.services', ['angular-data.DSCacheFactory'])
 		}
 	};
 }])
+
+// Resource/Model: EVENTS 
+.factory('SpoterEvents', ['$http', '$q', '_', 'appGlobals', 'DSCacheFactory', function($http, $q, _, appGlobals, DSCacheFactory) {
+
+	var resource_endpoint = appGlobals.config.api.endpoint + "events";
+	var localCache = DSCacheFactory('spoterEventsCache', {
+		maxAge: ((1000 * 60 * 5)), // 5 minutos cache
+		deleteOnExpire: 'aggressive',
+		storageMode: 'localStorage'
+	});
+
+	return {
+		// Devuelve un array de todos los elementos del recurso. Opcionalmente se peude especificar un objeto con variables a enviar
+		findAll: function(query) {
+			return $http({
+				url: resource_endpoint,
+				method: 'GET',
+				params: query,
+				//cache: localCache
+			}).then(function(result) {
+				return result.data;
+			});
+		},
+
+		find: function(query) {
+			return $http({
+				url: resource_endpoint,
+				method: 'GET',
+				params: query,
+				//cache: localCache
+			}).then(function(result) {
+				if (result.data.length > 0)
+					return result.data[0];
+				return result.data;
+			});
+		},
+
+		get: function(id) {
+			return $http({
+				url: resource_endpoint + "/" + id,
+				method: 'GET',
+				//cache: localCache
+			}).then(function(result) {
+				return result.data;
+			});
+		},
+
+		clearCache: function() {
+			return localCache.removeAll();
+		}
+	};
+}])
