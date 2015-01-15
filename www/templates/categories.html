@@ -31,9 +31,10 @@
 		</div>
 
 		<ion-list type="" class="ad-list">
-			<ion-item ng-repeat="ad in ads" class="item-thumbnail-left">
-				<img ng-src="{{ad.banner.url}}" class="full-image">
+			<ion-item ng-repeat="ad in ads" class="item-thumbnail-left" ng-click="goAd(ad.id)">
+				<div class="image" style="background-image: url({{ad.banner.url}})"></div>
 				<h2>{{ad.title}}</h2>
+				<h3>{{ad.address}}</h3>
     				<p>{{ad.description}}</p>		
 			</ion-item>
 		</ion-list>

@@ -1,6 +1,6 @@
 <ion-side-menus enable-menu-with-back-views="false">
 
-	<ion-side-menu side="left">
+	<ion-side-menu side="left" width="250">
 		<ion-header-bar class="bar-calm">
 			<h1 class="title">
 				<i class="icon ion-gear-a pull-right"></i>Tu guía
@@ -8,29 +8,36 @@
 			</h1>
 		</ion-header-bar>
 		<ion-content>
-			<ion-list>
-				<ion-item nav-clear menu-close ng-click="login()" class="item item-icon-right">
-					Puntos de interés <i class="icon ion-ios-location"></i>
+			<ion-list class="main-items">
+				<ion-item nav-clear menu-close class="item item-icon-right">
+					<a href="#/home"> Inicio <i class="icon ion-home"></i></a>
+				</ion-item>
+				<ion-item nav-clear menu-close class="item item-icon-right">
+					<a href="#/places">Puntos de interés <i class="icon ion-ios-location"></i></a>
 				</ion-item>
 				<ion-item nav-clear menu-close  class="item item-icon-right">
-					Eventos  <i class="icon ion-android-calendar"></i>
+					<a href="#/events">Eventos  <i class="icon ion-android-calendar"></i></a>
 				</ion-item>
 				<ion-item nav-clear menu-close  class="item item-icon-right">
-					Promociones <i class="icon ion-bookmark"></i>
+					<a href="#/promotions">Promociones <i class="icon ion-bookmark"></i></a>
 				</ion-item>
 			</ion-list>
 
 			<ion-list class="categories-list">
-				<div class="item item-divider">
+				<div class="item item-divider  item-icon-right">
+					<a href="#/categories/"  menu-close>Categorías <i class="icon ion-ios-more"></i></a>
+				</div>
+				<!--<div class="item item-divider">
 					<label class="item-input-wrapper">
 						<i class="icon ion-ios-search placeholder-icon"></i>
 						<input type="search" placeholder="Buscar">
 					</label>
-        			</div>        			
+        			</div>        			-->
 				<ion-item class="categories-item" menu-close  ng-repeat="category in categories | filter : {parent_id: 0}"  ng-click="goCategory({{category.id}})">
 					<i class="{{category.icon}}" style="background-color: {{category.color}};" ></i><span>{{category.name}}</span>
 				</ion-item>
 			</ion-list>
+
 		</ion-content>
 	</ion-side-menu>
 

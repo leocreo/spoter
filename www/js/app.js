@@ -60,5 +60,23 @@ angular.module('spoter', ['ionic', 'spoter.controllers', 'spoter.services'])
 				}
 			}
 		})
+		.state('app.ads', {
+			url: "/ads/:id",
+			views: {
+				"content": {
+					templateUrl: "templates/ad.html",
+					controller: 'AdsController'
+				}
+			}
+		})
+		.state('app.promotions', {
+			url: "/promotions",
+			views: {
+				"content": {
+					templateUrl: "templates/promotions.html",
+					controller: 'PromotionsController'
+				}
+			}
+		})
 	$urlRouterProvider.otherwise('/home');
 });

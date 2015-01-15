@@ -1,4 +1,4 @@
-angular.module('spoter.controllers', [])
+angular.module('spoter.controllers', ["leaflet-directive"])
 
 //############################################################################### 
 // Main App Layout Controller 
@@ -15,17 +15,27 @@ angular.module('spoter.controllers', [])
 			id: id
 		});
 	};
+	$scope.goAd = function(id) {
+		$state.go('app.ads', {
+			id: id
+		});
+	};
 
 }])
 
 //############################################################################### 
 // Home Front Controller 
-.controller('HomeController', ['$scope', '$state', 'appGlobals', 'SpoterCategories', function($scope, $state, appGlobals, SpoterCategories) {
+.controller('HomeController', ['$scope', '$state', 'appGlobals', 'SpoterCategories', 'SpoterPromotions', '$ionicSlideBoxDelegate', function($scope, $state, appGlobals, SpoterCategories, SpoterPromotions, $ionicSlideBoxDelegate) {
 
 	SpoterCategories.findAll({
 		featured: 1
 	}).then(function(data) {
 		$scope.featuredCategories = data;
+	});
+
+	SpoterPromotions.findAll().then(function(data) {
+		$scope.promotions = data;
+		$ionicSlideBoxDelegate.update();
 	});
 
 }])
@@ -42,6 +52,7 @@ angular.module('spoter.controllers', [])
 		SpoterCategories.find({
 			id: Number(data.parent_id)
 		}).then(function(data) {
+			console.log(data);
 			$scope.parentCategory = data;
 		});
 	});
@@ -58,6 +69,43 @@ angular.module('spoter.controllers', [])
 				$scope.ads = data;
 			});
 		}
+	});
+
+}])
+
+//############################################################################### 
+// Ads Controller 
+.controller('AdsController', ['$scope', '$stateParams', 'appGlobals', 'SpoterCategories', 'SpoterAds', '$ionicSlideBoxDelegate', function($scope, $stateParams, appGlobals, SpoterCategories, SpoterAds, $ionicSlideBoxDelegate) {
+
+
+	angular.extend($scope, {
+		map: {
+			center: {
+				lat: -63.4350586,
+				lng: -35.4427709,
+				zoom: 15
+			},
+			markers: {
+				ad: {
+					lat: -63.4350586,
+					lng: -35.4427709,
+					draggable: false
+				}
+			},
+			defaults: {
+				detectRetina: true,
+				scrollWheelZoom: true
+			}
+		}
+	});
+	// Traemos data completa del Anuncio
+	SpoterAds.get(Number($stateParams.id)).then(function(data) {
+		$scope.ad = data;
+		$scope.map.center.lat = data.location.lat;
+		$scope.map.center.lng = data.location.lng;
+		$scope.map.markers.ad.lat = data.location.lat;
+		$scope.map.markers.ad.lng = data.location.lng;
+		$ionicSlideBoxDelegate.update();
 	});
 
 }])

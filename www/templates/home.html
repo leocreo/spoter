@@ -22,12 +22,29 @@
 
 		<div class="section-buttons">
 			<div class="row">
-				<div class="col item item-icon-left"><i class="icon ion-ios-calendar-outline"></i><h6>Agenda</h6>Próximos eventos</div>
+				<div class="col item item-icon-left"><i class="icon ion-ios-calendar-outline"></i><span class="badge badge-calm">0</span><h6>Agenda</h6>Próximos eventos</div>
 				<div class="col item item-icon-left"><i class="icon ion-ios-navigate-outline"></i><h6>Turismo</h6>Sitios para conocer</div>
 			</div>
 		</div>
 
-  		<div class="categories-list">  		
+		<ion-list>
+			<div class="item item-divider  item-icon-right">
+				<a href="#/promotions">Promociones<i class="icon ion-ios-more"></i></a>
+			</div>
+		</ion-list>
+		<ion-slide-box class="promotions" show-pager="false" does-continue="true" auto-play="true">
+			<ion-slide ng-repeat="promo in promotions">
+				<span class="due"><i class="icon-hot ion-ios-flame"></i> 20 Enero</span>
+				<div class="image" style="background-image: url({{promo.banner.url}})"></div>
+				<div class="overlay"></div>
+				<div class="info">
+					<h2>{{promo.title}}</h2>
+					<p>{{promo.description}}{{promo.description}}</p>
+				</div>
+			</ion-slide>
+		</ion-slide-box>
+
+		<div class="categories-list">  		
 			<div class='row' ng-repeat="category in featuredCategories track by $index" ng-if="$index%2==0">
 				<div class="col" ng-if="(featuredCategories[$index] != null)" ng-click="goCategory(featuredCategories[$index].id)"><div class="categories-item"><i class="{{featuredCategories[$index].icon}}" style="background-color: {{featuredCategories[$index].color}};"></i><span>{{featuredCategories[$index].name}}</span></div></div>
 				<div class="col" ng-if="(featuredCategories[$index+1] != null)"  ng-click="goCategory(featuredCategories[$index+1].id)"><div class="categories-item"><i class="{{featuredCategories[$index+1].icon}}" style="background-color: {{featuredCategories[$index+1].color}};"></i><span>{{featuredCategories[$index+1].name}}</span></div></div>
