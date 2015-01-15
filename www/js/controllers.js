@@ -32,8 +32,9 @@ angular.module('spoter.controllers', [])
 
 //############################################################################### 
 // Categories Controller 
-.controller('CategoriesController', ['$scope', '$stateParams', 'appGlobals', 'SpoterCategories', function($scope, $stateParams, appGlobals, SpoterCategories) {
+.controller('CategoriesController', ['$scope', '$stateParams', 'appGlobals', 'SpoterCategories', 'SpoterAds', function($scope, $stateParams, appGlobals, SpoterCategories, SpoterAds) {
 
+	// Obtenemos categoria actual + categoria padre
 	SpoterCategories.find({
 		id: Number($stateParams.id)
 	}).then(function(data) {
@@ -45,10 +46,18 @@ angular.module('spoter.controllers', [])
 		});
 	});
 
+	// Obtenemos las categorías hijas de la categoria actual y si no tiene categorias hijas cargamos la lista de Ads
 	SpoterCategories.findAll({
 		parent_id: Number($stateParams.id)
 	}).then(function(data) {
 		$scope.childrenCategories = data;
+		if ($scope.childrenCategories.length == 0) {
+			SpoterAds.findAll({
+				id_categories: Number($stateParams.id)
+			}).then(function(data) {
+				$scope.ads = data;
+			});
+		}
 	});
 
 }])

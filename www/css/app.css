@@ -232,3 +232,24 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 .section-buttons .icon {
 	color: #888;
 }
+
+
+
+/* LISTADO DE ADS*/
+.ad-list h2 {
+	font-size:  18px;
+	margin-top: 8px;
+}
+.ad-list .item-thumbnail-left, .ad-list  .item-thumbnail-left .item-content {
+	padding-left: 133px;
+
+}
+.ad-list .item-thumbnail-left > img:first-child, .ad-list  .item-thumbnail-left .item-image, .ad-list .item-thumbnail-left .item-content > img:first-child, .ad-list .item-thumbnail-left .item-content .item-image {
+	top: 0;
+	left: 0;
+	max-width: 120px;
+	max-height: 120px;
+}
+.ad-list .item-thumbnail-left, .ad-list .item-thumbnail-left .item-content {
+	min-height: 80px;
+}

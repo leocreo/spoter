@@ -18,6 +18,7 @@
 	</ion-header-bar>
 
 	<ion-content >	
+
   		<div class="categories-list big">  		
 			<div class='row' ng-repeat="child in childrenCategories track by $index" ng-if="$index%2==0">
 				<div class="col" ng-if="(childrenCategories[$index] != null)" ng-click="goCategory(childrenCategories[$index].id)">
@@ -28,6 +29,15 @@
 				</div>
 			 </div>
 		</div>
+
+		<ion-list type="" class="ad-list">
+			<ion-item ng-repeat="ad in ads" class="item-thumbnail-left">
+				<img ng-src="{{ad.banner.url}}" class="full-image">
+				<h2>{{ad.title}}</h2>
+    				<p>{{ad.description}}</p>		
+			</ion-item>
+		</ion-list>
+
 	</ion-content>
 
 </ion-view>

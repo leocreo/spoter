@@ -29,8 +29,8 @@
 
   		<div class="categories-list">  		
 			<div class='row' ng-repeat="category in featuredCategories track by $index" ng-if="$index%2==0">
-				<div class="col" ng-if="(featuredCategories[$index] != null)" ng-click="goCategory(featuredCategories[$index].id)"><div class="categories-item"><i class="{{featuredCategories[$index].icon}}" style="background-color: {{featuredCategories[$index].color}};"></i><span>{{categories[$index].name}}</span></div></div>
-				<div class="col" ng-if="(featuredCategories[$index+1] != null)"  ng-click="goCategory(featuredCategories[$index+1].id)"><div class="categories-item"><i class="{{featuredCategories[$index+1].icon}}" style="background-color: {{featuredCategories[$index+1].color}};"></i><span>{{categories[$index+1].name}}</span></div></div>
+				<div class="col" ng-if="(featuredCategories[$index] != null)" ng-click="goCategory(featuredCategories[$index].id)"><div class="categories-item"><i class="{{featuredCategories[$index].icon}}" style="background-color: {{featuredCategories[$index].color}};"></i><span>{{featuredCategories[$index].name}}</span></div></div>
+				<div class="col" ng-if="(featuredCategories[$index+1] != null)"  ng-click="goCategory(featuredCategories[$index+1].id)"><div class="categories-item"><i class="{{featuredCategories[$index+1].icon}}" style="background-color: {{featuredCategories[$index+1].color}};"></i><span>{{featuredCategories[$index+1].name}}</span></div></div>
 			 </div>
 		</div>
 
