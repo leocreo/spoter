@@ -56,7 +56,9 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 .bar.bar-positive {
 	background-color: #F55F49;
 }
-
+.positive-border {
+	border-color: #F55F49;
+}
 
 /* Categories */
 .categories-list {

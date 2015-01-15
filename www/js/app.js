@@ -1,4 +1,4 @@
-angular.module('spoter', ['ionic', 'spoter.controllers', 'spoter.services'])
+angular.module('spoter', ['ionic', 'spoter.controllers', 'spoter.services', 'spoter.directives'])
 
 // Service global para almacenar informacion global de la app
 .factory("appGlobals", [function() {

@@ -1,0 +1,43 @@
+<ion-view view-title="{{event.title}}" class="view-ad">
+
+	<ion-nav-bar class="bar bar-energized">
+		<ion-nav-back-button class="button-clear">
+			<i class="icon ion-android-arrow-back"></i>
+		</ion-nav-back-button>
+		<ion-nav-buttons side="left">
+			<button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+		</ion-nav-buttons>
+		<ion-nav-buttons side="right">
+			<button class="button button-icon button-clear ion-ios-search-strong"></button>
+		</ion-nav-buttons>
+	</ion-nav-bar>
+
+	<ion-content >			
+		<div class="ad-image">	
+			<ion-slide-box>
+				<ion-slide ng-repeat="image in event.banners">
+					<div class="overlay"></div>
+					<div class="image" style="background-image: url({{image.url}})"></div>
+				</ion-slide>
+			</ion-slide-box>
+		</div>		
+		<div class="ad-info">
+	  		<div class="categories-list">  		
+				<div class="categories-item" ng-repeat="category in event.categories"><i class="{{category.icon}}" style="background-color: {{category.color}};"></i></div>
+			</div>
+			<h4>{{event.title}}</h4>
+			<h5>{{event.address}} - {{event.phone}}</h5>
+		</div>	
+		<p>{{event.description}}</p>
+		<div class="ad-map-actions">
+			<button class="button button-small button-outline button-calm pull-left">
+				&nbsp;&nbsp;<i class="ion-home"></i>&nbsp;&nbsp; Sitio web&nbsp;&nbsp;
+			</button>
+			<button class="button button-small button-calm">
+				&nbsp;&nbsp;<i class="ion-location"></i>&nbsp;&nbsp; ¿Cómo llegar?&nbsp;&nbsp;
+			</button>
+		</div>
+		<leaflet center="map.center" markers="map.markers" defaults="map.defaults" height="200px"></leaflet>
+	</ion-content>
+
+</ion-view>
