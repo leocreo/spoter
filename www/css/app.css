@@ -235,7 +235,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 .header-city h3 span {
 	font-size: 15px;
 	padding-bottom:  13px;
-	margin-bottom: 16px;
+	margin-bottom: 8px;
 	border-bottom: 1px solid rgba(255,255,255,.7);
 	font-family: 'Asap';	
 	text-transform: uppercase;
@@ -419,14 +419,16 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 	height: 100px;	
 }
 .home-categories h2{
-	color: #444;
-	text-transform: capitalize;
-	font-family: 'Kaushan';
-	font-size: 30px;
+	color: #fff;
+	text-transform: capitalize;	
+	font-weight: 300;
+	font-size: 25px;
 	letter-spacing: -1px;
 	position: absolute;
-	bottom: -10px;
+	top: 30px;
 	left: 15px;
+	right: 15px;
+	text-align: center;
 	z-index: 1000;
 }
 .home-categories .icon {
@@ -446,9 +448,9 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 	right: 0;
 	top: 0;
 	background: -moz-linear-gradient(bottom,  rgba(255,255,255,1) 0%, rgba(255,255,255,.16) 50%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left bottom, left top, color-stop(0%,rgba255,255,255,1), color-stop(50%,rgba(255,255,255,.16))); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(bottom,  rgba(255,255,255,1) 0%,rgba(255,255,255,.16) 50%); /* Chrome10+,Safari5.1+ */
-	background: linear-gradient(to top,  rgba(255,255,255,1) 0%,rgba(255,255,255,.16) 50%); /* W3C */
+	background: -webkit-gradient(linear, left bottom, left top, color-stop(0%,rgba(255,255,255,1)), color-stop(20%,rgba(255,255,255,.5)), color-stop(66%,rgba(0,0,0,.5))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(bottom,  rgba(255,255,255,1) 0%, rgba(255,255,255,.5) 20%, rgba(0,0,0,.5) 66%); /* Chrome10+,Safari5.1+ */
+	background: linear-gradient(to top,  rgba(255,255,255,1) 0%, rgba(255,255,255,.5) 20%, rgba(0,0,0,.5) 66%); /* W3C */
 }
 
 
