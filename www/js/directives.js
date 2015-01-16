@@ -1,46 +1,25 @@
 angular.module('spoter.directives', [])
+	.directive('headerScrollFade', function($document) {
+		return {
+			restrict: 'A',
+			link: function(scope, element, attrs) {
 
-.directive('ionSearch', function() {
-	return {
-		restrict: 'E',
-		replace: true,
-		scope: {
-			getData: '&source',
-			model: '=?',
-			search: '=?filter'
-		},
-		link: function(scope, element, attrs) {
-			attrs.minLength = attrs.minLength || 0;
-			scope.placeholder = attrs.placeholder || '';
-			scope.search = {
-				value: ''
-			};
+				var header = $document[0].body.querySelector('.' + attrs.headerScrollHeader);
+				var reference = $document[0].body.querySelector('.' + attrs.headerScrollReference);
+				var threshold = 30;
 
-			if (attrs.class)
-				element.addClass(attrs.class);
+				angular.element(header).css("opacity", 0);
 
-			if (attrs.source) {
-				scope.$watch('search.value', function(newValue, oldValue) {
-					if (newValue.length > attrs.minLength) {
-						scope.getData({
-							str: newValue
-						}).then(function(results) {
-							scope.model = results;
-						});
-					} else {
-						scope.model = [];
-					}
+				element.bind('scroll', function(e) {
+					var rh = reference.offsetHeight;
+					var hh = header.offsetHeight;
+
+					var offset = (e.detail.scrollTop + hh + threshold) - rh;
+					offset /= threshold;
+					if (offset < 0) offset = 0;
+					if (offset > 1) offset = 1;
+					angular.element(header).css("opacity", offset);
 				});
 			}
-
-			scope.clearSearch = function() {
-				scope.search.value = '';
-			};
-		},
-		template: '<div class="bar bar-positive bar-header disable-user-behavior"><div class="item-input-wrapper">' +
-			'<i class="icon ion-android-search"></i>' +
-			'<input type="search" placeholder="{{placeholder}}" ng-model="search.value">' +
-			'<i ng-if="search.value.length > 0" ng-click="clearSearch()" class="icon ion-close"></i>' +
-			'</div>'
-	};
-})
+		}
+	});

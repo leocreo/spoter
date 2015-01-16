@@ -204,10 +204,13 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 
 /*### ESTILOS PORTADA */
 .view-home .bar{
-	background-color: rgba(255,255,255, 0) !important; 	
+	/*background-color: rgba(255,255,255, 0) !important; */
 	border: 0;
-	margin: 4px;
 	width: auto;
+}
+.view-home .title {
+	color: #fff;
+	left: 39px;	
 }
 .view-home .scroll-content {
 	overflow: visible !important;
