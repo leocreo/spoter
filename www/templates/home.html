@@ -22,14 +22,14 @@
 
 		<div class="section-buttons">
 			<div class="row">
-				<div class="col item item-icon-left"><i class="icon ion-ios-calendar-outline"></i><span class="badge badge-calm">0</span><h6>Agenda</h6>Próximos eventos</div>
-				<div class="col item item-icon-left"><i class="icon ion-ios-navigate-outline"></i><h6>Turismo</h6>Sitios para conocer</div>
+				<a class="col item item-icon-left" href="#/events"><i class="icon ion-ios-calendar-outline"></i><span class="badge badge-calm">0</span><h6>Agenda</h6>Próximos eventos</a>
+				<a class="col item item-icon-left" href="#/places"><i class="icon ion-ios-navigate-outline"></i><h6>Turismo</h6>Sitios para conocer</a>
 			</div>
 		</div>
 
-		<ion-list>
-			<div class="item item-divider  item-icon-right">
-				<a href="#/promotions">Promociones<i class="icon ion-ios-more"></i></a>
+		<ion-list class="">
+			<div class="item item-divider  item-icon-right "  ng-click="goPromo()">
+				<span class="calm">Promociones<i class="icon ion-ios-more"></i></span>
 			</div>
 		</ion-list>
 		<ion-slide-box class="promotions" show-pager="false" does-continue="true" auto-play="true">
@@ -38,9 +38,26 @@
 				<div class="image" style="background-image: url({{promo.banner.url}})"></div>
 				<div class="overlay"></div>
 				<div class="info">
-					<h2>{{promo.title}}</h2>
-					<p>{{promo.description}}{{promo.description}}</p>
+					<p>{{promo.title}}</p>
+					<h2>{{promo.promo_title}}</h2>
 				</div>
+			</ion-slide>
+		</ion-slide-box>
+
+
+		<ion-list>
+			<div class="item item-divider  item-icon-right positive-border" ng-click="goCategory()">
+				<span class="positive">Directorio de anuncios<i class="icon ion-ios-more"></i></span>
+			</div>
+		</ion-list>		
+
+		<ion-slide-box class="home-categories" show-pager="false" does-continue="true" auto-play="true" slide-interval="7000">
+			<ion-slide ng-repeat="category in featuredCategories track by $index">
+				<div class="image" style="background-image: url({{category.banner.url}})">					
+					<h2>{{category.name}}</h2>
+					<!--<i class="icon ion-forward pull-right"></i>-->
+					<div class="overlay"></div>
+				</div>				
 			</ion-slide>
 		</ion-slide-box>
 

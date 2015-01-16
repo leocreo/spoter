@@ -1,4 +1,4 @@
-<ion-view view-title="{{event.title}}" class="view-ad">
+<ion-view view-title="{{event.title}}" class="view-ad view-events">
 
 	<ion-nav-bar class="bar bar-energized">
 		<ion-nav-back-button class="button-clear">
@@ -25,6 +25,13 @@
 	  		<div class="categories-list">  		
 				<div class="categories-item" ng-repeat="category in event.categories"><i class="{{category.icon}}" style="background-color: {{category.color}};"></i></div>
 			</div>
+
+			<div class="fecha">
+				<h4>22</h4>
+				Enero		
+				<span class="hour">22hs</span>			
+			</div>
+
 			<h4>{{event.title}}</h4>
 			<h5>{{event.address}} - {{event.phone}}</h5>
 		</div>	

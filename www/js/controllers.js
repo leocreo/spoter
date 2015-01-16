@@ -21,19 +21,35 @@ angular.module('spoter.controllers', ["leaflet-directive"])
 		});
 	};
 	$scope.goEvent = function(id) {
-		$state.go('app.event', {
-			id: id
-		});
+		if (_.isUndefined(id))
+			$state.go('app.events', {
+				id: id
+			});
+		else
+			$state.go('app.event', {
+				id: id
+			});
 	};
 	$scope.goPromo = function(id) {
-		$state.go('app.promo', {
-			id: id
-		});
+		if (_.isUndefined(id))
+			$state.go('app.promotions', {
+				id: id
+			});
+		else
+			$state.go('app.promo', {
+				id: id
+			});
 	};
 	$scope.goPlace = function(id) {
-		$state.go('app.place', {
-			id: id
-		});
+		if (_.isUndefined(id))
+			$state.go('app.places', {
+				id: id
+			});
+		else
+			$state.go('app.place', {
+				id: id
+			});
+
 	};
 
 	angular.extend($scope, {
