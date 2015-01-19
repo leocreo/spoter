@@ -61,6 +61,10 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 	background-color: #F55F49;
 	border-color: #F55F49;
 }
+.button.button-positive {
+	background-color: #F55F49;
+	border-color: #F55F49;
+}
 .positive-border {
 	border-color: #F55F49;
 }
@@ -98,6 +102,19 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 	font-size: 13px;
 	letter-spacing: 0;
 }
+.categories-list .item-divider {
+	font-weight: normal;
+	text-transform: none;
+	font-size: 16px;
+	height: 47px;
+	line-height: 32px;
+}
+.categories-list .item-divider a{
+	padding: 7px 14px;	
+	border-left-style: solid;
+	border-left-width: 4px;
+}
+
 /* Big version*/
 .categories-list.big  .categories-item i{
 	font-size: 34px;
@@ -172,15 +189,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 	border-color: #eee;
 	padding: 0;
 }
-.menu .item-divider{
-	font-size: 13px;
-	color: #888;
-	font-weight: bold;
-}
-.menu .item-divider a{
-	padding: 7px 14px;	
-	border: 0;
-}
+
 .menu .categories-list .categories-item{	
 	padding: 7px 15px; 	
 	width: 100%;	
@@ -273,6 +282,45 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 	background-image: url(../img/cityline-vgb.png);
 }
 
+.home-categories .col {
+	margin: 5px;
+	padding: 0;
+}
+.home-categories .col .image{
+	position: relative;
+	height: 100px;
+}
+.home-categories h3 {
+	color: #fff;
+	text-align: center;
+	font-size: 12px;
+	text-transform: uppercase;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 26px;
+	line-height: 26px;
+	margin: 0;
+	opacity: .9;
+}
+.home-categories i {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -40px;
+	margin-left: -25px;
+	width: 50px;
+	height: 50px;
+	border-radius: 50px;
+	color: #fff;
+	font-size: 26px;
+	text-align: center;
+	line-height: 50px;
+	opacity: .9;
+}
+
+
 .section-buttons {
 	background-color: rgba(0,0,0,.1);
 }
@@ -312,7 +360,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 	color: #888;
 }
 .view-home .list, .view-home .list .item {
-	/*background-color: transparent;*/
+	background-color: transparent;
 	border: 0;
 }
 
@@ -686,3 +734,4 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 	z-index: 1000;
 	position: relative;
 }
+

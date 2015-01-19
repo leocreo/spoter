@@ -54,11 +54,40 @@
 			</div>
 		</ion-list>		
 
+
+		<div class="home-categories">  		
+			<div class='row' ng-repeat="category in featuredCategories track by $index" ng-if="$index%3==0">
+				<div class="col" ng-if="(featuredCategories[$index] != null)" ng-click="goCategory(featuredCategories[$index].id)" style=" background-color: {{featuredCategories[$index].color}}">
+					<div class="image" style="background-image: url({{featuredCategories[$index].banner.url}});">
+						<i class="{{featuredCategories[$index].icon}}" style="background-color: {{featuredCategories[$index].color}};"></i>
+						<h3 style="background-color: {{featuredCategories[$index].color}}">{{featuredCategories[$index].name}}</h3>
+					</div>
+				</div>
+				<div class="col" ng-if="(featuredCategories[$index+1] != null)"  ng-click="goCategory(featuredCategories[$index+1].id)" style="background-color: {{featuredCategories[$index+1].color}}">
+					<div class="image" style="background-image: url({{featuredCategories[$index+1].banner.url}}); ">
+						<i class="{{featuredCategories[$index+1].icon}}" style="background-color: {{featuredCategories[$index+1].color}};"></i>
+						<h3 style="background-color: {{featuredCategories[$index+1].color}}">{{featuredCategories[$index+1].name}}</h3>
+					</div>
+				</div>
+				<div class="col" ng-if="(featuredCategories[$index+2] != null)"  ng-click="goCategory(featuredCategories[$index+2].id)" style="background-color: {{featuredCategories[$index+2].color}}">
+					<div class="image" style="background-image: url({{featuredCategories[$index+2].banner.url}}); ">
+						<i class="{{featuredCategories[$index+2].icon}}" style="background-color: {{featuredCategories[$index+2].color}};"></i>
+						<h3 style="background-color: {{featuredCategories[$index+2].color}}">{{featuredCategories[$index+2].name}}</h3>
+					</div>
+				</div>
+			 </div>
+		</div>
+
+		<div class="text-center">
+			<br>
+			<button class="button button-positive button-small">Más categorías...</button>
+		</div>
+
+		<!--
 		<ion-slide-box class="home-categories" show-pager="false" does-continue="true" auto-play="true" slide-interval="7000">
 			<ion-slide ng-repeat="category in featuredCategories track by $index">
 				<div class="image" style="background-image: url({{category.banner.url}})">					
 					<h2>{{category.name}}</h2>
-					<!--<i class="icon ion-forward pull-right"></i>-->
 					<div class="overlay"></div>
 				</div>				
 			</ion-slide>
@@ -73,6 +102,7 @@
 		<div class="text-center">
 			<button class="button button-outline button-positive button-small">Ver todas...</button>
 		</div>
+		-->
 
 	</ion-content>
 

@@ -5,7 +5,7 @@ angular.module('spoter.controllers', ["leaflet-directive"])
 .controller('AppController', ['$scope', '$state', 'appGlobals', 'SpoterCategories', function($scope, $state, appGlobals, SpoterCategories) {
 	$scope.currentCityName = "Villa General Belgrano";
 
-	//SpoterCategories.clearCache();
+	SpoterCategories.clearCache();
 	SpoterCategories.findAll().then(function(data) {
 		$scope.categories = data;
 	});
