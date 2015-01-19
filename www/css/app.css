@@ -5,6 +5,9 @@ body {
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 	font-family: 'Asap';	
 }
+input, button, select, textarea {
+	font-family: 'Asap';		
+}
 .pull-right {
 	float: right;
 }
@@ -17,7 +20,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 .bar .button.button-clear .icon:before, .bar .button.button-clear.icon:before, .bar .button.button-clear.icon-left:before, .bar .button.button-clear.icon-right:before {
 	font-size: 28px;
-	line-height: 32px;
+	line-height: 30px;
 }
 .bar .button.button-icon .icon:before, .bar .button.button-icon:before, .bar .button.button-icon.icon-left:before, .bar .button.button-icon.icon-right:before {
 	font-size: 28px;

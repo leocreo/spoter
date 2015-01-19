@@ -2,7 +2,7 @@ angular.module('spoter.controllers', ["leaflet-directive"])
 
 //############################################################################### 
 // Main App Layout Controller 
-.controller('AppController', ['$scope', '$state', 'appGlobals', 'SpoterCategories', function($scope, $state, appGlobals, SpoterCategories) {
+.controller('AppController', ['$scope', '$state', '$ionicPopup', 'appGlobals', 'SpoterCategories', function($scope, $state, $ionicPopup, appGlobals, SpoterCategories) {
 	$scope.currentCityName = "Villa General Belgrano";
 
 	SpoterCategories.clearCache();
@@ -50,6 +50,27 @@ angular.module('spoter.controllers', ["leaflet-directive"])
 				id: id
 			});
 
+	};
+	$scope.changeCity = function() {
+		// Show the action sheet
+		var myPopup = $ionicPopup.show({
+			template: '<ul class="list"><li class="item item-checkbox"><label class="checkbox"> <input type="checkbox" checked=""></label>Flux Capacitor</li><li class="item item-checkbox"> <label class="checkbox"> <input type="checkbox" checked=""></label>1.21 Gigawatts</li><li class="item item-checkbox"> <label class="checkbox"><input type="checkbox" checked=""></label>Delorean</li><li class="item item-checkbox"><label class="checkbox"> <input type="checkbox" checked=""></label> 88 MPH</li><li class="item item-checkbox"><label class="checkbox"> <input type="checkbox" checked=""></label>Flux Capacitor</li><li class="item item-checkbox"> <label class="checkbox"> <input type="checkbox" checked=""></label>1.21 Gigawatts</li><li class="item item-checkbox"> <label class="checkbox"><input type="checkbox" checked=""></label>Delorean</li><li class="item item-checkbox"><label class="checkbox"> <input type="checkbox" checked=""></label> 88 MPH</li></ul>',
+			title: 'Tu ciudad',
+			subTitle: 'Selecciona tu ciudad',
+			scope: $scope,
+			buttons: [{
+				text: 'Cancelar'
+			}, {
+				text: '<b>Seleccionar</b>',
+				type: 'button-positive',
+				onTap: function(e) {
+					console.log(e);
+				}
+			}]
+		});
+		myPopup.then(function(res) {
+			console.log('Tapped!', res);
+		});
 	};
 
 	angular.extend($scope, {
