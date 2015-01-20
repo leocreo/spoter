@@ -21,6 +21,9 @@ input, button, select, textarea {
 	letter-spacing: -1px;
 	color: #666;
 }
+.pane, .view {
+	width: auto;
+}
 .bar .button.button-clear .icon:before, .bar .button.button-clear.icon:before, .bar .button.button-clear.icon-left:before, .bar .button.button-clear.icon-right:before {
 	font-size: 28px;
 	line-height: 30px;
@@ -233,7 +236,7 @@ input, button, select, textarea {
 }
 .view-home .scroll-content {
 	overflow: visible !important;
-	margin-top: -45px;
+	margin-top: -45px;	
 }
 .view-home .header-city {
 	height: 188px;
