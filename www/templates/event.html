@@ -31,17 +31,17 @@
 				Enero		
 				<span class="hour">22hs</span>			
 			</div>
-
-			<h4>{{event.title}}</h4>
+			<h6>{{event.title}}</h6>
+			<h4>{{event.event_name}}</h4>
 			<h5>{{event.address}} - {{event.phone}}</h5>
 		</div>	
 		<p>{{event.description}}</p>
 		<div class="ad-map-actions">
 			<button class="button button-small button-outline button-calm pull-left">
-				&nbsp;&nbsp;<i class="ion-home"></i>&nbsp;&nbsp; Sitio web&nbsp;&nbsp;
+				<i class="ion-home"></i>Sitio web
 			</button>
 			<button class="button button-small button-calm">
-				&nbsp;&nbsp;<i class="ion-location"></i>&nbsp;&nbsp; ¿Cómo llegar?&nbsp;&nbsp;
+				<i class="ion-location"></i>¿Cómo llegar?
 			</button>
 		</div>
 		<leaflet center="map.center" markers="map.markers" defaults="map.defaults" height="200px"></leaflet>
