@@ -1,23 +1,40 @@
-/*
-To customize the look and feel of Ionic, you can override the variables
-in ionic's _variables.scss file.
 
-For example, you might change some of the default colors:
+// Personalizaciones SCSS   para esta app
 
-$light:                           #fff !default;
-$stable:                          #f8f8f8 !default;
-$positive:                        #387ef5 !default;
-$calm:                            #11c1f3 !default;
-$balanced:                        #33cd5f !default;
-$energized:                       #ffc900 !default;
-$assertive:                       #ef473a !default;
-$royal:                           #886aea !default;
-$dark:                            #444 !default;
-*/
+// Colors
+// -------------------------------
 
+$light:                           	#fff !default;
+$stable:                          	#B6B6B6 !default;
+$positive:                        	#607D8B !default;
+$calm:                           	#CDDC39 !default;
+$balanced:                       	#00BCD4 !default;
+$energized:                      	#FF5722 !default;
+$assertive:                     	#E91E63 !default;
+$royal:                          	#9C27B0 !default;
+$dark:                            	#444 !default;
+
+
+// Buttons
+// -------------------------------
+
+$button-light-border:             $light !default;
+$button-stable-border:            $stable !default;
+$button-positive-border:          $positive !default;
+$button-calm-border:              $calm !default;
+$button-assertive-border:          $assertive !default;
+$button-balanced-border:          $balanced !default;
+$button-energized-border:         $energized !default;
+$button-royal-border:             $royal !default;
+$button-dark-border:              $dark !default;
+
+
+
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Librería Ionicons por fuera de Ionic
 // The path for our ionicons font files, relative to the built CSS in www/css
-$ionicons-font-path: "../lib/ionic/fonts" !default;
+$ionicons-font-path: "../lib/ionicons/fonts" !default;
+@import "www/lib/ionicons/scss/ionicons.scss";
 
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
-

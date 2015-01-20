@@ -65,26 +65,6 @@ input, button, select, textarea {
 .bar {
 	border: 0;
 }
-.bar.bar-positive {
-	background-color: #FF9800;
-	border-color: #FF9800;
-}
-.button.button-positive {
-	background-color: #FF9800;
-	border-color: #FF9800;
-}
-.bar.bar-calm {
-	background-color: #00BCD4;
-	border-color: #00BCD4;
-}
-.button.button-calm {
-	background-color: #00BCD4;
-	border-color: #00BCD4;
-}
-.button.button-calm.button-outline {
-	border-color: #00BCD4;
-}
-
 .button.button-small {
 	text-transform: uppercase;
 	font-size: 12px;
@@ -96,7 +76,22 @@ input, button, select, textarea {
 	margin-left: 3px;
 }
 
-
+/*
+.bar.bar-positive {
+	background-color: #F55F49;
+	border-color: #F55F49;
+}
+.button.button-positive {
+	background-color: #F55F49;
+	border-color: #F55F49;
+}
+.button.button-calm {
+	background-color: #53C6E7;
+	border-color: #53C6E7;
+}
+.button.button-calm.button-outline {
+	border-color: #53C6E7;
+}
 .positive-border {
 	border-color: #F55F49;
 }
@@ -106,6 +101,7 @@ input, button, select, textarea {
 .positive {
 	color: #F55F49;
 }
+*/
 
 
 
