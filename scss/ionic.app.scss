@@ -5,15 +5,16 @@
 // -------------------------------
 
 $light:                           	#fff !default;
-$stable:                          	#B6B6B6 !default;
-$positive:                        	#607D8B !default;
-$calm:                           	#CDDC39 !default;
-$balanced:                       	#00BCD4 !default;
-$energized:                      	#FF5722 !default;
-$assertive:                     	#E91E63 !default;
-$royal:                          	#9C27B0 !default;
-$dark:                            	#444 !default;
+$stable:                          	#E64A19 !default; // Default Color de app
+$positive:                        	#F57C00 !default;  // Anuncios
+$calm:                           	#8BC34A !default; // Eventos
+$balanced:                       	#0288D1 !default; // Puntos interes
+$energized:                      	#4CAF50 !default; // Promos
+$assertive:                     	#E91E63 !default; // Rosa adicional
+$royal:                          	#9C27B0 !default; // Violeta Adicional
+$dark:                            	#455A64 !default;
 
+$button-stable-text:              #fff !default;
 
 // Buttons
 // -------------------------------
