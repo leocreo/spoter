@@ -1,6 +1,6 @@
-<ion-view view-title="{{place.title}}" class="view-ad">
+<ion-view view-title="{{place.title}}" class="view-ad view-places">
 
-	<ion-nav-bar class="bar bar-balanced">
+	<ion-nav-bar class="bar bar-balanced darken">
 		<ion-nav-back-button class="button-clear">
 			<i class="icon ion-android-arrow-back"></i>
 		</ion-nav-back-button>
@@ -8,13 +8,43 @@
 		<ion-nav-buttons side="left">
 			<button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
 		</ion-nav-buttons>
-		<ion-nav-buttons side="right">
-			<button class="button button-icon button-clear ion-ios-search-strong"></button>
-		</ion-nav-buttons>
 	</ion-nav-bar>
 	
 	<ion-content >			
-		<div class="ad-image">	
+		<div class="cover-gallery">
+			<div class="overlay"></div>
+
+			<div class="ad-info">
+				<h4>{{place.title}}</h4>
+				<h5>{{place.short_description}}</h5>
+			</div>
+
+			<div class="layout layout-1" ng-if="place.banners.length==1">
+				<div class="row">
+					<div class="col"><div class="image" style="background-image: url({{place.banners[0].url}})"></div></div>
+				</div>
+			</div>
+
+			<div class="layout layout-2" ng-if="place.banners.length==2">
+				<div class="row">
+					<div class="col col-67"><div class="image" style="background-image: url({{place.banners[0].url}})"></div></div>
+					<div class="col"><div class="image" style="background-image: url({{place.banners[1].url}})"></div></div>
+				</div>
+			</div>
+
+			<div class="layout layout-3" ng-if="place.banners.length>=3">
+				<div class="row">
+					<div class="col col-67"><div class="image" style="background-image: url({{place.banners[1].url}})"></div></div>
+					<div class="col"><div class="image" style="background-image: url({{place.banners[2].url}})"></div></div>
+				</div>
+
+				<div class="row">
+					<div class="col"><div class="image" style="background-image: url({{place.banners[0].url}})"></div></div>
+				</div>
+			</div>
+
+		</div>
+		<!--<div class="ad-image">		
 			<ion-slide-box>
 				<ion-slide ng-repeat="image in place.banners">
 					<div class="overlay"></div>
@@ -22,23 +52,60 @@
 				</ion-slide>
 			</ion-slide-box>
 		</div>		
+
 		<div class="ad-info">
-	  		<div class="categories-list">  		
+				<div class="categories-list">  		
 				<div class="categories-item" ng-repeat="category in place.categories"><i class="{{category.icon}}" style="background-color: {{category.color}};"></i></div>
 			</div>
 			<h4>{{place.title}}</h4>
 			<h5>{{place.address}} - {{place.phone}}</h5>
 		</div>	
-		<p>{{place.description}}</p>
-		<div class="ad-map-actions">
-			<button class="button button-small button-outline button-calm pull-left">
-				&nbsp;&nbsp;<i class="ion-home"></i>&nbsp;&nbsp; Sitio web&nbsp;&nbsp;
-			</button>
-			<button class="button button-small button-calm">
-				&nbsp;&nbsp;<i class="ion-location"></i>&nbsp;&nbsp; ¿Cómo llegar?&nbsp;&nbsp;
-			</button>
+		-->
+		<div class="body">
+			<div class="icon-actions">
+				<span>
+					<i class="ion-images balanced-bg"></i>						
+				</span>
+			</div>
+			<div class="extra-info row balanced-bg light">
+				<div class="col">
+					<i class="ion-clock"></i>
+					<small>Horario</small>
+					8 a 13hs  / 16 a 20hs
+				</div>
+				<div class="col">
+					<i class="ion-location"></i>
+					<small>Distancia</small>
+					A 25km
+				</div>
+			</div>
+
+			<p ng-bind-html="place.description"></p>
+		</div> 
+
+		<div class="extra-info bottom row dark">
+			<div class="col" ng-if="place.website">
+				<i class="ion-home"></i>
+				<small>Sitio web</small>
+				{{place.website}}
+			</div>
+			<div class="col" ng-if="place.phone">
+				<i class="ion-android-call"></i>
+				<small>Teléfono</small>
+				{{place.phone}}
+			</div>
 		</div>
-		<leaflet center="map.center" markers="map.markers" defaults="map.defaults" height="200px"></leaflet>
+
+		<div class="ad-map-actions dark">
+			<button class="button button-small button-calm pull-right">
+				<i class="ion-location"></i>¿Cómo llegar?
+			</button>
+			<small class="dark">Dirección:</small>
+			<p>{{place.address}}</p>
+		</div>
+
+		<leaflet center="map.center" markers="map.markers" defaults="map.defaults" height="200px" width="100%"></leaflet>
+
 	</ion-content>
 
 </ion-view>

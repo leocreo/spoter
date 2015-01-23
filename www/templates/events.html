@@ -7,9 +7,6 @@
 		<ion-nav-buttons side="left">
 			<button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
 		</ion-nav-buttons>
-		<ion-nav-buttons side="right">
-			<button class="button button-icon button-clear ion-ios-search-strong"></button>
-		</ion-nav-buttons>
 	</ion-nav-bar>
 
 	<ion-content >	
@@ -24,11 +21,12 @@
 					Enero		
 					<span class="hour calm-bg darken">22hs</span>			
 				</div>
-				<h1 class="name">{{event.event_name}}</h1>
-				
-				<p class="title"><i class="location ion-location"></i><strong>{{event.title}}</strong> </p>
-				<p class="address"></p>
-				<p>{{event.description}}</p>
+				<div class="info">
+					<h1 class="name">{{event.event_name}}</h1>				
+					<small><i class="location ion-location"></i><strong>{{event.title}}</strong> </small>
+					<p class="address"></p>
+					<p>{{event.description}}</p>
+				</div>
 			</div>
 
 		</div>

@@ -7,9 +7,6 @@
 		<ion-nav-buttons side="left">
 			<button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
 		</ion-nav-buttons>
-		<ion-nav-buttons side="right">
-			<button class="button button-icon button-clear ion-ios-search-strong"></button>
-		</ion-nav-buttons>
 	</ion-nav-bar>
 
 	<ion-content >			
@@ -24,8 +21,8 @@
 		<div class="ad-info calm-bg">
 
 	  		<div class="categories-list">  		  			
-				<div class="cost assertive-bg light" ng-if="event.event_cost"><small>Entrada</small>{{event.event_cost.money}}{{event.event_cost.price}}</div>
-				<div class="categories-item"  ng-if="!event.event_cost"><i class="ion-calendar assertive-bg"></i></div>
+				<!--<div class="cost assertive-bg light" ng-if="event.event_cost"><small>Entrada</small>{{event.event_cost.money}}{{event.event_cost.price}}</div>-->
+				<div class="categories-item" ><i class="ion-calendar positive-bg"></i></div>
 			</div>
 
 			<div class="fecha calm-bg ">
@@ -38,15 +35,34 @@
 			<h5>{{event.address}} - {{event.phone}}</h5>
 		</div>	
 		<p>{{event.description}}</p>
-		<div class="ad-map-actions">
-			<button class="button button-small button-outline button-calm pull-left">
-				<i class="ion-home"></i>Sitio web
-			</button>
-			<button class="button button-small button-calm">
+
+		<div class="extra-info bottom row dark">
+			<div class="col" ng-if="event.event_cost">
+				<i class="ion-ios-pricetag"></i>
+				<small>Costo</small>
+				{{event.event_cost.money}}{{event.event_cost.price}}
+			</div>
+			<div class="col" ng-if="event.website">
+				<i class="ion-home"></i>
+				<small>Sitio web</small>
+				{{event.website}}
+			</div>
+			<div class="col" ng-if="event.phone">
+				<i class="ion-android-call"></i>
+				<small>Teléfono</small>
+				{{event.phone}}
+			</div>
+		</div>
+
+		<div class="ad-map-actions dark">
+			<button class="button button-small button-calm pull-right">
 				<i class="ion-location"></i>¿Cómo llegar?
 			</button>
+			<small>Dirección:</small>
+			<p>{{event.address}}</p>
 		</div>
-		<leaflet center="map.center" markers="map.markers" defaults="map.defaults" height="200px"></leaflet>
+
+		<leaflet center="map.center" markers="map.markers" defaults="map.defaults" height="200px" width="100%"></leaflet>
 	</ion-content>
 
 </ion-view>

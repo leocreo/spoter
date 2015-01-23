@@ -21,6 +21,11 @@ input, button, select, textarea {
 	letter-spacing: -1px;
 	color: #666;
 }
+.item p{
+	font-size: 15px;
+	color: #888;
+	line-height: 17px;
+}
 .item.activated {
 	background-color: #f4f4f4;
 	border-color: #f4f4f4;
@@ -80,7 +85,7 @@ input, button, select, textarea {
 }
 .button.button-small i{
 	font-size: 20px;
-	margin-right: 12px;
+	margin-right: 7px;
 	margin-left: 3px;
 	line-height: 25px;
 	vertical-align: sub;
@@ -680,17 +685,6 @@ input, button, select, textarea {
 	background-size: cover;
 	background-position: center;
 }
-.view-ad .ad-image .slider .overlay{
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background: -moz-linear-gradient(bottom,  rgba(0,0,0,.5) 0%, rgba(0,0,0,.16) 50%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left bottom, left top, color-stop(0%,rgba(0,0,0,.5)), color-stop(50%,rgba(0,0,0,.16))); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(bottom,  rgba(0,0,0,.5) 0%,rgba(0,0,0,.16) 50%); /* Chrome10+,Safari5.1+ */
-	background: linear-gradient(to top,  rgba(0,0,0,.5) 0%,rgba(0,0,0,.16) 50%); /* W3C */
-}
 .view-ad .slider-pager .slider-pager-page {
 	font-size: 11px;
 	width: 10px;
@@ -708,7 +702,7 @@ input, button, select, textarea {
 }
 .view-ad .ad-info h4{
 	margin: 0 0 0 0;
-	font-size: 22px;
+	font-size: 25px;
 	font-weight: 300;
 	letter-spacing: -1px;
 	color: #fff;
@@ -736,9 +730,13 @@ input, button, select, textarea {
 	margin-bottom: 10px;
 }
 .view-ad .ad-map-actions{
-	text-align: right;
-	padding: 10px 20px;
+	padding: 20px;
 	border-top: 1px solid #eee;
+}
+.view-ad .ad-map-actions p{
+	padding: 0;
+	margin: 0;
+	line-height: 14px;
 }
 .view-ad .categories-list {
 	position: absolute;
@@ -806,8 +804,8 @@ input, button, select, textarea {
 	letter-spacing: -2px;
 }
 .view-events  .categories-list{
-	top: -40px;
-	right: 20px;
+	top: -48px;
+	right: 23px;
 }
 .view-events  .fecha .hour {
 	display: block;
@@ -842,18 +840,18 @@ input, button, select, textarea {
 	text-transform: uppercase;
 	color: rgba(255,255,255,.8);
 }
+.view-events  .info {
+	padding: 0 10px;
+}
+.view-events  small {
+	font-size: 12px;
+	letter-spacing: -1px;
+}
 .view-events  h1.name {
 	font-size: 22px;
 	font-weight: 300;
 	padding: 13px 0 0 0;
-	margin: 0 10px;
-}
-.view-events  p.title {
-	color: #999;
-	text-transform: uppercase;
-	font-size: 13px;
-	padding-top: 3px;
-	padding-bottom: 0;
+	margin: 0;
 }
 .view-events  .list {
 	padding-bottom: 20px;
@@ -862,7 +860,7 @@ input, button, select, textarea {
 	margin: 0 10px;
 }
 .view-events  .list p {
-	margin: 4px 10px;
+	margin: 4px 0;
 	line-height: 15px;
 }
 .view-events  p.address {
@@ -881,7 +879,7 @@ input, button, select, textarea {
 	padding-bottom: 25px;
 }
 .view-events .ad-info h4 {
-	font-size: 27px
+	font-size: 25px;
 }
 
 /* PLACES */
@@ -921,19 +919,145 @@ input, button, select, textarea {
 .view-places  .item-body p {
 	margin: 0;
 	padding: 6px 12px 12px 10px;
-	line-height: 16px;
-	color: #999;	
 }
 .view-places  .item-body p.title {
 	color: #fff;
-	font-size: 20px;
+	font-size: 25px;
+	font-weight: 300;
 	padding-top: 13px;
-	padding-bottom: 25px	;
-	margin-top: -45px;
+	padding-bottom: 35px	;
+	margin-top: -55px;
 	z-index: 1000;
 	position: relative;
 }
 .view-places .list .border {
 	height: 5px;
 }
+.view-places .overlay{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 1000;
+	background: -moz-linear-gradient(bottom,  rgba(0,0,0,.9) 0%, rgba(0,0,0,.1) 55%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left bottom, left top, color-stop(0%,rgba(0,0,0,.9)), color-stop(55%,rgba(0,0,0,.1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(bottom,  rgba(0,0,0,.9) 0%,rgba(0,0,0,.1) 55%); /* Chrome10+,Safari5.1+ */
+	background: linear-gradient(to top,  rgba(0,0,0,.9) 0%,rgba(0,0,0,.1) 55%); /* W3C */
+}
+.view-places .body {
+	z-index: 2000;
+	position: relative;
+}
+.view-places .icon-actions {
+	position: absolute;
+	right: 0;
+	top: -82px;
+	width: 80px;
+}
+.view-places .icon-actions span{
+	display: block;	
+}
+.view-places .icon-actions i{
+	width: 60px;
+	height: 60px;
+	border-radius: 60px;
+	line-height: 60px;
+	color: #fff;
+	font-size: 30px;
+	display: inline-block;	
+	text-align: center;
+	margin: 5px 0;
+}
+.view-places .ad-catinfo {
+	padding-bottom: 20px; 
+	border-bottom: 1px solid #eee;
+}
+.view-places .ad-catinfo span {
+	color: #888;
+	background-color: #eee;
+}
 
+.cover-gallery, .cover-gallery .layout {
+	position: relative;
+	height: 280px;
+}
+.cover-gallery .row {
+	padding: 0;
+	margin: 0;
+	height: 60%;
+}
+.cover-gallery .row:first-child {
+	height: 40%;
+}
+.cover-gallery .layout-2 .row:first-child {
+	height: 100%;
+}
+
+.cover-gallery .col{
+	height: 100%;
+	width: 100%;
+	line-height: 0;
+	padding: 1px;
+	margin: 0;
+	background-color: #fff;
+}
+.cover-gallery .image{
+	line-height: 0;
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #ABCC48;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+.cover-gallery .ad-info {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 1100;
+	box-shadow: none;
+}
+.cover-gallery .ad-info h4{
+	font-size: 28px;
+}
+.cover-gallery .ad-info h5{
+	color: rgba(255,255,255,.8);
+	margin-right: 100px;
+}
+
+
+.extra-info {
+	border-bottom: 1px solid #eee;
+}
+.extra-info.bottom {
+	border-bottom: 0;
+	border-top: 1px solid #eee;	
+}
+.extra-info div  {
+	text-align: center;
+	font-weight: 300;
+	
+	font-size: 17px;
+	letter-spacing: -1px;
+	border-left: 1px solid #eee;
+}
+.extra-info div:first-child {
+	border-left: 0;
+} 
+.extra-info div  i {
+	display: block;
+	
+	font-size:22px; 
+}
+small{
+	font-size: 11px;
+	letter-spacing: 0;
+	
+	font-weight: 800;
+	display: block;
+	text-transform: uppercase;
+}
