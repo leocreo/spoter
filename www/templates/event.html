@@ -1,6 +1,6 @@
-<ion-view view-title="{{event.title}}" class="view-ad view-events">
+<ion-view view-title="{{event.event_name}}" class="view-ad view-events">
 
-	<ion-nav-bar class="bar bar-energized">
+	<ion-nav-bar class="bar bar-calm darken">
 		<ion-nav-back-button class="button-clear">
 			<i class="icon ion-android-arrow-back"></i>
 		</ion-nav-back-button>
@@ -13,26 +13,28 @@
 	</ion-nav-bar>
 
 	<ion-content >			
-		<div class="ad-image">	
+		<div class="ad-image">			
 			<ion-slide-box>
 				<ion-slide ng-repeat="image in event.banners">
 					<div class="overlay"></div>
 					<div class="image" style="background-image: url({{image.url}})"></div>
-				</ion-slide>
+				</ion-slide> 
 			</ion-slide-box>
 		</div>		
-		<div class="ad-info">
-	  		<div class="categories-list">  		
-				<div class="categories-item" ng-repeat="category in event.categories"><i class="{{category.icon}}" style="background-color: {{category.color}};"></i></div>
+		<div class="ad-info calm-bg">
+
+	  		<div class="categories-list">  		  			
+				<div class="cost assertive-bg light" ng-if="event.event_cost"><small>Entrada</small>{{event.event_cost.money}}{{event.event_cost.price}}</div>
+				<div class="categories-item"  ng-if="!event.event_cost"><i class="ion-calendar assertive-bg"></i></div>
 			</div>
 
-			<div class="fecha">
+			<div class="fecha calm-bg ">
 				<h4>22</h4>
 				Enero		
 				<span class="hour">22hs</span>			
 			</div>
-			<h6>{{event.title}}</h6>
 			<h4>{{event.event_name}}</h4>
+			<h6>{{event.title}}</h6>
 			<h5>{{event.address}} - {{event.phone}}</h5>
 		</div>	
 		<p>{{event.description}}</p>

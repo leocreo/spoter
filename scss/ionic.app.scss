@@ -7,7 +7,7 @@
 $light:                           	#fff !default;
 $stable:                          	#E64A19 !default; // Default Color de app
 $positive:                        	#F57C00 !default;  // Anuncios
-$calm:                           	#8BC34A !default; // Eventos
+$calm:                           	#F2B90D !default; // Eventos 
 $balanced:                       	#0288D1 !default; // Puntos interes
 $energized:                      	#689F38 !default; // Promos
 $assertive:                     	#E91E63 !default; // Rosa adicional
@@ -51,6 +51,43 @@ $button-dark-border:              $dark !default;
 	background-color: darken($royal, 15%);
 }
 
+.energized-bg.darken {
+	background-color: darken($energized, 15%);
+}
+.positive-bg.darken {
+	background-color: darken($positive, 15%);
+}
+.calm-bg.darken {
+	background-color: darken($calm, 15%);
+}
+.assertive-bg.darken {
+	background-color: darken($assertive, 15%);
+}
+.balanced-bg.darken {
+	background-color: darken($balanced, 15%);
+}
+.royal-bg.darken {
+	background-color: darken($royal, 15%);
+}
+
+.energized-bg.lighten {
+	background-color: lighten($energized, 5%);
+}
+.positive-bg.lighten {
+	background-color: lighten($positive, 5%);
+}
+.calm-bg.lighten {
+	background-color: lighten($calm, 5%);
+}
+.assertive-bg.lighten {
+	background-color: lighten($assertive, 5%);
+}
+.balanced-bg.lighten {
+	background-color: lighten($balanced, 5%);
+}
+.royal-bg.lighten {
+	background-color: lighten($royal, 5%);
+}
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Librería Ionicons por fuera de Ionic
 // The path for our ionicons font files, relative to the built CSS in www/css

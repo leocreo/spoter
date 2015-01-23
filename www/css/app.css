@@ -423,7 +423,7 @@ input, button, select, textarea {
 	left: 0;
 	top: 0; 
 	bottom: 0;
-	padding-top: 15px;
+	padding-top: 15px; 
 	width: 30%;
 	text-align: center;
 	font-size: 12px;
@@ -721,11 +721,10 @@ input, button, select, textarea {
 	color: rgba(255,255,255,.7);
 }
 .view-ad .ad-info h6{
-	margin: 13px 0 0 0;
-	text-transform: uppercase;
-	font-size: 12px;
-	font-weight: bold;
-	color: #939188;
+	margin: 0;
+	font-size: 16px;
+	font-weight: 300;
+	color: #fff;
 }
 .view-ad p{
 	padding: 15px 20px;
@@ -739,6 +738,7 @@ input, button, select, textarea {
 .view-ad .ad-map-actions{
 	text-align: right;
 	padding: 10px 20px;
+	border-top: 1px solid #eee;
 }
 .view-ad .categories-list {
 	position: absolute;
@@ -781,9 +781,9 @@ input, button, select, textarea {
 	border-radius: 3px 4px 0 0;
 }
 .view-events  .fecha {
-	font-size: 15px;
-	background-color: #f2f2f2;
-	color: #aaa;
+	font-weight: 300;
+	font-size: 15px;	
+	color: #fff;
 	text-transform: uppercase;
 	width: 26%;	
 	text-align: center;		
@@ -792,54 +792,97 @@ input, button, select, textarea {
 	margin: 12px;
 }
 .view-events .ad-info .fecha {
-	background-color: #FCFCFC;
-	margin-top:  4px;
+	padding-left: 15px;
+	margin-top:  0;
+	margin-right: 0;
+	border-left: 1px solid rgba(255,255,255,.6);
 }
-.view-events .fecha h4{
+.view-events .fecha h4{ 
 	font-size: 40px;
+	font-weight: 300;
 	line-height: 80%;
 	margin: 3px 0 0 0 ;
-	color: #aaa;
-	letter-spacing: -2px;
-	font-weight: bold;	
-}
-.view-events  i.ion-calendar {
-	position: absolute;
-	left: 10px;
-	top: 114px;
 	color: #fff;
-	line-height: 26px;
-	font-size: 26px;
-	z-index: 1000;
+	letter-spacing: -2px;
+}
+.view-events  .categories-list{
+	top: -40px;
+	right: 20px;
 }
 .view-events  .fecha .hour {
 	display: block;
 	font-size: 17px;
 	font-weight: bold;
-	color: #999;
-	background-color: #d8d8d8;
+	color: #fff;
 }
-.view-events  p {
-	margin: 0;
-	padding: 10px 12px 12px 10px;
-	line-height: 16px;
-	color: #999;	
+.view-events .list .border {
+	height: 5px;
 }
-.view-events  p.name {
-	color: #444;
-	font-size: 18px;
-	padding-top: 0;
-	padding-bottom: 0;
+.view-events .cost {
+	font-size: 30px; 
+	font-weight: 400;
+	letter-spacing: -2px;
+	border-radius: 80px;
+	width: 80px;
+	height: 80px;
+	position: absolute;
+	right: -8px;
+	top: -30px;
+	line-height: 27px;
+	text-align: center;
+	box-shadow: 0 0 10px rgba(0,0,0,.7);
+	z-index: 1000;
+}
+.view-events .cost small {
+	font-size: 9px;
+	line-height: 10px;
+	font-weight: bold;
+	letter-spacing: 0;
+	display: inline-block;
+	text-transform: uppercase;
+	color: rgba(255,255,255,.8);
+}
+.view-events  h1.name {
+	font-size: 22px;
+	font-weight: 300;
+	padding: 13px 0 0 0;
+	margin: 0 10px;
 }
 .view-events  p.title {
 	color: #999;
 	text-transform: uppercase;
 	font-size: 13px;
-	padding-top: 13px;
+	padding-top: 3px;
 	padding-bottom: 0;
 }
-
-
+.view-events  .list {
+	padding-bottom: 20px;
+}
+.view-events  .list p.title {
+	margin: 0 10px;
+}
+.view-events  .list p {
+	margin: 4px 10px;
+	line-height: 15px;
+}
+.view-events  p.address {
+	color: #999;
+	text-transform: uppercase;
+	font-size: 13px;
+	padding-top:0;
+	padding-bottom: 0;
+}
+.view-events  i.location{
+	font-size: 17px;
+	line-height: 20px;	
+	margin-right: 6px;
+}
+.view-events .ad-info {
+	padding-bottom: 25px;
+}
+.view-events .ad-info h4 {
+	font-size: 27px
+}
 
 /* PLACES */
 .view-places  .item-body  {

@@ -1,6 +1,6 @@
 <ion-view view-title="Eventos" class="view-events">
 	
-	<ion-nav-bar class="bar bar-energized">
+	<ion-nav-bar class="bar bar-calm darken">
 		<ion-nav-back-button class="button-clear">
 			<i class="icon ion-android-arrow-back"></i>
 		</ion-nav-back-button>
@@ -17,15 +17,17 @@
 		<div class="list card" ng-repeat="event in events" ng-click="goEvent({{event.id}})">
 
 			<div class="item item-body">
-				<i class="ion-calendar"></i>
 				<div class="image" style="background-image: url({{event.banner.url}})"></div>
-				<div class="fecha">
+				<div class="border calm-bg"></div>
+				<div class="fecha calm-bg">
 					<h4>22</h4>
 					Enero		
-					<span class="hour">22hs</span>			
+					<span class="hour calm-bg darken">22hs</span>			
 				</div>
-				<p class="title">{{event.title}}</p>
-				<p class="name">{{event.event_name}}</p>
+				<h1 class="name">{{event.event_name}}</h1>
+				
+				<p class="title"><i class="location ion-location"></i><strong>{{event.title}}</strong> </p>
+				<p class="address"></p>
 				<p>{{event.description}}</p>
 			</div>
 
