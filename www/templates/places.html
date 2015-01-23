@@ -1,6 +1,6 @@
 <ion-view view-title="Puntos de interés" class="view-places">
 	
-	<ion-nav-bar class="bar bar-balanced">
+	<ion-nav-bar class="bar bar-balanced darken">
 		<ion-nav-back-button class="button-clear">
 			<i class="icon ion-android-arrow-back"></i>
 		</ion-nav-back-button>
@@ -16,13 +16,14 @@
 	<ion-content >	
 
 		<div class="list card" ng-repeat="place in places" ng-click="goPlace({{place.id}})">
-
+ 
 			<div class="item item-body">
 				<div class="overlay"></div>
-				<div class="image" style="background-image: url({{place.banner.url}})"></div>
+				<div class="image" style="background-image: url({{place.banners[0].url}})"></div>
+				<div class="border balanced-bg"></div>
 				<p class="title">{{place.title}}</p>
 				<i class="icon ion-forward pull-right"></i>
-				<p>{{place.description}}</p>
+				<p>{{place.short_description}}</p>
 			</div>
 
 		</div>
