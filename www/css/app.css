@@ -11,6 +11,7 @@ input, button, select, textarea {
 }
 
 
+
 .pull-right {
 	float: right;
 }
@@ -69,7 +70,48 @@ input, button, select, textarea {
 .button-small {
 	padding: 2px 11px 1px;
 }
+.checkbox .checkbox-icon:before, .checkbox input:before {
+	border-color: #ddd;
+}
+.popup-container .popup{
+	border-radius: 2px;
+	box-shadow: 0 0 10px rgba(0,0,0,.1);
+}
+.popup-title {
+	font-size: 20px;
+	color: #555;
+}
+.popup-sub-title {
+	font-size: 14px;
+	font-weight: 300;
+	margin: 0;
+}
 
+.city-list-selector {
+	max-height: 260px;
+	position: relative;
+}
+.city-list-selector .item-radio {
+	border-color: #eee;
+}
+/*
+.city-list-selector .overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 1000;
+	background: -moz-linear-gradient(bottom,  rgba(255,255,255,1) 0%, rgba(255,255,255,0) 10%); 
+	background: -webkit-gradient(linear, left bottom, left top, color-stop(0%,rgba(255,255,255,1)), color-stop(10%,rgba(255,255,255,0))); 
+	background: -webkit-linear-gradient(bottom,  rgba(255,255,255,1) 0%,rgba(255,255,255,0) 10%); 
+	background: linear-gradient(to top,  rgba(255,255,255,1) 0%,rgba(255,255,255,0) 10%); 
+}*/
+.city-list-selector .item-radio .radio-icon {
+	font-size: 30px;
+	line-height: 30px;
+	padding: 12px;
+}
 
 /* COLORES Y ESTILOS */
 .bar {
@@ -270,7 +312,7 @@ input, button, select, textarea {
 	height: 188px;
 	background-color: #8CE0F4;
 	position: relative;
-	background-image: url(../img/city-vgb.jpg); 
+/*)	background-image: url(../img/city-vgb.jpg); */
 	background-size: cover;
 }
 .header-city h3 {

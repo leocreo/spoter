@@ -3,7 +3,7 @@ angular.module('spoter.controllers', ["leaflet-directive"])
 //############################################################################### 
 // Main App Layout Controller 
 .controller('AppController', ['$scope', '$state', '$ionicPopup', 'appGlobals', 'SpoterCategories', function($scope, $state, $ionicPopup, appGlobals, SpoterCategories) {
-	$scope.currentCityName = "Villa General Belgrano";
+	$scope.currentCity = appGlobals.config.currentCity;
 
 	SpoterCategories.clearCache();
 	SpoterCategories.findAll().then(function(data) {
@@ -53,10 +53,20 @@ angular.module('spoter.controllers', ["leaflet-directive"])
 	};
 	$scope.changeCity = function() {
 		// Show the action sheet
+		var cityList = '<div class="list city-list-selector">';
+		//cityList += '<div class="item item-divider">Recomendadas</div>';
+		_.each(appGlobals.config.availableCities, function(city) {
+			selected = "";
+			if (appGlobals.config.currentCity.id == city.id)
+				selected = ' checked="checked" ';
+			cityList += '<label class="item item-radio "><input type="radio"  ng-model="data.new_city" name="data.new_city" value="' + city.id + '"' + selected + '><div class="item-content">' + city.name + '</div><i class="radio-icon ion-ios-checkmark assertive"></i></label>';
+		});
+		cityList += '</div>';
+		$scope.data = {}
 		var myPopup = $ionicPopup.show({
-			template: '<ul class="list"><li class="item item-checkbox"><label class="checkbox"> <input type="checkbox" checked=""></label>Flux Capacitor</li><li class="item item-checkbox"> <label class="checkbox"> <input type="checkbox" checked=""></label>1.21 Gigawatts</li><li class="item item-checkbox"> <label class="checkbox"><input type="checkbox" checked=""></label>Delorean</li><li class="item item-checkbox"><label class="checkbox"> <input type="checkbox" checked=""></label> 88 MPH</li><li class="item item-checkbox"><label class="checkbox"> <input type="checkbox" checked=""></label>Flux Capacitor</li><li class="item item-checkbox"> <label class="checkbox"> <input type="checkbox" checked=""></label>1.21 Gigawatts</li><li class="item item-checkbox"> <label class="checkbox"><input type="checkbox" checked=""></label>Delorean</li><li class="item item-checkbox"><label class="checkbox"> <input type="checkbox" checked=""></label> 88 MPH</li></ul>',
-			title: 'Tu ciudad',
-			subTitle: 'Selecciona tu ciudad',
+			template: cityList,
+			title: 'Ciudad',
+			subTitle: 'Selecciona tu ciudad:',
 			scope: $scope,
 			buttons: [{
 				text: 'Cancelar'
@@ -64,12 +74,18 @@ angular.module('spoter.controllers', ["leaflet-directive"])
 				text: '<b>Seleccionar</b>',
 				type: 'button-positive',
 				onTap: function(e) {
-					console.log(e);
+					return $scope.data.new_city;
 				}
 			}]
 		});
-		myPopup.then(function(res) {
-			console.log('Tapped!', res);
+		myPopup.then(function(selected_id) {
+			var city = _.findWhere(appGlobals.config.availableCities, {
+				id: Number(selected_id)
+			});
+			if (city) {
+				appGlobals.config.currentCity = city;
+				$scope.currentCity = appGlobals.config.currentCity;
+			}
 		});
 	};
 
