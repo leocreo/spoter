@@ -2,13 +2,22 @@ angular.module('spoter.controllers', ["leaflet-directive"])
 
 //############################################################################### 
 // Main App Layout Controller 
-.controller('AppController', ['$scope', '$state', '$ionicPopup', 'appGlobals', 'SpoterCategories', function($scope, $state, $ionicPopup, appGlobals, SpoterCategories) {
-	$scope.currentCity = appGlobals.config.currentCity;
+.controller('AppController', ['$scope', '$state', '$ionicPopup', 'SpoterConfig', 'SpoterCategories', function($scope, $state, $ionicPopup, SpoterConfig, SpoterCategories) {
 
-	SpoterCategories.clearCache();
-	SpoterCategories.findAll().then(function(data) {
-		$scope.categories = data;
-	});
+	SpoterConfig.events.on("spoter:city.change", function(event, currentCity) {
+		$scope.currentCity = currentCity;
+		SpoterCategories.clearCache();
+		$state.go('app.home');
+		SpoterCategories.findAll().then(function(data) {
+			$scope.categories = data;
+		});
+	}, $scope);
+
+	SpoterConfig.init();
+
+	/*	SpoterCategories.findAll().then(function(data) {
+			$scope.categories = data;
+		});*/
 
 	$scope.goCategory = function(id) {
 		$state.go('app.categories', {
@@ -55,10 +64,11 @@ angular.module('spoter.controllers', ["leaflet-directive"])
 		// Show the action sheet
 		var cityList = '<div class="list city-list-selector">';
 		//cityList += '<div class="item item-divider">Recomendadas</div>';
-		_.each(appGlobals.config.availableCities, function(city) {
+		_.each(SpoterConfig.availableCities, function(city) {
 			selected = "";
-			if (appGlobals.config.currentCity.id == city.id)
+			if (SpoterConfig.currentCity.id == Number(city.id)) {
 				selected = ' checked="checked" ';
+			}
 			cityList += '<label class="item item-radio "><input type="radio"  ng-model="data.new_city" name="data.new_city" value="' + city.id + '"' + selected + '><div class="item-content">' + city.name + '</div><i class="radio-icon ion-ios-checkmark assertive"></i></label>';
 		});
 		cityList += '</div>';
@@ -79,13 +89,7 @@ angular.module('spoter.controllers', ["leaflet-directive"])
 			}]
 		});
 		myPopup.then(function(selected_id) {
-			var city = _.findWhere(appGlobals.config.availableCities, {
-				id: Number(selected_id)
-			});
-			if (city) {
-				appGlobals.config.currentCity = city;
-				$scope.currentCity = appGlobals.config.currentCity;
-			}
+			SpoterConfig.setCurrentCity(selected_id);
 		});
 	};
 
@@ -114,7 +118,24 @@ angular.module('spoter.controllers', ["leaflet-directive"])
 
 //############################################################################### 
 // Home Front Controller 
-.controller('HomeController', ['$scope', '$state', 'appGlobals', 'SpoterCategories', 'SpoterPromotions', '$ionicSlideBoxDelegate', function($scope, $state, appGlobals, SpoterCategories, SpoterPromotions, $ionicSlideBoxDelegate) {
+.controller('HomeController', ['$scope', '$state', 'SpoterConfig', 'SpoterCategories', 'SpoterPromotions', '$ionicSlideBoxDelegate', function($scope, $state, SpoterConfig, SpoterCategories, SpoterPromotions, $ionicSlideBoxDelegate) {
+
+
+	SpoterConfig.events.on("spoter:city.change", function(event, currentCity) {
+		SpoterCategories.clearCache();
+		SpoterCategories.findAll({
+			featured: 1
+		}).then(function(data) {
+			$scope.featuredCategories = data;
+		});
+
+		SpoterPromotions.clearCache();
+		SpoterPromotions.findAll().then(function(data) {
+			$scope.promotions = data;
+			$ionicSlideBoxDelegate.update();
+		});
+
+	}, $scope);
 
 	SpoterCategories.findAll({
 		featured: 1
@@ -131,7 +152,7 @@ angular.module('spoter.controllers', ["leaflet-directive"])
 
 //############################################################################### 
 // Categories Controller 
-.controller('CategoriesController', ['$scope', '$stateParams', 'appGlobals', 'SpoterCategories', 'SpoterAds', function($scope, $stateParams, appGlobals, SpoterCategories, SpoterAds) {
+.controller('CategoriesController', ['$scope', '$stateParams', 'SpoterConfig', 'SpoterCategories', 'SpoterAds', function($scope, $stateParams, SpoterConfig, SpoterCategories, SpoterAds) {
 
 	// Obtenemos categoria actual + categoria padre
 	SpoterCategories.find({
@@ -163,7 +184,7 @@ angular.module('spoter.controllers', ["leaflet-directive"])
 
 //############################################################################### 
 // Ads Controller 
-.controller('AdsController', ['$scope', '$stateParams', 'appGlobals', 'SpoterCategories', 'SpoterAds', '$ionicSlideBoxDelegate', function($scope, $stateParams, appGlobals, SpoterCategories, SpoterAds, $ionicSlideBoxDelegate) {
+.controller('AdsController', ['$scope', '$stateParams', 'SpoterConfig', 'SpoterCategories', 'SpoterAds', '$ionicSlideBoxDelegate', function($scope, $stateParams, SpoterConfig, SpoterCategories, SpoterAds, $ionicSlideBoxDelegate) {
 
 
 	// Traemos data completa del Anuncio
@@ -181,7 +202,7 @@ angular.module('spoter.controllers', ["leaflet-directive"])
 
 //############################################################################### 
 // Promotions Controller 
-.controller('PromotionsController', ['$scope', '$stateParams', 'appGlobals', 'SpoterPromotions', '$ionicSlideBoxDelegate', function($scope, $stateParams, appGlobals, SpoterPromotions, $ionicSlideBoxDelegate) {
+.controller('PromotionsController', ['$scope', '$stateParams', 'SpoterConfig', 'SpoterPromotions', '$ionicSlideBoxDelegate', function($scope, $stateParams, SpoterConfig, SpoterPromotions, $ionicSlideBoxDelegate) {
 
 	if ($stateParams.id) {
 		SpoterPromotions.get($stateParams.id).then(function(data) {
@@ -202,7 +223,7 @@ angular.module('spoter.controllers', ["leaflet-directive"])
 
 //############################################################################### 
 // Events Controller 
-.controller('EventsController', ['$scope', '$stateParams', 'appGlobals', 'SpoterEvents', '$ionicSlideBoxDelegate', function($scope, $stateParams, appGlobals, SpoterEvents, $ionicSlideBoxDelegate) {
+.controller('EventsController', ['$scope', '$stateParams', 'SpoterConfig', 'SpoterEvents', '$ionicSlideBoxDelegate', function($scope, $stateParams, SpoterConfig, SpoterEvents, $ionicSlideBoxDelegate) {
 	if ($stateParams.id) {
 		SpoterEvents.get($stateParams.id).then(function(data) {
 			$scope.event = data;
@@ -221,7 +242,7 @@ angular.module('spoter.controllers', ["leaflet-directive"])
 
 //############################################################################### 
 // Placess Controller 
-.controller('PlacesController', ['$scope', '$stateParams', 'appGlobals', 'SpoterPlaces', '$ionicSlideBoxDelegate', function($scope, $stateParams, appGlobals, SpoterPlaces, $ionicSlideBoxDelegate) {
+.controller('PlacesController', ['$scope', '$stateParams', 'SpoterConfig', 'SpoterPlaces', '$ionicSlideBoxDelegate', function($scope, $stateParams, SpoterConfig, SpoterPlaces, $ionicSlideBoxDelegate) {
 	if ($stateParams.id) {
 		SpoterPlaces.get($stateParams.id).then(function(data) {
 			$scope.place = data;
