@@ -49,6 +49,10 @@ angular.module('spoter.services', ['angular-data.DSCacheFactory'])
 		id: 8,
 		name: 'Pinamar',
 		banner: 'img/city-mdp.jpg'
+	}, {
+		id: 9,
+		name: 'Ezeiza',
+		banner: 'img/ezeiza.jpg'
 	}];
 
 	service.setCurrentCity = function(id) {
