@@ -1,23 +1,65 @@
 angular.module('spoter.controllers', ["leaflet-directive"])
 
 //############################################################################### 
-// Main App Layout Controller 
-.controller('AppController', ['$scope', '$state', '$ionicPopup', 'SpoterConfig', 'SpoterCategories', function($scope, $state, $ionicPopup, SpoterConfig, SpoterCategories) {
+// Init Controller 
+.controller('InitController', ['$scope', '$state', '$ionicHistory', 'SpoterConfig', function($scope, $state, $ionicHistory, SpoterConfig) {
 
-	SpoterConfig.events.on("spoter:city.change", function(event, currentCity) {
-		$scope.currentCity = currentCity;
-		SpoterCategories.clearCache();
-		$state.go('app.home');
+	console.log("InitController");
+	/*
+		$ionicHistory.nextViewOptions({
+			disableAnimate: true,
+			disableBack: true
+		});
+
+		if (SpoterConfig.getCurrentCity() !== false) {
+			console.log("> GO HOME START");
+			console.log("> Cargamos en diferido el loadServerStartup para proximos usos.");
+		} else {
+			console.log("> Cargamos loadServerStartup y esperamos.... luego:");
+			SpoterConfig.loadServerStartup().then(function() {
+				if (SpoterConfig.predefinedCityId !== false) {
+					SpoterConfig.setCurrentCity(SpoterConfig.predefinedCityId);
+					console.log(">> Tiene prebundle la ciudad: Mostrar welcome a la ciudad y texto introductorio + boton comenzar.");
+				} else {
+					if (SpoterConfig.server.detected_city_id !== false) {
+						SpoterConfig.setCurrentCity(SpoterConfig.server.detected_city_id);
+						console.log(">> El server detectó la ciudad: Mostrar welcome a la ciudad y texto introductorio + boton comenzar.");
+					} else {
+						console.log(">> Mostrar welcome + texto introductorio + selector de cuidad y boton comenzar.");
+					}
+				}
+				//console.log("1", SpoterConfig.userData.currentCity);
+				$state.go('welcome');
+			});
+		}
+		/*
+			$state.go('welcome', {}, {
+				location: 'replace'
+			});*/
+
+}])
+
+
+//############################################################################### 
+// Main App Layout Controller 
+.controller('AppController', ['$scope', '$state', '$ionicPopup', 'SpoterCategories', 'SpoterConfig', function($scope, $state, $ionicPopup, SpoterCategories, SpoterConfig) {
+
+	/*	SpoterConfig.events.on("spoter:city.change", function(event, currentCity) {
+			$scope.currentCity = currentCity;
+			SpoterCategories.clearCache();
+			SpoterCategories.findAll().then(function(data) {
+				$scope.categories = data;
+			});
+		}, $scope);
+	*/
+	/*
+		$scope.currentCity = SpoterConfig.userData.currentCity;
 		SpoterCategories.findAll().then(function(data) {
 			$scope.categories = data;
-		});
-	}, $scope);
-
-	SpoterConfig.init();
-
-	/*	SpoterCategories.findAll().then(function(data) {
-			$scope.categories = data;
 		});*/
+
+	console.log("AppController");
+	return;
 
 	$scope.goCategory = function(id) {
 		$state.go('app.categories', {
@@ -116,10 +158,20 @@ angular.module('spoter.controllers', ["leaflet-directive"])
 
 }])
 
+
+//############################################################################### 
+// Welcome Controller 
+.controller('WelcomeController', ['$state', 'SpoterConfig', function($state, SpoterConfig) {
+	console.log("WelcomeController");
+	//	$scope.currentCity = SpoterConfig.userData.currentCity;
+}])
+
 //############################################################################### 
 // Home Front Controller 
 .controller('HomeController', ['$scope', '$state', 'SpoterConfig', 'SpoterCategories', 'SpoterPromotions', '$ionicSlideBoxDelegate', function($scope, $state, SpoterConfig, SpoterCategories, SpoterPromotions, $ionicSlideBoxDelegate) {
 
+	console.log("Home Controller");
+	return;
 
 	SpoterConfig.events.on("spoter:city.change", function(event, currentCity) {
 		SpoterCategories.clearCache();

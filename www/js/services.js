@@ -1,7 +1,7 @@
-angular.module('spoter.services', ['angular-data.DSCacheFactory'])
+angular.module('spoter.services', ['angular-data.DSCacheFactory', 'LocalForageModule'])
 
-// Service global para almacenar informacion global de la app
-.factory("SpoterConfig", ['$rootScope', 'EventsService', function($rootScope, EventsService) {
+// Service global para startup de la app y almacenar informacion global
+.service("SpoterConfig", ['EventsService', '$localForage', '$q', '$http', function(EventsService, $localForage, $q, $http) {
 	var service = {};
 
 	angular.extend(service, {
@@ -12,61 +12,63 @@ angular.module('spoter.services', ['angular-data.DSCacheFactory'])
 		appName: 'Tu guía',
 		appVersion: '1.0',
 		api: {
-			endpoint: 'http://spoter-server/api/'
-		},
-		defaultCityID: 1 // HARDCODED - Devería tomarlo del LocalStorage o detectarlo segun lógica
+			endpoint: 'http://spoter-server/api/' // DEV
+				// endpoint: 'http://spoter.mobi/api/' // PRODUCCION
+		}
 	};
-	service.currentCity = {};
-	service.availableCities = [{
-		id: 1,
-		name: 'Villa General Belgrano',
-		banner: "img/city-vgb.jpg"
-	}, {
-		id: 2,
-		name: 'Calamuchita',
-		banner: "img/city-cordoba.jpg"
-	}, {
-		id: 3,
-		name: 'Cordoba',
-		banner: "img/city-cordoba.jpg"
-	}, {
-		id: 4,
-		name: 'Villa Carlos Paz',
-		banner: "img/city-cordoba.jpg"
-	}, {
-		id: 5,
-		name: 'Mar del Plata',
-		banner: "img/city-mar-del-plata",
-	}, {
-		id: 6,
-		name: 'Mar de las Pampas',
-		banner: 'img/city-mdp.jpg'
-	}, {
-		id: 7,
-		name: 'Villa Gesell',
-		banner: 'img/city-mdp.jpg'
-	}, {
-		id: 8,
-		name: 'Pinamar',
-		banner: 'img/city-mdp.jpg'
-	}, {
-		id: 9,
-		name: 'Ezeiza',
-		banner: 'img/ezeiza.jpg'
-	}];
+	service.userData = {
+		currentCity: false
+	};
+	service.server = {};
+	service.predefinedCityId = false;
 
 	service.setCurrentCity = function(id) {
-		var city = _.findWhere(this.availableCities, {
+		var city = _.findWhere(this.getAvailablesCities(), {
 			id: Number(id)
 		});
 		if (city) {
-			this.currentCity = city;
-			this.events.emit("spoter:city.change", this.currentCity);
+			this.userData.currentCity = city;
+			//			$localForage.setItem("userData", this.userData);
+			this.events.emit("spoter:city.change", this.userData.currentCity);
 		}
 	};
-	service.init = function() {
-		this.setCurrentCity(this.config.defaultCityID);
+	service.getCurrentCity = function() {
+		return this.userData.currentCity;
 	};
+
+	service.getAvailablesCities = function() {
+		return this.server.available_cities;
+	};
+	service.loadServerStartup = function() {
+		return $http({
+			url: service.config.api.endpoint + "startup",
+			method: 'GET',
+			params: {},
+			cache: false
+		}).then(function(result) {
+			service.server = result.data;
+			return true;
+		});
+	}
+	service.loadUserData = function() {
+		var deferred = $q.defer();
+		$localForage.getItem("userData").then(function(data) {
+			if (data !== undefined)
+				service.userData = data;
+			deferred.resolve(data);
+		});
+		return deferred.promise;
+	};
+
+	service.init = function() {
+		var deferred = $q.defer();
+		service.loadUserData().then(function() {
+			console.log("Config app initiated...");
+			deferred.resolve(service);
+		});
+		return deferred.promise;
+	};
+
 	return service;
 }])
 
@@ -85,7 +87,7 @@ angular.module('spoter.services', ['angular-data.DSCacheFactory'])
 	return {
 		// Devuelve un array de elementos que coincidan con el query dado (object)
 		findAll: function(query) {
-			params.city_id = SpoterConfig.currentCity.id;
+			params.city_id = SpoterConfig.userData.currentCity.id;
 			return $http({
 				url: resource_endpoint,
 				method: 'GET',
@@ -103,7 +105,7 @@ angular.module('spoter.services', ['angular-data.DSCacheFactory'])
 
 		// Devuelve un sólo elemento que coincida con el query dado (object)
 		find: function(query) {
-			params.city_id = SpoterConfig.currentCity.id;
+			params.city_id = SpoterConfig.userData.currentCity.id;
 			return $http({
 				url: resource_endpoint,
 				method: 'GET',
@@ -137,7 +139,7 @@ angular.module('spoter.services', ['angular-data.DSCacheFactory'])
 	return {
 		// Devuelve un array de todos los elementos del recurso. Opcionalmente se peude especificar un objeto con variables a enviar
 		findAll: function(query) {
-			params.city_id = SpoterConfig.currentCity.id;
+			params.city_id = SpoterConfig.userData.currentCity.id;
 			angular.extend(params, query);
 			return $http({
 				url: resource_endpoint,
@@ -150,7 +152,7 @@ angular.module('spoter.services', ['angular-data.DSCacheFactory'])
 		},
 
 		find: function(query) {
-			params.city_id = SpoterConfig.currentCity.id;
+			params.city_id = SpoterConfig.userData.currentCity.id;
 			angular.extend(params, query);
 			return $http({
 				url: resource_endpoint,
@@ -165,7 +167,7 @@ angular.module('spoter.services', ['angular-data.DSCacheFactory'])
 		},
 
 		get: function(id) {
-			params.city_id = SpoterConfig.currentCity.id;
+			params.city_id = SpoterConfig.userData.currentCity.id;
 			return $http({
 				url: resource_endpoint + "/" + id,
 				method: 'GET',
@@ -196,7 +198,7 @@ angular.module('spoter.services', ['angular-data.DSCacheFactory'])
 	return {
 		// Devuelve un array de todos los elementos del recurso. Opcionalmente se peude especificar un objeto con variables a enviar
 		findAll: function(query) {
-			params.city_id = SpoterConfig.currentCity.id;
+			params.city_id = SpoterConfig.userData.currentCity.id;
 			angular.extend(params, query);
 			return $http({
 				url: resource_endpoint,
@@ -209,7 +211,7 @@ angular.module('spoter.services', ['angular-data.DSCacheFactory'])
 		},
 
 		find: function(query) {
-			params.city_id = SpoterConfig.currentCity.id;
+			params.city_id = SpoterConfig.userData.currentCity.id;
 			angular.extend(params, query);
 			return $http({
 				url: resource_endpoint,
@@ -224,7 +226,7 @@ angular.module('spoter.services', ['angular-data.DSCacheFactory'])
 		},
 
 		get: function(id) {
-			params.city_id = SpoterConfig.currentCity.id;
+			params.city_id = SpoterConfig.userData.currentCity.id;
 			return $http({
 				url: resource_endpoint + "/" + id,
 				method: 'GET',
@@ -255,7 +257,7 @@ angular.module('spoter.services', ['angular-data.DSCacheFactory'])
 	return {
 		// Devuelve un array de todos los elementos del recurso. Opcionalmente se peude especificar un objeto con variables a enviar
 		findAll: function(query) {
-			params.city_id = SpoterConfig.currentCity.id;
+			params.city_id = SpoterConfig.userData.currentCity.id;
 			angular.extend(params, query);
 			return $http({
 				url: resource_endpoint,
@@ -268,7 +270,7 @@ angular.module('spoter.services', ['angular-data.DSCacheFactory'])
 		},
 
 		find: function(query) {
-			params.city_id = SpoterConfig.currentCity.id;
+			params.city_id = SpoterConfig.userData.currentCity.id;
 			angular.extend(params, query);
 			return $http({
 				url: resource_endpoint,
@@ -283,7 +285,7 @@ angular.module('spoter.services', ['angular-data.DSCacheFactory'])
 		},
 
 		get: function(id) {
-			params.city_id = SpoterConfig.currentCity.id;
+			params.city_id = SpoterConfig.userData.currentCity.id;
 			return $http({
 				url: resource_endpoint + "/" + id,
 				method: 'GET',
@@ -315,7 +317,7 @@ angular.module('spoter.services', ['angular-data.DSCacheFactory'])
 	return {
 		// Devuelve un array de todos los elementos del recurso. Opcionalmente se peude especificar un objeto con variables a enviar
 		findAll: function(query) {
-			params.city_id = SpoterConfig.currentCity.id;
+			params.city_id = SpoterConfig.userData.currentCity.id;
 			angular.extend(params, query);
 			return $http({
 				url: resource_endpoint,
@@ -328,7 +330,7 @@ angular.module('spoter.services', ['angular-data.DSCacheFactory'])
 		},
 
 		find: function(query) {
-			params.city_id = SpoterConfig.currentCity.id;
+			params.city_id = SpoterConfig.userData.currentCity.id;
 			angular.extend(params, query);
 			return $http({
 				url: resource_endpoint,
@@ -343,7 +345,7 @@ angular.module('spoter.services', ['angular-data.DSCacheFactory'])
 		},
 
 		get: function(id) {
-			params.city_id = SpoterConfig.currentCity.id;
+			params.city_id = SpoterConfig.userData.currentCity.id;
 			return $http({
 				url: resource_endpoint + "/" + id,
 				method: 'GET',
