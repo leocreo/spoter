@@ -1,9 +1,16 @@
 
 <ion-nav-view>
-	<ion-view>
+	<ion-view class="view-welcome">
 		<ion-content style="">					
-			<h1 class="positive text-center" ng-click="goHome()">Bienvenido</h1>
-			{{currentCity.name}}
+			<img src="img/welcome-localia-logo.png" class="logo">
+			<h1 class="positive text-center">Bienvenido a Localia</h1>
+			<h2>{{currentCity.name}}</h2>			
+			<p>
+				Bienvenido a la guía local donde podrás encontrar servicios, comercios, atracciones y eventos en tu ciudad.
+			</p>
 		</ion-content>
+		<div class="bar bar-footer">
+			<button class="button button-large button-full button-balanced" ng-click="goHome()">Comenzar</button>
+		</div>
 	</ion-view>
 </ion-nav-view>

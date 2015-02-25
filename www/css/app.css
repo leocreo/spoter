@@ -1020,6 +1020,47 @@ input, button, select, textarea {
 	background-color: #eee;
 }
 
+
+.view-welcome {
+	background-image: url(../img/welcome-background.jpg);
+	background-size: 100%;
+}
+.view-welcome .logo {
+	width: 50%;
+	margin-left: 25%;
+	margin-top: 40px;
+	margin-bottom: 40px
+}
+.view-welcome h1 {
+	font-size: 23px;	
+	font-weight: 300;
+	color: #fff;
+	margin: 0;
+	text-align: center;
+}
+.view-welcome h2 {
+	font-size: 26px;	
+	font-weight:400;
+	text-align: center;
+	color: #fff;
+	margin: 0 0 20px 0;
+}
+.view-welcome p{
+	border-top: 1px solid rgba(255,255,255,.6);
+	padding-top: 20px;
+	text-align: center;
+	width: 70%;	
+	margin-left: 15%;
+	font-size: 17px;	
+	font-weight: 300;
+	color: #fff;
+}
+.view-welcome .bar-footer {
+	height: 85px;
+	background-color: transparent;
+}
+
+
 .cover-gallery, .cover-gallery .layout {
 	position: relative;
 	height: 280px;
@@ -1103,3 +1144,4 @@ small{
 	display: block;
 	text-transform: uppercase;
 }
+

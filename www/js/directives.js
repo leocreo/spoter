@@ -1,4 +1,4 @@
-angular.module('spoter.directives', [])
+angular.module('localia.directives', [])
 	.directive('headerScrollFade', function($document) {
 		return {
 			restrict: 'A',

@@ -1,8 +1,8 @@
-angular.module('spoter.controllers', ["leaflet-directive"])
+angular.module('localia.controllers', ["leaflet-directive"])
 
 //############################################################################### 
 // Init Controller 
-.controller('InitController', ['$scope', '$state', '$ionicHistory', 'SpoterConfig', function($scope, $state, $ionicHistory, SpoterConfig) {
+.controller('InitController', ['$scope', '$state', '$ionicHistory', 'LocaliaConfig', function($scope, $state, $ionicHistory, LocaliaConfig) {
 
 	console.log("InitController");
 	/*
@@ -11,24 +11,24 @@ angular.module('spoter.controllers', ["leaflet-directive"])
 			disableBack: true
 		});
 
-		if (SpoterConfig.getCurrentCity() !== false) {
+		if (LocaliaConfig.getCurrentCity() !== false) {
 			console.log("> GO HOME START");
 			console.log("> Cargamos en diferido el loadServerStartup para proximos usos.");
 		} else {
 			console.log("> Cargamos loadServerStartup y esperamos.... luego:");
-			SpoterConfig.loadServerStartup().then(function() {
-				if (SpoterConfig.predefinedCityId !== false) {
-					SpoterConfig.setCurrentCity(SpoterConfig.predefinedCityId);
+			LocaliaConfig.loadServerStartup().then(function() {
+				if (LocaliaConfig.predefinedCityId !== false) {
+					LocaliaConfig.setCurrentCity(LocaliaConfig.predefinedCityId);
 					console.log(">> Tiene prebundle la ciudad: Mostrar welcome a la ciudad y texto introductorio + boton comenzar.");
 				} else {
-					if (SpoterConfig.server.detected_city_id !== false) {
-						SpoterConfig.setCurrentCity(SpoterConfig.server.detected_city_id);
+					if (LocaliaConfig.server.detected_city_id !== false) {
+						LocaliaConfig.setCurrentCity(LocaliaConfig.server.detected_city_id);
 						console.log(">> El server detectó la ciudad: Mostrar welcome a la ciudad y texto introductorio + boton comenzar.");
 					} else {
 						console.log(">> Mostrar welcome + texto introductorio + selector de cuidad y boton comenzar.");
 					}
 				}
-				//console.log("1", SpoterConfig.userData.currentCity);
+				//console.log("1", LocaliaConfig.userData.currentCity);
 				$state.go('welcome');
 			});
 		}
@@ -42,24 +42,22 @@ angular.module('spoter.controllers', ["leaflet-directive"])
 
 //############################################################################### 
 // Main App Layout Controller 
-.controller('AppController', ['$scope', '$state', '$ionicPopup', 'SpoterCategories', 'SpoterConfig', function($scope, $state, $ionicPopup, SpoterCategories, SpoterConfig) {
+.controller('AppController', ['$scope', '$state', '$ionicPopup', 'LocaliaCategories', 'LocaliaConfig', function($scope, $state, $ionicPopup, LocaliaCategories, LocaliaConfig) {
 
-	/*	SpoterConfig.events.on("spoter:city.change", function(event, currentCity) {
-			$scope.currentCity = currentCity;
-			SpoterCategories.clearCache();
-			SpoterCategories.findAll().then(function(data) {
-				$scope.categories = data;
-			});
-		}, $scope);
-	*/
-	/*
-		$scope.currentCity = SpoterConfig.userData.currentCity;
-		SpoterCategories.findAll().then(function(data) {
+	LocaliaConfig.events.on("localia:city.change", function(event, currentCity) {
+		$scope.currentCity = currentCity;
+		LocaliaCategories.clearCache();
+		LocaliaCategories.findAll().then(function(data) {
 			$scope.categories = data;
-		});*/
+		});
+	}, $scope);
 
-	console.log("AppController");
-	return;
+
+	$scope.currentCity = LocaliaConfig.userData.currentCity;
+	LocaliaCategories.findAll().then(function(data) {
+		$scope.categories = data;
+	});
+
 
 	$scope.goCategory = function(id) {
 		$state.go('app.categories', {
@@ -106,9 +104,9 @@ angular.module('spoter.controllers', ["leaflet-directive"])
 		// Show the action sheet
 		var cityList = '<div class="list city-list-selector">';
 		//cityList += '<div class="item item-divider">Recomendadas</div>';
-		_.each(SpoterConfig.availableCities, function(city) {
+		_.each(LocaliaConfig.getAvailablesCities(), function(city) {
 			selected = "";
-			if (SpoterConfig.currentCity.id == Number(city.id)) {
+			if (Number(LocaliaConfig.userData.currentCity.id) == Number(city.id)) {
 				selected = ' checked="checked" ';
 			}
 			cityList += '<label class="item item-radio "><input type="radio"  ng-model="data.new_city" name="data.new_city" value="' + city.id + '"' + selected + '><div class="item-content">' + city.name + '</div><i class="radio-icon ion-ios-checkmark assertive"></i></label>';
@@ -131,7 +129,7 @@ angular.module('spoter.controllers', ["leaflet-directive"])
 			}]
 		});
 		myPopup.then(function(selected_id) {
-			SpoterConfig.setCurrentCity(selected_id);
+			LocaliaConfig.setCurrentCity(selected_id);
 		});
 	};
 
@@ -161,41 +159,43 @@ angular.module('spoter.controllers', ["leaflet-directive"])
 
 //############################################################################### 
 // Welcome Controller 
-.controller('WelcomeController', ['$state', 'SpoterConfig', function($state, SpoterConfig) {
-	console.log("WelcomeController");
-	//	$scope.currentCity = SpoterConfig.userData.currentCity;
+.controller('WelcomeController', ['$scope', '$state', 'LocaliaConfig', function($scope, $state, LocaliaConfig) {
+	$scope.goHome = function() {
+		$state.go('app.home');
+	};
+	$scope.currentCity = LocaliaConfig.userData.currentCity;
 }])
 
 //############################################################################### 
 // Home Front Controller 
-.controller('HomeController', ['$scope', '$state', 'SpoterConfig', 'SpoterCategories', 'SpoterPromotions', '$ionicSlideBoxDelegate', function($scope, $state, SpoterConfig, SpoterCategories, SpoterPromotions, $ionicSlideBoxDelegate) {
+.controller('HomeController', ['$scope', '$state', 'LocaliaConfig', 'LocaliaCategories', 'LocaliaPromotions', '$ionicSlideBoxDelegate', function($scope, $state, LocaliaConfig, LocaliaCategories, LocaliaPromotions, $ionicSlideBoxDelegate) {
 
 	console.log("Home Controller");
 	return;
 
-	SpoterConfig.events.on("spoter:city.change", function(event, currentCity) {
-		SpoterCategories.clearCache();
-		SpoterCategories.findAll({
+	LocaliaConfig.events.on("localia:city.change", function(event, currentCity) {
+		LocaliaCategories.clearCache();
+		LocaliaCategories.findAll({
 			featured: 1
 		}).then(function(data) {
 			$scope.featuredCategories = data;
 		});
 
-		SpoterPromotions.clearCache();
-		SpoterPromotions.findAll().then(function(data) {
+		LocaliaPromotions.clearCache();
+		LocaliaPromotions.findAll().then(function(data) {
 			$scope.promotions = data;
 			$ionicSlideBoxDelegate.update();
 		});
 
 	}, $scope);
 
-	SpoterCategories.findAll({
+	LocaliaCategories.findAll({
 		featured: 1
 	}).then(function(data) {
 		$scope.featuredCategories = data;
 	});
 
-	SpoterPromotions.findAll().then(function(data) {
+	LocaliaPromotions.findAll().then(function(data) {
 		$scope.promotions = data;
 		$ionicSlideBoxDelegate.update();
 	});
@@ -204,14 +204,14 @@ angular.module('spoter.controllers', ["leaflet-directive"])
 
 //############################################################################### 
 // Categories Controller 
-.controller('CategoriesController', ['$scope', '$stateParams', 'SpoterConfig', 'SpoterCategories', 'SpoterAds', function($scope, $stateParams, SpoterConfig, SpoterCategories, SpoterAds) {
+.controller('CategoriesController', ['$scope', '$stateParams', 'LocaliaConfig', 'LocaliaCategories', 'LocaliaAds', function($scope, $stateParams, LocaliaConfig, LocaliaCategories, LocaliaAds) {
 
 	// Obtenemos categoria actual + categoria padre
-	SpoterCategories.find({
+	LocaliaCategories.find({
 		id: Number($stateParams.id)
 	}).then(function(data) {
 		$scope.category = data;
-		SpoterCategories.find({
+		LocaliaCategories.find({
 			id: Number(data.parent_id)
 		}).then(function(data) {
 			$scope.parentCategory = data;
@@ -219,12 +219,12 @@ angular.module('spoter.controllers', ["leaflet-directive"])
 	});
 
 	// Obtenemos las categorías hijas de la categoria actual y si no tiene categorias hijas cargamos la lista de Ads
-	SpoterCategories.findAll({
+	LocaliaCategories.findAll({
 		parent_id: Number($stateParams.id)
 	}).then(function(data) {
 		$scope.childrenCategories = data;
 		if ($scope.childrenCategories.length == 0) {
-			SpoterAds.findAll({
+			LocaliaAds.findAll({
 				id_categories: Number($stateParams.id)
 			}).then(function(data) {
 				$scope.ads = data;
@@ -236,11 +236,11 @@ angular.module('spoter.controllers', ["leaflet-directive"])
 
 //############################################################################### 
 // Ads Controller 
-.controller('AdsController', ['$scope', '$stateParams', 'SpoterConfig', 'SpoterCategories', 'SpoterAds', '$ionicSlideBoxDelegate', function($scope, $stateParams, SpoterConfig, SpoterCategories, SpoterAds, $ionicSlideBoxDelegate) {
+.controller('AdsController', ['$scope', '$stateParams', 'LocaliaConfig', 'LocaliaCategories', 'LocaliaAds', '$ionicSlideBoxDelegate', function($scope, $stateParams, LocaliaConfig, LocaliaCategories, LocaliaAds, $ionicSlideBoxDelegate) {
 
 
 	// Traemos data completa del Anuncio
-	SpoterAds.get(Number($stateParams.id)).then(function(data) {
+	LocaliaAds.get(Number($stateParams.id)).then(function(data) {
 		$scope.ad = data;
 		$scope.map.center.lat = data.location.lat;
 		$scope.map.center.lng = data.location.lng;
@@ -254,10 +254,10 @@ angular.module('spoter.controllers', ["leaflet-directive"])
 
 //############################################################################### 
 // Promotions Controller 
-.controller('PromotionsController', ['$scope', '$stateParams', 'SpoterConfig', 'SpoterPromotions', '$ionicSlideBoxDelegate', function($scope, $stateParams, SpoterConfig, SpoterPromotions, $ionicSlideBoxDelegate) {
+.controller('PromotionsController', ['$scope', '$stateParams', 'LocaliaConfig', 'LocaliaPromotions', '$ionicSlideBoxDelegate', function($scope, $stateParams, LocaliaConfig, LocaliaPromotions, $ionicSlideBoxDelegate) {
 
 	if ($stateParams.id) {
-		SpoterPromotions.get($stateParams.id).then(function(data) {
+		LocaliaPromotions.get($stateParams.id).then(function(data) {
 			$scope.promo = data;
 			$scope.map.center.lat = data.location.lat;
 			$scope.map.center.lng = data.location.lng;
@@ -266,7 +266,7 @@ angular.module('spoter.controllers', ["leaflet-directive"])
 			$ionicSlideBoxDelegate.update();
 		});
 	} else {
-		SpoterPromotions.findAll().then(function(data) {
+		LocaliaPromotions.findAll().then(function(data) {
 			$scope.promotions = data;
 		});
 	}
@@ -275,9 +275,9 @@ angular.module('spoter.controllers', ["leaflet-directive"])
 
 //############################################################################### 
 // Events Controller 
-.controller('EventsController', ['$scope', '$stateParams', 'SpoterConfig', 'SpoterEvents', '$ionicSlideBoxDelegate', function($scope, $stateParams, SpoterConfig, SpoterEvents, $ionicSlideBoxDelegate) {
+.controller('EventsController', ['$scope', '$stateParams', 'LocaliaConfig', 'LocaliaEvents', '$ionicSlideBoxDelegate', function($scope, $stateParams, LocaliaConfig, LocaliaEvents, $ionicSlideBoxDelegate) {
 	if ($stateParams.id) {
-		SpoterEvents.get($stateParams.id).then(function(data) {
+		LocaliaEvents.get($stateParams.id).then(function(data) {
 			$scope.event = data;
 			$scope.map.center.lat = data.location.lat;
 			$scope.map.center.lng = data.location.lng;
@@ -286,7 +286,7 @@ angular.module('spoter.controllers', ["leaflet-directive"])
 			$ionicSlideBoxDelegate.update();
 		});
 	} else {
-		SpoterEvents.findAll().then(function(data) {
+		LocaliaEvents.findAll().then(function(data) {
 			$scope.events = data;
 		});
 	}
@@ -294,9 +294,9 @@ angular.module('spoter.controllers', ["leaflet-directive"])
 
 //############################################################################### 
 // Placess Controller 
-.controller('PlacesController', ['$scope', '$stateParams', 'SpoterConfig', 'SpoterPlaces', '$ionicSlideBoxDelegate', function($scope, $stateParams, SpoterConfig, SpoterPlaces, $ionicSlideBoxDelegate) {
+.controller('PlacesController', ['$scope', '$stateParams', 'LocaliaConfig', 'LocaliaPlaces', '$ionicSlideBoxDelegate', function($scope, $stateParams, LocaliaConfig, LocaliaPlaces, $ionicSlideBoxDelegate) {
 	if ($stateParams.id) {
-		SpoterPlaces.get($stateParams.id).then(function(data) {
+		LocaliaPlaces.get($stateParams.id).then(function(data) {
 			$scope.place = data;
 			$scope.map.center.lat = data.location.lat;
 			$scope.map.center.lng = data.location.lng;
@@ -305,7 +305,7 @@ angular.module('spoter.controllers', ["leaflet-directive"])
 			$ionicSlideBoxDelegate.update();
 		});
 	} else {
-		SpoterPlaces.findAll().then(function(data) {
+		LocaliaPlaces.findAll().then(function(data) {
 			$scope.places = data;
 		});
 	}

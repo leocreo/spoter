@@ -1,43 +1,44 @@
-angular.module('spoter.services', ['angular-data.DSCacheFactory', 'LocalForageModule'])
+angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageModule'])
 
 // Service global para startup de la app y almacenar informacion global
-.service("SpoterConfig", ['EventsService', '$localForage', '$q', '$http', function(EventsService, $localForage, $q, $http) {
+.service("LocaliaConfig", ['EventsService', '$localForage', '$q', '$http', function(EventsService, $localForage, $q, $http) {
 	var service = {};
 
 	angular.extend(service, {
 		events: EventsService
 	});
 	service.config = {
-		appCodName: 'spoter',
-		appName: 'Tu guía',
+		appCodName: 'Localia',
+		appName: 'Localia',
 		appVersion: '1.0',
 		api: {
 			endpoint: 'http://spoter-server/api/' // DEV
-				// endpoint: 'http://spoter.mobi/api/' // PRODUCCION
+				// endpoint: 'http://localia.mobi/api/' // PRODUCCION
 		}
 	};
 	service.userData = {
 		currentCity: false
 	};
+	service.initiated = false;
 	service.server = {};
 	service.predefinedCityId = false;
 
 	service.setCurrentCity = function(id) {
-		var city = _.findWhere(this.getAvailablesCities(), {
-			id: Number(id)
+		var city = _.findWhere(service.getAvailablesCities(), {
+			id: id
 		});
 		if (city) {
 			this.userData.currentCity = city;
-			//			$localForage.setItem("userData", this.userData);
-			this.events.emit("spoter:city.change", this.userData.currentCity);
+			$localForage.setItem("userData", this.userData);
+			this.events.emit("localia:city.change", this.userData.currentCity);
 		}
 	};
 	service.getCurrentCity = function() {
-		return this.userData.currentCity;
+		return service.userData.currentCity;
 	};
 
 	service.getAvailablesCities = function() {
-		return this.server.available_cities;
+		return service.server.available_cities;
 	};
 	service.loadServerStartup = function() {
 		return $http({
@@ -63,7 +64,8 @@ angular.module('spoter.services', ['angular-data.DSCacheFactory', 'LocalForageMo
 	service.init = function() {
 		var deferred = $q.defer();
 		service.loadUserData().then(function() {
-			console.log("Config app initiated...");
+			console.log("LocaliaConfig initiated...");
+			service.initiated = true;
 			deferred.resolve(service);
 		});
 		return deferred.promise;
@@ -74,9 +76,9 @@ angular.module('spoter.services', ['angular-data.DSCacheFactory', 'LocalForageMo
 
 // RESOURCES: Definimos los recursos que se comunicarán con el REST API ##########################################################
 // Resource/Model: CATEGORIES 
-.factory('SpoterCategories', ['$http', '$q', '_', 'SpoterConfig', 'DSCacheFactory', function($http, $q, _, SpoterConfig, DSCacheFactory) {
+.factory('LocaliaCategories', ['$http', '$q', '_', 'LocaliaConfig', 'DSCacheFactory', function($http, $q, _, LocaliaConfig, DSCacheFactory) {
 
-	var resource_endpoint = SpoterConfig.config.api.endpoint + "categories";
+	var resource_endpoint = LocaliaConfig.config.api.endpoint + "categories";
 	var localCache = DSCacheFactory('spoterCategoriesCache', {
 		maxAge: ((1000 * 60 * 60) * 1), // Una hora de cache
 		deleteOnExpire: 'aggressive',
@@ -87,7 +89,7 @@ angular.module('spoter.services', ['angular-data.DSCacheFactory', 'LocalForageMo
 	return {
 		// Devuelve un array de elementos que coincidan con el query dado (object)
 		findAll: function(query) {
-			params.city_id = SpoterConfig.userData.currentCity.id;
+			params.city_id = LocaliaConfig.userData.currentCity.id;
 			return $http({
 				url: resource_endpoint,
 				method: 'GET',
@@ -105,7 +107,7 @@ angular.module('spoter.services', ['angular-data.DSCacheFactory', 'LocalForageMo
 
 		// Devuelve un sólo elemento que coincida con el query dado (object)
 		find: function(query) {
-			params.city_id = SpoterConfig.userData.currentCity.id;
+			params.city_id = LocaliaConfig.userData.currentCity.id;
 			return $http({
 				url: resource_endpoint,
 				method: 'GET',
@@ -126,9 +128,9 @@ angular.module('spoter.services', ['angular-data.DSCacheFactory', 'LocalForageMo
 }])
 
 // Resource/Model: ADS 
-.factory('SpoterAds', ['$http', '$q', '_', 'SpoterConfig', 'DSCacheFactory', function($http, $q, _, SpoterConfig, DSCacheFactory) {
+.factory('LocaliaAds', ['$http', '$q', '_', 'LocaliaConfig', 'DSCacheFactory', function($http, $q, _, LocaliaConfig, DSCacheFactory) {
 
-	var resource_endpoint = SpoterConfig.config.api.endpoint + "ads";
+	var resource_endpoint = LocaliaConfig.config.api.endpoint + "ads";
 	var localCache = DSCacheFactory('spoterAdsCache', {
 		maxAge: ((1000 * 60 * 0)), // 
 		deleteOnExpire: 'aggressive',
@@ -139,7 +141,7 @@ angular.module('spoter.services', ['angular-data.DSCacheFactory', 'LocalForageMo
 	return {
 		// Devuelve un array de todos los elementos del recurso. Opcionalmente se peude especificar un objeto con variables a enviar
 		findAll: function(query) {
-			params.city_id = SpoterConfig.userData.currentCity.id;
+			params.city_id = LocaliaConfig.userData.currentCity.id;
 			angular.extend(params, query);
 			return $http({
 				url: resource_endpoint,
@@ -152,7 +154,7 @@ angular.module('spoter.services', ['angular-data.DSCacheFactory', 'LocalForageMo
 		},
 
 		find: function(query) {
-			params.city_id = SpoterConfig.userData.currentCity.id;
+			params.city_id = LocaliaConfig.userData.currentCity.id;
 			angular.extend(params, query);
 			return $http({
 				url: resource_endpoint,
@@ -167,7 +169,7 @@ angular.module('spoter.services', ['angular-data.DSCacheFactory', 'LocalForageMo
 		},
 
 		get: function(id) {
-			params.city_id = SpoterConfig.userData.currentCity.id;
+			params.city_id = LocaliaConfig.userData.currentCity.id;
 			return $http({
 				url: resource_endpoint + "/" + id,
 				method: 'GET',
@@ -185,9 +187,9 @@ angular.module('spoter.services', ['angular-data.DSCacheFactory', 'LocalForageMo
 }])
 
 // Resource/Model: PROMOTIONS 
-.factory('SpoterPromotions', ['$http', '$q', '_', 'SpoterConfig', 'DSCacheFactory', function($http, $q, _, SpoterConfig, DSCacheFactory) {
+.factory('LocaliaPromotions', ['$http', '$q', '_', 'LocaliaConfig', 'DSCacheFactory', function($http, $q, _, LocaliaConfig, DSCacheFactory) {
 
-	var resource_endpoint = SpoterConfig.config.api.endpoint + "promotions";
+	var resource_endpoint = LocaliaConfig.config.api.endpoint + "promotions";
 	var localCache = DSCacheFactory('spoterPromotionsCache', {
 		maxAge: ((1000 * 60 * 0)),
 		deleteOnExpire: 'aggressive',
@@ -198,7 +200,7 @@ angular.module('spoter.services', ['angular-data.DSCacheFactory', 'LocalForageMo
 	return {
 		// Devuelve un array de todos los elementos del recurso. Opcionalmente se peude especificar un objeto con variables a enviar
 		findAll: function(query) {
-			params.city_id = SpoterConfig.userData.currentCity.id;
+			params.city_id = LocaliaConfig.userData.currentCity.id;
 			angular.extend(params, query);
 			return $http({
 				url: resource_endpoint,
@@ -211,7 +213,7 @@ angular.module('spoter.services', ['angular-data.DSCacheFactory', 'LocalForageMo
 		},
 
 		find: function(query) {
-			params.city_id = SpoterConfig.userData.currentCity.id;
+			params.city_id = LocaliaConfig.userData.currentCity.id;
 			angular.extend(params, query);
 			return $http({
 				url: resource_endpoint,
@@ -226,7 +228,7 @@ angular.module('spoter.services', ['angular-data.DSCacheFactory', 'LocalForageMo
 		},
 
 		get: function(id) {
-			params.city_id = SpoterConfig.userData.currentCity.id;
+			params.city_id = LocaliaConfig.userData.currentCity.id;
 			return $http({
 				url: resource_endpoint + "/" + id,
 				method: 'GET',
@@ -244,9 +246,9 @@ angular.module('spoter.services', ['angular-data.DSCacheFactory', 'LocalForageMo
 }])
 
 // Resource/Model: EVENTS 
-.factory('SpoterEvents', ['$http', '$q', '_', 'SpoterConfig', 'DSCacheFactory', function($http, $q, _, SpoterConfig, DSCacheFactory) {
+.factory('LocaliaEvents', ['$http', '$q', '_', 'LocaliaConfig', 'DSCacheFactory', function($http, $q, _, LocaliaConfig, DSCacheFactory) {
 
-	var resource_endpoint = SpoterConfig.config.api.endpoint + "events";
+	var resource_endpoint = LocaliaConfig.config.api.endpoint + "events";
 	var localCache = DSCacheFactory('spoterEventsCache', {
 		maxAge: ((1000 * 60 * 0)),
 		deleteOnExpire: 'aggressive',
@@ -257,7 +259,7 @@ angular.module('spoter.services', ['angular-data.DSCacheFactory', 'LocalForageMo
 	return {
 		// Devuelve un array de todos los elementos del recurso. Opcionalmente se peude especificar un objeto con variables a enviar
 		findAll: function(query) {
-			params.city_id = SpoterConfig.userData.currentCity.id;
+			params.city_id = LocaliaConfig.userData.currentCity.id;
 			angular.extend(params, query);
 			return $http({
 				url: resource_endpoint,
@@ -270,7 +272,7 @@ angular.module('spoter.services', ['angular-data.DSCacheFactory', 'LocalForageMo
 		},
 
 		find: function(query) {
-			params.city_id = SpoterConfig.userData.currentCity.id;
+			params.city_id = LocaliaConfig.userData.currentCity.id;
 			angular.extend(params, query);
 			return $http({
 				url: resource_endpoint,
@@ -285,7 +287,7 @@ angular.module('spoter.services', ['angular-data.DSCacheFactory', 'LocalForageMo
 		},
 
 		get: function(id) {
-			params.city_id = SpoterConfig.userData.currentCity.id;
+			params.city_id = LocaliaConfig.userData.currentCity.id;
 			return $http({
 				url: resource_endpoint + "/" + id,
 				method: 'GET',
@@ -304,9 +306,9 @@ angular.module('spoter.services', ['angular-data.DSCacheFactory', 'LocalForageMo
 
 
 // Resource/Model: PLACES 
-.factory('SpoterPlaces', ['$http', '$q', '_', 'SpoterConfig', 'DSCacheFactory', function($http, $q, _, SpoterConfig, DSCacheFactory) {
+.factory('LocaliaPlaces', ['$http', '$q', '_', 'LocaliaConfig', 'DSCacheFactory', function($http, $q, _, LocaliaConfig, DSCacheFactory) {
 
-	var resource_endpoint = SpoterConfig.config.api.endpoint + "places";
+	var resource_endpoint = LocaliaConfig.config.api.endpoint + "places";
 	var localCache = DSCacheFactory('spoterPlacesCache', {
 		maxAge: ((1000 * 60 * 0)),
 		deleteOnExpire: 'aggressive',
@@ -317,7 +319,7 @@ angular.module('spoter.services', ['angular-data.DSCacheFactory', 'LocalForageMo
 	return {
 		// Devuelve un array de todos los elementos del recurso. Opcionalmente se peude especificar un objeto con variables a enviar
 		findAll: function(query) {
-			params.city_id = SpoterConfig.userData.currentCity.id;
+			params.city_id = LocaliaConfig.userData.currentCity.id;
 			angular.extend(params, query);
 			return $http({
 				url: resource_endpoint,
@@ -330,7 +332,7 @@ angular.module('spoter.services', ['angular-data.DSCacheFactory', 'LocalForageMo
 		},
 
 		find: function(query) {
-			params.city_id = SpoterConfig.userData.currentCity.id;
+			params.city_id = LocaliaConfig.userData.currentCity.id;
 			angular.extend(params, query);
 			return $http({
 				url: resource_endpoint,
@@ -345,7 +347,7 @@ angular.module('spoter.services', ['angular-data.DSCacheFactory', 'LocalForageMo
 		},
 
 		get: function(id) {
-			params.city_id = SpoterConfig.userData.currentCity.id;
+			params.city_id = LocaliaConfig.userData.currentCity.id;
 			return $http({
 				url: resource_endpoint + "/" + id,
 				method: 'GET',
