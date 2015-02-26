@@ -161,7 +161,9 @@ angular.module('localia.controllers', ["leaflet-directive"])
 // Welcome Controller 
 .controller('WelcomeController', ['$scope', '$state', 'LocaliaConfig', function($scope, $state, LocaliaConfig) {
 	$scope.goHome = function() {
-		$state.go('app.home');
+		$state.go('app.home', {}, {
+			location: 'replace'
+		});
 	};
 	$scope.currentCity = LocaliaConfig.userData.currentCity;
 }])

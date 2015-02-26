@@ -29,7 +29,7 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 		});
 		if (city) {
 			this.userData.currentCity = city;
-			$localForage.setItem("userData", this.userData);
+			//$localForage.setItem("userData", this.userData);
 			this.events.emit("localia:city.change", this.userData.currentCity);
 		}
 	};

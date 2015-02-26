@@ -83,7 +83,9 @@ angular.module('spoter', ['ionic', 'localia.controllers', 'localia.services', 'l
 
 					LocaliaConfig.init().then(function() {
 						if (LocaliaConfig.getCurrentCity() !== false) {
-							$state.go('app.home');
+							$state.go('app.home', {}, {
+								location: 'replace'
+							});
 							LocaliaConfig.loadServerStartup(); // Cargamos en diferido el loadServerStartup para proximos usos.
 						} else {
 							console.log("> Cargamos loadServerStartup y esperamos.... luego:");
@@ -91,14 +93,20 @@ angular.module('spoter', ['ionic', 'localia.controllers', 'localia.services', 'l
 								if (LocaliaConfig.predefinedCityId !== false) {
 									// Tiene prebundle la ciudad: Mostrar welcome a la ciudad y texto introductorio + boton comenzar.
 									LocaliaConfig.setCurrentCity(LocaliaConfig.predefinedCityId);
-									$state.go('welcome');
+									$state.go('welcome', {}, {
+										location: 'replace'
+									});
 								} else {
 									if (LocaliaConfig.server.default_city !== false) {
 										// El server detectó la ciudad: Mostrar welcome a la ciudad y texto introductorio + boton comenzar.
 										LocaliaConfig.setCurrentCity(LocaliaConfig.server.default_city);
-										$state.go('welcome');
+										$state.go('welcome', {}, {
+											location: 'replace'
+										});
 									} else {
-										$state.go('welcome');
+										$state.go('welcome', {}, {
+											location: 'replace'
+										});
 										// Mostrar welcome + texto introductorio + selector de cuidad y boton comenzar.
 									}
 								}

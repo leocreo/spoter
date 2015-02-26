@@ -5,7 +5,7 @@
 // -------------------------------
 
 $light:                           	#fff !default;
-$stable:                          	#E64A19 !default; // Default Color de app
+$stable:                          	#1bbdd5 !default; // Default Color de app
 $positive:                        	#F57C00 !default;  // Anuncios
 $calm:                           	#F2B90D !default; // Eventos 
 $balanced:                       	#0288D1 !default; // Puntos interes
@@ -30,6 +30,12 @@ $button-energized-border:         $energized !default;
 $button-royal-border:             $royal !default;
 $button-dark-border:              $dark !default;
 
+.button.button-light.button-outline {
+	background-color: rgba($light, .1) !important;
+}
+.button.button-large {
+	font-size: 15px !important;
+}
 
 
 .bar.bar-energized.darken {
