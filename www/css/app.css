@@ -147,13 +147,14 @@ input, button, select, textarea {
 }
 .categories-list .categories-item i{
 	vertical-align: middle;
-    	display: table-cell;
-    	width: 40px;
-    	height: 40px;
-    	text-align: center;
-    	border-radius: 40px;
-    	font-size: 24px;
-    	color: #fff;
+	display: block;
+	width: 40px;
+	height: 40px;
+	text-align: center;
+	border-radius: 40px;
+	font-size: 24px;
+	color: #fff;
+	line-height: 40px;
 }
 .categories-list .categories-item span{
 	vertical-align: middle;
@@ -164,6 +165,11 @@ input, button, select, textarea {
 	color: #888;
 	font-weight: 700;
 	letter-spacing: 0;
+	width: 100%;
+	max-width: 191px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 .categories-list .item-divider {
 	font-weight: normal;
