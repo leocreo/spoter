@@ -1,4 +1,4 @@
-angular.module('spoter', ['ionic', 'localia.controllers', 'localia.services', 'localia.directives'])
+angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', 'localia.directives'])
 
 
 // Underscore service
@@ -25,36 +25,7 @@ angular.module('spoter', ['ionic', 'localia.controllers', 'localia.services', 'l
 		}
 
 		// TEST - DESCOMENTAR EN PROD.
-		//$templateCache.removeAll();
-
-		/*
-				// Inicio app
-				// Inicializamos el objeto de configuracion global tomando valores almacenados en DB local o dejando valores por defecto. 
-				LocaliaConfig.init().then(function() {
-					if (LocaliaConfig.getCurrentCity() !== false) {
-						console.log("GO HOME START");
-						console.log("Cargamos en diferido el loadServerStartup para proximos usos.");
-					} else {
-						console.log("Cargamos loadServerStartup y esperamos.... luego:");
-						LocaliaConfig.loadServerStartup().then(function() {
-							if (LocaliaConfig.predefinedCityId !== false) {
-								LocaliaConfig.setCurrentCity(LocaliaConfig.predefinedCityId);
-								console.log(">> Tiene prebundle la ciudad: Mostrar welcome a la ciudad y texto introductorio + boton comenzar.");
-							} else {
-								if (LocaliaConfig.server.detected_city_id !== false) {
-									LocaliaConfig.setCurrentCity(LocaliaConfig.server.detected_city_id);
-									console.log(">> El server detectó la ciudad: Mostrar welcome a la ciudad y texto introductorio + boton comenzar.");
-								} else {
-									console.log(">> Mostrar welcome + texto introductorio + selector de cuidad y boton comenzar.");
-								}
-							}
-							console.log("1", LocaliaConfig.userData.currentCity);
-							//$state.go('welcome');
-						});
-					}
-				});
-		*/
-
+		//$templateCache.removeAll();	
 
 	});
 })

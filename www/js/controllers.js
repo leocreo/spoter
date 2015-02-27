@@ -172,9 +172,6 @@ angular.module('localia.controllers', ["leaflet-directive"])
 // Home Front Controller 
 .controller('HomeController', ['$scope', '$state', 'LocaliaConfig', 'LocaliaCategories', 'LocaliaPromotions', '$ionicSlideBoxDelegate', function($scope, $state, LocaliaConfig, LocaliaCategories, LocaliaPromotions, $ionicSlideBoxDelegate) {
 
-	console.log("Home Controller");
-	return;
-
 	LocaliaConfig.events.on("localia:city.change", function(event, currentCity) {
 		LocaliaCategories.clearCache();
 		LocaliaCategories.findAll({
