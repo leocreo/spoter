@@ -10,7 +10,7 @@
 			<button class="button button-icon button-clear ion-ios-search-strong"></button>
 		</ion-nav-buttons>
 		-->
-		<ion-pane class="bar-scroll positive-bg">
+		<ion-pane class="bar-scroll stable-bg">
 			<h1 class="title title-left">{{currentCity.name}}</h1>
 		</ion-pane>
 	</ion-nav-bar>
@@ -67,22 +67,28 @@
 
 		<div class="home-categories">  		
 			<div class='row' ng-repeat="category in featuredCategories track by $index" ng-if="$index%3==0">
-				<div class="col" ng-if="(featuredCategories[$index] != null)" ng-click="goCategory(featuredCategories[$index].id)" style=" background-color: {{featuredCategories[$index].color}}">
-					<div class="image" style="background-image: url({{featuredCategories[$index].banner.url}});">
-						<i class="{{featuredCategories[$index].icon}}" style="background-color: {{featuredCategories[$index].color}};"></i>
-						<h3 style="background-color: {{featuredCategories[$index].color}}">{{featuredCategories[$index].name}}</h3>
+				<div class="col" ng-if="(featuredCategories[$index] != null)" ng-click="goCategory(featuredCategories[$index].id)">
+					<div class="frame" style=" background-color: {{featuredCategories[$index].color}}">
+						<div class="image" style="background-image: url({{featuredCategories[$index].banner.url}});">
+							<i class="{{featuredCategories[$index].icon}}" style="background-color: {{featuredCategories[$index].color}};"></i>
+							<h3 style="background-color: {{featuredCategories[$index].color}}">{{featuredCategories[$index].name}}</h3>
+						</div>
 					</div>
 				</div>
-				<div class="col" ng-if="(featuredCategories[$index+1] != null)"  ng-click="goCategory(featuredCategories[$index+1].id)" style="background-color: {{featuredCategories[$index+1].color}}">
-					<div class="image" style="background-image: url({{featuredCategories[$index+1].banner.url}}); ">
-						<i class="{{featuredCategories[$index+1].icon}}" style="background-color: {{featuredCategories[$index+1].color}};"></i>
-						<h3 style="background-color: {{featuredCategories[$index+1].color}}">{{featuredCategories[$index+1].name}}</h3>
+				<div class="col" ng-if="(featuredCategories[$index+1] != null)"  ng-click="goCategory(featuredCategories[$index+1].id)">
+					<div class="frame"  style="background-color: {{featuredCategories[$index+1].color}}">
+						<div class="image" style="background-image: url({{featuredCategories[$index+1].banner.url}}); ">
+							<i class="{{featuredCategories[$index+1].icon}}" style="background-color: {{featuredCategories[$index+1].color}};"></i>
+							<h3 style="background-color: {{featuredCategories[$index+1].color}}">{{featuredCategories[$index+1].name}}</h3>
+						</div>
 					</div>
 				</div>
-				<div class="col" ng-if="(featuredCategories[$index+2] != null)"  ng-click="goCategory(featuredCategories[$index+2].id)" style="background-color: {{featuredCategories[$index+2].color}}">
-					<div class="image" style="background-image: url({{featuredCategories[$index+2].banner.url}}); ">
-						<i class="{{featuredCategories[$index+2].icon}}" style="background-color: {{featuredCategories[$index+2].color}};"></i>
-						<h3 style="background-color: {{featuredCategories[$index+2].color}}">{{featuredCategories[$index+2].name}}</h3>
+				<div class="col" ng-if="(featuredCategories[$index+2] != null)"  ng-click="goCategory(featuredCategories[$index+2].id)">
+					<div class="frame" style="background-color: {{featuredCategories[$index+2].color}}">
+						<div class="image" style="background-image: url({{featuredCategories[$index+2].banner.url}}); ">
+							<i class="{{featuredCategories[$index+2].icon}}" style="background-color: {{featuredCategories[$index+2].color}};"></i>
+							<h3 style="background-color: {{featuredCategories[$index+2].color}}">{{featuredCategories[$index+2].name}}</h3>
+						</div>
 					</div>
 				</div>
 			 </div>

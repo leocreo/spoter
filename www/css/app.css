@@ -374,8 +374,7 @@ input, button, select, textarea {
 }
 
 .home-categories .col {
-	margin: 5px;
-	padding: 0;
+	padding: 3px;
 }
 .home-categories .col .image{
 	position: relative;

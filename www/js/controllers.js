@@ -52,7 +52,7 @@ angular.module('localia.controllers', ["leaflet-directive"])
 		});
 	}, $scope);
 
-
+	//LocaliaCategories.clearCache();
 	$scope.currentCity = LocaliaConfig.userData.currentCity;
 	LocaliaCategories.findAll().then(function(data) {
 		$scope.categories = data;
