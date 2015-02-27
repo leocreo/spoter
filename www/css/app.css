@@ -252,7 +252,10 @@ input, button, select, textarea {
 .menu .main-items .list {
 	box-shadow: 0 0 10px rgba(0,0,0,.1);
 	z-index: 1000;
-	border-bottom: 0;
+	border-bottom: 1px solid #000;
+}
+.menu .main-items .item-icon-left .icon , .categories-list  .item-icon-left .icon {
+	left: 18px;
 }
 .menu .main-items .list:last-child {
 	border-bottom: 0;
@@ -268,11 +271,11 @@ input, button, select, textarea {
 	padding-top: 0;
 	padding-left: 40px;
 	padding-bottom: 0;
-	border: 0;
+	border: 0;		
 }
 
 .menu .categories-list .categories-item{	
-	padding: 7px 15px; 	
+	padding: 7px 12px; 	
 	width: 100%;	
 	background-color: transparent;
 	border: 0;
