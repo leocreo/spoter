@@ -22,4 +22,22 @@ angular.module('localia.directives', [])
 				});
 			}
 		}
-	});
+	})
+
+.directive('loader', function() {
+	return {
+		restrict: 'E',
+		template: [
+			'<div class="loader {{loaderType}}"><div class="spinner" style="opacity: {{ loaderOpacity }}"></div></div>'
+		].join(''),
+		replace: false,
+		scope: {},
+		controller: function($scope, $attrs) {},
+		link: function(scope, elem, attrs) {
+			if (attrs.hasOwnProperty('loaderOpacity'))
+				scope.loaderOpacity = attrs.loaderOpacity;
+			if (attrs.hasOwnProperty('loaderType'))
+				scope.loaderType = attrs.loaderType;
+		}
+	};
+});

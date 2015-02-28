@@ -4,39 +4,6 @@ angular.module('localia.controllers', ["leaflet-directive"])
 // Init Controller 
 .controller('InitController', ['$scope', '$state', '$ionicHistory', 'LocaliaConfig', function($scope, $state, $ionicHistory, LocaliaConfig) {
 
-	console.log("InitController");
-	/*
-		$ionicHistory.nextViewOptions({
-			disableAnimate: true,
-			disableBack: true
-		});
-
-		if (LocaliaConfig.getCurrentCity() !== false) {
-			console.log("> GO HOME START");
-			console.log("> Cargamos en diferido el loadServerStartup para proximos usos.");
-		} else {
-			console.log("> Cargamos loadServerStartup y esperamos.... luego:");
-			LocaliaConfig.loadServerStartup().then(function() {
-				if (LocaliaConfig.predefinedCityId !== false) {
-					LocaliaConfig.setCurrentCity(LocaliaConfig.predefinedCityId);
-					console.log(">> Tiene prebundle la ciudad: Mostrar welcome a la ciudad y texto introductorio + boton comenzar.");
-				} else {
-					if (LocaliaConfig.server.detected_city_id !== false) {
-						LocaliaConfig.setCurrentCity(LocaliaConfig.server.detected_city_id);
-						console.log(">> El server detectó la ciudad: Mostrar welcome a la ciudad y texto introductorio + boton comenzar.");
-					} else {
-						console.log(">> Mostrar welcome + texto introductorio + selector de cuidad y boton comenzar.");
-					}
-				}
-				//console.log("1", LocaliaConfig.userData.currentCity);
-				$state.go('welcome');
-			});
-		}
-		/*
-			$state.go('welcome', {}, {
-				location: 'replace'
-			});*/
-
 }])
 
 
@@ -53,8 +20,12 @@ angular.module('localia.controllers', ["leaflet-directive"])
 	}, $scope);
 
 	//LocaliaCategories.clearCache();
+	$scope.loader_categories = true;
+
+
 	$scope.currentCity = LocaliaConfig.userData.currentCity;
 	LocaliaCategories.findAll().then(function(data) {
+		$scope.loader_categories = false;
 		$scope.categories = data;
 	});
 
@@ -205,6 +176,7 @@ angular.module('localia.controllers', ["leaflet-directive"])
 // Categories Controller 
 .controller('CategoriesController', ['$scope', '$stateParams', 'LocaliaConfig', 'LocaliaCategories', 'LocaliaAds', function($scope, $stateParams, LocaliaConfig, LocaliaCategories, LocaliaAds) {
 
+
 	// Obtenemos categoria actual + categoria padre
 	LocaliaCategories.find({
 		id: Number($stateParams.id)
@@ -218,14 +190,18 @@ angular.module('localia.controllers', ["leaflet-directive"])
 	});
 
 	// Obtenemos las categorías hijas de la categoria actual y si no tiene categorias hijas cargamos la lista de Ads
+	$scope.showBanner = false;
 	LocaliaCategories.findAll({
 		parent_id: Number($stateParams.id)
 	}).then(function(data) {
 		$scope.childrenCategories = data;
 		if ($scope.childrenCategories.length == 0) {
+			$scope.loader_category_ads = true;
+			$scope.showBanner = true;
 			LocaliaAds.findAll({
 				id_categories: Number($stateParams.id)
 			}).then(function(data) {
+				$scope.loader_category_ads = false;
 				$scope.ads = data;
 			});
 		}

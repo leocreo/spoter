@@ -13,7 +13,7 @@
 		</ion-pane>
 	</ion-nav-bar>
 
-	<ion-content header-scroll-fade header-scroll-reference="header-city" header-scroll-header="bar-scroll">		
+	<ion-content header-scroll-fade header-scroll-reference="header-city" header-scroll-header="bar-scroll" >		
 		<div class="header-city" style="background-image: url({{currentCity.banners[0].url}})">		
 			<div class="overlay"></div>
 			<h3>
@@ -30,6 +30,7 @@
 				<a class="col item item-icon-left" href="#/places"><i class="icon ion-android-compass"></i><h6>Conocer</h6>Atracciones turísticas</a>
 			</div>
 		</div>-->
+
 
 		<ion-list class="">
 			<div class="item item-divider  item-icon-right "  ng-click="goPromo()">
@@ -60,9 +61,8 @@
 			<div class="item item-divider  item-icon-right stable-border" ng-click="goCategory()">
 				<span class="stable">Directorio de anuncios<i class="icon ion-ios-more"></i></span>
 			</div>
-		</ion-list>		
-
-
+		</ion-list>				
+		<loader ng-show="loader_categories" loader-opacity=".2"></loader>
 		<div class="home-categories">  		
 			<div class='row' ng-repeat="category in featuredCategories track by $index" ng-if="$index%3==0">
 				<div class="col" ng-if="(featuredCategories[$index] != null)" ng-click="goCategory(featuredCategories[$index].id)">
@@ -97,8 +97,9 @@
 			<a href="#/categories/" class="button button-stable button-small button-outline">Más categorías...</a>
 			<br>
 			<br>
-			<br>
+			<br>					
 		</div>
+		
 
 	</ion-content>
 

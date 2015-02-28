@@ -1,4 +1,4 @@
-angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', 'localia.directives'])
+angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', 'localia.directives', 'imageLoader'])
 
 
 // Underscore service

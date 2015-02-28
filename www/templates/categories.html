@@ -1,13 +1,13 @@
 <ion-view view-title="Categorías" class="view-categories">
 
+	<loader ng-show="loader_category_ads" loader-type="full" loader-opacity=".2"></loader>
 
 	<ion-header-bar  class="bar-subheader bar-stable">	
 		<h2 class="title"><span class="parent" ng-if="parentCategory.id" ng-click="goCategory(parentCategory.id)">{{parentCategory.name}}<i class="ion-ios-arrow-right"></i></span>{{category.name}}</h2>
 	</ion-header-bar>
 
-	<ion-content >	
-
-		<div class="home-categories">  		
+	<ion-content image-loader-scroll>			
+		<div class="home-categories">  					
 			<div class='row' ng-repeat="category in childrenCategories track by $index" ng-if="$index%2==0">
 				<div class="col col-50" ng-if="(childrenCategories[$index] != null)" ng-click="goCategory(childrenCategories[$index].id)" >
 					<div class="frame" style=" background-color: {{childrenCategories[$index].color}}">
@@ -27,27 +27,16 @@
 				</div>				
 			 </div>
 		</div>
-		<!--
-		<div class="categories-list big">  		
-			<div class='row' ng-repeat="child in childrenCategories track by $index" ng-if="$index%2==0">
-				<div class="col" ng-if="(childrenCategories[$index] != null)" ng-click="goCategory(childrenCategories[$index].id)">
-					<div class="categories-item"><i class="{{childrenCategories[$index].icon}}" style="background-color: {{childrenCategories[$index].color}};"></i><span>{{childrenCategories[$index].name}}</span></div>
-				</div>
-				<div class="col" ng-if="(childrenCategories[$index+1] != null)"  ng-click="goCategory(childrenCategories[$index+1].id)">
-					<div class="categories-item"><i class="{{childrenCategories[$index+1].icon}}" style="background-color: {{childrenCategories[$index+1].color}};"></i><span>{{childrenCategories[$index+1].name}}</span></div>
-				</div>
-			 </div>
-		</div>
-		-->
-		<div class="home-categories" ng-if="ads" style="background-color: {{category.color}};"> 
-			<div class="image" style="background-image: url({{category.banner.url}}); background-color: rgba(255,255,255,.2)"> 
+
+		<div class="home-categories banner" ng-if="showBanner" style="background-color: {{category.color}};"> 
+			<div class="image image-loader" style="background-color: rgba(255,255,255,.2)"  image-loader-background="{{category.banner.url}}">
 				<i class="{{category.icon}}" style="background-color: {{category.color}};"></i>
 				<h3 style="background-color: {{category.color}}">{{category.name}}</h3>
 			</div>
 		</div>		
 		<ion-list type="" class="ad-list">
 			<ion-item ng-repeat="ad in ads" class="item-thumbnail-left" ng-click="goAd(ad.id)">
-				<div class="image" style="background-image: url({{ad.banner.url}})"></div>
+				<div class="image image-loader" image-loader-background="{{ad.banner}}"  image-loader-lazy></div>
 				<h2>{{ad.title}}</h2>
 				<h3>{{ad.address}}</h3>
     				<p>{{ad.description}}</p>	
