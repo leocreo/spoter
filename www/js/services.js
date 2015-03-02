@@ -14,7 +14,8 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 		api: {
 			endpoint: 'http://spoter-server/api/' // DEV
 				// endpoint: 'http://localia.mobi/api/' // PRODUCCION
-		}
+		},
+		gaCode: 'UA-60262215-1'
 	};
 	service.userData = {
 		currentCity: false

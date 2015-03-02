@@ -1,4 +1,4 @@
-angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', 'localia.directives', 'imageLoader'])
+angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', 'localia.directives', 'imageLoader', 'ngCordova'])
 
 
 // Underscore service
@@ -13,10 +13,9 @@ angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', '
 	};
 })
 
-.run(function($ionicPlatform, $state, $templateCache, LocaliaConfig, $ionicHistory) {
+.run(function($ionicPlatform, $state, $templateCache, LocaliaConfig, $ionicHistory, $cordovaGoogleAnalytics) {
 	$ionicPlatform.ready(function() {
-		// Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-		// for form inputs)
+
 		if (window.cordova && window.cordova.plugins.Keyboard) {
 			cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
 		}
@@ -27,6 +26,8 @@ angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', '
 		// TEST - DESCOMENTAR EN PROD.
 		//$templateCache.removeAll();	
 
+		$cordovaGoogleAnalytics.debugMode();
+		$cordovaGoogleAnalytics.startTrackerWithId(LocaliaConfig.config.gaCode);
 	});
 })
 
