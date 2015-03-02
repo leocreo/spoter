@@ -41,15 +41,19 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 		return service.server.available_cities;
 	};
 	service.loadServerStartup = function() {
-		return $http({
+		var deferred = $q.defer();
+		$http({
 			url: service.config.api.endpoint + "startup",
 			method: 'GET',
 			params: {},
 			cache: false
 		}).then(function(result) {
 			service.server = result.data;
-			return true;
+			deferred.resolve();
+		}, function(data, status) {
+			deferred.reject(data, status);
 		});
+		return deferred.promise;
 	}
 	service.loadUserData = function() {
 		var deferred = $q.defer();

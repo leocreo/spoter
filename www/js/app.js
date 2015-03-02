@@ -82,6 +82,10 @@ angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', '
 									}
 								}
 								deferred.resolve(LocaliaConfig);
+							}, function(data, status) {
+								$state.go('welcome', {}, {
+									location: 'replace'
+								});
 							});
 						}
 					});
