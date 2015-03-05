@@ -7,12 +7,6 @@ angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', '
 	return (_);
 }])
 
-.service('MyService', function() {
-	return {
-		testData: 2
-	};
-})
-
 .run(function($ionicPlatform, $state, $templateCache, LocaliaConfig, $ionicHistory, $cordovaGoogleAnalytics) {
 	$ionicPlatform.ready(function() {
 
