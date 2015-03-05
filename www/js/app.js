@@ -20,8 +20,9 @@ angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', '
 		// TEST - DESCOMENTAR EN PROD.
 		//$templateCache.removeAll();	
 
-		$cordovaGoogleAnalytics.debugMode();
-		$cordovaGoogleAnalytics.startTrackerWithId(LocaliaConfig.config.gaCode);
+		//if ($cordovaGoogleAnalytics) {
+		//	$cordovaGoogleAnalytics.startTrackerWithId(LocaliaConfig.config.gaCode);
+		//}
 	});
 })
 

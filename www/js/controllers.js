@@ -137,7 +137,7 @@ angular.module('localia.controllers', ["leaflet-directive"])
 		});
 	};
 	$scope.currentCity = LocaliaConfig.userData.currentCity;
-	$cordovaGoogleAnalytics.trackView('Home Screen');
+	//$cordovaGoogleAnalytics.trackView('Home Screen');
 }])
 
 //############################################################################### 
