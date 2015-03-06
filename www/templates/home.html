@@ -65,7 +65,7 @@
 		<loader ng-show="loader_categories" loader-opacity=".2"></loader>
 		<div class="network-error dark center" ng-show="errorConnection" ng-click="getFeatured(true)">
 			<i class="ion-refresh icon"></i>
-			<p>No connection</p>
+			<p>No hay conexion a internet en este momento.</p>
 		</div>
 		<div class="home-categories">  		
 			<div class='row' ng-repeat="category in featuredCategories track by $index" ng-if="$index%3==0">
