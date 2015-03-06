@@ -1197,6 +1197,43 @@ small{
 	text-transform: uppercase;
 }
 
+.network-error {
+	color: #fff;
+	text-align: left;
+	font-size: 14px;
+	padding: 14px;	
+}
+.network-error .icon{
+	float: right;
+	background-color: rgba(255,255,255,.1);
+	display: inline-block;
+	width: 40px;
+	height: 40px;
+	line-height: 40px;
+	border-radius: 40px;
+	font-size: 23px;
+	text-align: center;
+	padding-left: 4px;
+	margin-left: 15px;
+}
+.network-error.dark {
+	color: #666;
+}
+.network-error.dark .icon{
+	background-color: rgba(0,0,0,.04);
+	color: #bbb;
+}
+.network-error.center {
+	text-align: center;
+}
+.network-error.center .icon{
+	display: block;
+	float: none;
+	margin: 0 auto 10px;
+}
+.network-error.center p{
+	clear: both;
+}
 
 .loader {
 	display: block;

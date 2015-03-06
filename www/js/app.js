@@ -1,3 +1,5 @@
+var ERROR_NO_CONNECTION = 100;
+
 angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', 'localia.directives', 'imageLoader', 'ngCordova'])
 
 
@@ -47,51 +49,33 @@ angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', '
 					var deferred = $q.defer();
 					if (LocaliaConfig.initiated)
 						return LocaliaConfig;
-
-					LocaliaConfig.init().then(function() {
+					LocaliaConfig.init().then(function(LocaliaConfig) {
 						if (LocaliaConfig.getCurrentCity() !== false) {
+							deferred.resolve(LocaliaConfig);
 							$state.go('app.home', {}, {
 								location: 'replace'
 							});
-							LocaliaConfig.loadServerStartup(); // Cargamos en diferido el loadServerStartup para proximos usos.
 						} else {
-							console.log("> Cargamos loadServerStartup y esperamos.... luego:");
-							LocaliaConfig.loadServerStartup().then(function() {
-								if (LocaliaConfig.predefinedCityId !== false) {
-									// Tiene prebundle la ciudad: Mostrar welcome a la ciudad y texto introductorio + boton comenzar.
-									LocaliaConfig.setCurrentCity(LocaliaConfig.predefinedCityId);
-									$state.go('welcome', {}, {
-										location: 'replace'
-									});
-								} else {
-									if (LocaliaConfig.server.default_city !== false) {
-										// El server detectó la ciudad: Mostrar welcome a la ciudad y texto introductorio + boton comenzar.
-										LocaliaConfig.setCurrentCity(LocaliaConfig.server.default_city);
-										$state.go('welcome', {}, {
-											location: 'replace'
-										});
-									} else {
-										$state.go('welcome', {}, {
-											location: 'replace'
-										});
-										// Mostrar welcome + texto introductorio + selector de cuidad y boton comenzar.
-									}
-								}
-								deferred.resolve(LocaliaConfig);
-							}, function(data, status) {
-								$state.go('welcome', {}, {
-									location: 'replace'
-								});
+							if (LocaliaConfig.predefinedCityId !== false) {
+								LocaliaConfig.setCurrentCity(LocaliaConfig.predefinedCityId);
+							} else {
+								if (LocaliaConfig.serverConfig !== false && LocaliaConfig.serverConfig.default_city)
+									LocaliaConfig.setCurrentCity(LocaliaConfig.serverConfig.default_city);
+							}
+							deferred.resolve(LocaliaConfig);
+							$state.go('welcome', {}, {
+								location: 'replace'
 							});
 						}
 					});
-					return deferred.promise;
+					return deferred.promise();
 				}
 			}
 		})
 		.state('welcome', {
-			url: '/welcome',
+			url: '/welcome/:serverError',
 			parent: 'init',
+			cache: false,
 			views: {
 				'main': {
 					templateUrl: "templates/welcome.html",

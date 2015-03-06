@@ -21,7 +21,7 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 		currentCity: false
 	};
 	service.initiated = false;
-	service.server = {};
+	service.serverConfig = false;
 	service.predefinedCityId = false;
 
 	service.setCurrentCity = function(id) {
@@ -30,7 +30,7 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 		});
 		if (city) {
 			this.userData.currentCity = city;
-			//$localForage.setItem("userData", this.userData);
+			$localForage.setItem("userData", this.userData);
 			this.events.emit("localia:city.change", this.userData.currentCity);
 		}
 	};
@@ -39,20 +39,22 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 	};
 
 	service.getAvailablesCities = function() {
-		return service.server.available_cities;
+		return service.serverConfig.available_cities;
 	};
 	service.loadServerStartup = function() {
 		var deferred = $q.defer();
+		console.log("LocaliaConfig loading server config...");
 		$http({
 			url: service.config.api.endpoint + "startup",
 			method: 'GET',
 			params: {},
 			cache: false
 		}).then(function(result) {
-			service.server = result.data;
-			deferred.resolve();
+			service.serverConfig = result.data;
+			deferred.resolve(service.serverConfig);
 		}, function(data, status) {
-			deferred.reject(data, status);
+			service.serverConfig = false;
+			deferred.resolve(service.serverConfig);
 		});
 		return deferred.promise;
 	}
@@ -68,10 +70,13 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 
 	service.init = function() {
 		var deferred = $q.defer();
+		console.log("LocaliaConfig loading local data...");
 		service.loadUserData().then(function() {
-			console.log("LocaliaConfig initiated...");
-			service.initiated = true;
-			deferred.resolve(service);
+			service.loadServerStartup().then(function() {
+				console.log("LocaliaConfig initiated...");
+				service.initiated = true;
+				deferred.resolve(service);
+			});
 		});
 		return deferred.promise;
 	};
@@ -94,20 +99,24 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 	return {
 		// Devuelve un array de elementos que coincidan con el query dado (object)
 		findAll: function(query) {
+			var deferred = $q.defer();
 			params.city_id = LocaliaConfig.userData.currentCity.id;
-			return $http({
+			$http({
 				url: resource_endpoint,
 				method: 'GET',
 				cache: localCache,
 				params: params
 			}).then(function(result) {
 				if (query === undefined)
-					return result.data;
+					deferred.resolve(result.data);
 				var find = _.where(result.data, query);
 				if (find == undefined)
-					return [];
-				return find;
+					deferred.resolve([]);
+				deferred.resolve(find);
+			}, function() {
+				deferred.reject(ERROR_NO_CONNECTION);
 			});
+			return deferred.promise;
 		},
 
 		// Devuelve un sólo elemento que coincida con el query dado (object)

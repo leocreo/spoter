@@ -8,8 +8,14 @@
 			<p>
 				Bienvenido a la guía local donde podrás encontrar servicios, comercios, atracciones y eventos en tu ciudad.
 			</p>
-		</ion-content>
-		<div class="bar bar-footer">
+		</ion-content>		
+		<div class="bar bar-footer bar-light" ng-show="serverError && !loading" ng-click="reload()" style="height: auto;">
+			<div class="network-error">
+				<i class="ion-refresh icon"></i>
+				No podemos conectarnos con los servicios de Localia. Revisa tu conexión a internet.
+			</div>
+		</div>
+		<div class="bar bar-footer" ng-hide="serverError">
 			<button class="button button-large button-light button-block" ng-click="goHome()">Comenzar</button>
 		</div>
 	</ion-view>

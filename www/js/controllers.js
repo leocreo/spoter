@@ -11,25 +11,19 @@ angular.module('localia.controllers', ["leaflet-directive"])
 // Main App Layout Controller 
 .controller('AppController', ['$scope', '$state', '$ionicPopup', 'LocaliaCategories', 'LocaliaConfig', function($scope, $state, $ionicPopup, LocaliaCategories, LocaliaConfig) {
 
-	LocaliaConfig.events.on("localia:city.change", function(event, currentCity) {
-		$scope.currentCity = currentCity;
-		LocaliaCategories.clearCache();
+	$scope.getAllCategories = function(reload) {
+		if (reload)
+			LocaliaCategories.clearCache();
+		$scope.loader_categories = true;
 		LocaliaCategories.findAll().then(function(data) {
+			$scope.loader_categories = false;
 			$scope.categories = data;
+		}, function(error_code) {
+			$scope.loader_categories = false;
+			if (error_code == ERROR_NO_CONNECTION)
+				$scope.errorConnection = true;
 		});
-	}, $scope);
-
-	//LocaliaCategories.clearCache();
-	$scope.loader_categories = true;
-
-
-	$scope.currentCity = LocaliaConfig.userData.currentCity;
-	LocaliaCategories.findAll().then(function(data) {
-		$scope.loader_categories = false;
-		$scope.categories = data;
-	});
-
-
+	};
 	$scope.goCategory = function(id) {
 		$state.go('app.categories', {
 			id: id
@@ -124,52 +118,77 @@ angular.module('localia.controllers', ["leaflet-directive"])
 		}
 	});
 
+	LocaliaConfig.events.on("localia:city.change", function(event, currentCity) {
+		$scope.currentCity = currentCity;
+		$scope.getAllCategories(true);
+	}, $scope);
 
+	$scope.currentCity = LocaliaConfig.userData.currentCity;
+	$scope.getAllCategories();
 }])
 
 
 //############################################################################### 
 // Welcome Controller 
-.controller('WelcomeController', ['$scope', '$state', 'LocaliaConfig', '$cordovaGoogleAnalytics', function($scope, $state, LocaliaConfig, $cordovaGoogleAnalytics) {
+.controller('WelcomeController', ['$scope', '$state', '$stateParams', 'LocaliaConfig', function($scope, $state, $stateParams, LocaliaConfig) {
 	$scope.goHome = function() {
 		$state.go('app.home', {}, {
 			location: 'replace'
 		});
 	};
-	$scope.currentCity = LocaliaConfig.userData.currentCity;
-	//$cordovaGoogleAnalytics.trackView('Home Screen');
+	$scope.reload = function() {
+		$scope.loading = true;
+		LocaliaConfig.loadServerStartup().then(function() {
+			$scope.loading = false;
+			setup();
+		});
+	};
+
+	function setup() {
+		$scope.currentCity = LocaliaConfig.userData.currentCity;
+		$scope.serverError = false;
+		if (LocaliaConfig.serverConfig === false)
+			$scope.serverError = true;
+	}
+	setup();
+
 }])
 
 //############################################################################### 
 // Home Front Controller 
-.controller('HomeController', ['$scope', '$state', 'LocaliaConfig', 'LocaliaCategories', 'LocaliaPromotions', '$ionicSlideBoxDelegate', function($scope, $state, LocaliaConfig, LocaliaCategories, LocaliaPromotions, $ionicSlideBoxDelegate) {
+.controller('HomeController', ['$scope', '$state', 'LocaliaConfig', 'LocaliaCategories', 'LocaliaPlaces', '$ionicSlideBoxDelegate', function($scope, $state, LocaliaConfig, LocaliaCategories, LocaliaPlaces, $ionicSlideBoxDelegate) {
 
 	LocaliaConfig.events.on("localia:city.change", function(event, currentCity) {
-		LocaliaCategories.clearCache();
+		$scope.getFeatured();
+		$scope.getPlaces();
+	}, $scope);
+
+	$scope.getFeatured = function(reload) {
+		if (reload)
+			LocaliaCategories.clearCache();
+		$scope.loader_categories = true;
 		LocaliaCategories.findAll({
 			featured: 1
 		}).then(function(data) {
+			$scope.loader_categories = false;
 			$scope.featuredCategories = data;
+		}, function(error_code) {
+			$scope.loader_categories = false;
+			if (error_code == ERROR_NO_CONNECTION)
+				$scope.errorConnection = true;
 		});
-
-		LocaliaPromotions.clearCache();
-		LocaliaPromotions.findAll().then(function(data) {
+	};
+	$scope.getPlaces = function(reload) {
+		LocaliaPlaces.clearCache();
+		/*
+		LocaliaPlaces.findAll().then(function(data) {
 			$scope.promotions = data;
 			$ionicSlideBoxDelegate.update();
-		});
+		});*/
+	}
 
-	}, $scope);
-
-	LocaliaCategories.findAll({
-		featured: 1
-	}).then(function(data) {
-		$scope.featuredCategories = data;
-	});
-
-	LocaliaPromotions.findAll().then(function(data) {
-		$scope.promotions = data;
-		$ionicSlideBoxDelegate.update();
-	});
+	$scope.getPlaces();
+	$scope.getFeatured();
 
 }])
 
@@ -206,8 +225,9 @@ angular.module('localia.controllers', ["leaflet-directive"])
 				$scope.ads = data;
 			});
 		}
+	}, function(error_code) {
+		console.log("*");
 	});
-
 }])
 
 //############################################################################### 

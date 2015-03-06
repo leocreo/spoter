@@ -63,6 +63,10 @@
 			</div>
 		</ion-list>				
 		<loader ng-show="loader_categories" loader-opacity=".2"></loader>
+		<div class="network-error dark center" ng-show="errorConnection" ng-click="getFeatured(true)">
+			<i class="ion-refresh icon"></i>
+			<p>No connection</p>
+		</div>
 		<div class="home-categories">  		
 			<div class='row' ng-repeat="category in featuredCategories track by $index" ng-if="$index%3==0">
 				<div class="col" ng-if="(featuredCategories[$index] != null)" ng-click="goCategory(featuredCategories[$index].id)">
@@ -92,7 +96,7 @@
 			 </div>
 		</div>
 
-		<div class="text-center">
+		<div class="text-center" ng-hide="errorConnection">
 			<br>
 			<a href="#/categories/" class="button button-stable button-small button-outline">Más categorías...</a>
 			<br>
