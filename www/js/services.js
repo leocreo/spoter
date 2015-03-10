@@ -1,7 +1,7 @@
 angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageModule'])
 
 // Service global para startup de la app y almacenar informacion global
-.service("LocaliaConfigService", ['EventsService', '$localForage', '$q', '$http', '$timeout', function(EventsService, $localForage, $q, $http, $timeout) {
+.factory("LocaliaConfig", ['EventsService', '$localForage', '$q', '$http', '$timeout', function(EventsService, $localForage, $q, $http, $timeout) {
 	var service = {};
 
 	angular.extend(service, {

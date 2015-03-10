@@ -58,10 +58,10 @@ angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', '
 				}
 			},
 			resolve: {
-				LocaliaConfig: function(LocaliaConfigService) {
-					if (LocaliaConfigService.initiated)
-						return LocaliaConfigService;
-					return service.init();
+				LocaliaConfig: function(LocaliaConfig) {
+					if (LocaliaConfig.initiated)
+						return LocaliaConfig;
+					return LocaliaConfig.init();
 				}
 			}
 		})
