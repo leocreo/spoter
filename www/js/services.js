@@ -1,7 +1,7 @@
 angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageModule'])
 
 // Service global para startup de la app y almacenar informacion global
-.service("LocaliaConfig", ['EventsService', '$localForage', '$q', '$http', function(EventsService, $localForage, $q, $http) {
+.service("LocaliaConfigService", ['EventsService', '$localForage', '$q', '$http', '$timeout', function(EventsService, $localForage, $q, $http, $timeout) {
 	var service = {};
 
 	angular.extend(service, {
@@ -57,7 +57,8 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 			deferred.resolve(service.serverConfig);
 		});
 		return deferred.promise;
-	}
+	};
+
 	service.loadUserData = function() {
 		var deferred = $q.defer();
 		$localForage.getItem("userData").then(function(data) {
@@ -87,7 +88,6 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 // RESOURCES: Definimos los recursos que se comunicarán con el REST API ##########################################################
 // Resource/Model: CATEGORIES 
 .factory('LocaliaCategories', ['$http', '$q', '_', 'LocaliaConfig', 'DSCacheFactory', function($http, $q, _, LocaliaConfig, DSCacheFactory) {
-
 	var resource_endpoint = LocaliaConfig.config.api.endpoint + "categories";
 	var localCache = DSCacheFactory('spoterCategoriesCache', {
 		maxAge: ((1000 * 60 * 60) * 1), // Una hora de cache

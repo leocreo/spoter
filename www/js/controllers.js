@@ -1,11 +1,30 @@
 angular.module('localia.controllers', ["leaflet-directive"])
 
+
 //############################################################################### 
-// Init Controller 
-.controller('InitController', ['$scope', '$state', '$ionicHistory', 'LocaliaConfig', function($scope, $state, $ionicHistory, LocaliaConfig) {
+// Welcome Controller 
+.controller('WelcomeController', ['$scope', '$state', '$stateParams', 'LocaliaConfig', function($scope, $state, $stateParams, LocaliaConfig) {
+	$scope.goHome = function() {
+		$state.go('app.home', {}, {
+			location: 'replace'
+		});
+	};
+	$scope.reload = function() {
+		$scope.loading = true;
+		LocaliaConfig.loadServerStartup().then(function() {
+			$scope.loading = false;
+			setup();
+		});
+	};
 
+	function setup() {
+		$scope.currentCity = LocaliaConfig.userData.currentCity;
+		$scope.serverError = false;
+		if (LocaliaConfig.serverConfig === false)
+			$scope.serverError = true;
+	}
+	setup();
 }])
-
 
 //############################################################################### 
 // Main App Layout Controller 
@@ -125,33 +144,6 @@ angular.module('localia.controllers', ["leaflet-directive"])
 
 	$scope.currentCity = LocaliaConfig.userData.currentCity;
 	$scope.getAllCategories();
-}])
-
-
-//############################################################################### 
-// Welcome Controller 
-.controller('WelcomeController', ['$scope', '$state', '$stateParams', 'LocaliaConfig', function($scope, $state, $stateParams, LocaliaConfig) {
-	$scope.goHome = function() {
-		$state.go('app.home', {}, {
-			location: 'replace'
-		});
-	};
-	$scope.reload = function() {
-		$scope.loading = true;
-		LocaliaConfig.loadServerStartup().then(function() {
-			$scope.loading = false;
-			setup();
-		});
-	};
-
-	function setup() {
-		$scope.currentCity = LocaliaConfig.userData.currentCity;
-		$scope.serverError = false;
-		if (LocaliaConfig.serverConfig === false)
-			$scope.serverError = true;
-	}
-	setup();
-
 }])
 
 //############################################################################### 

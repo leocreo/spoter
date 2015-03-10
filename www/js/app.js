@@ -9,7 +9,7 @@ angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', '
 	return (_);
 }])
 
-.run(function($ionicPlatform, $state, $templateCache, LocaliaConfig, $ionicHistory, $cordovaGoogleAnalytics) {
+.run(function($ionicPlatform, $state, $templateCache, LocaliaConfig, $ionicHistory, $cordovaGoogleAnalytics, $rootScope) {
 	$ionicPlatform.ready(function() {
 
 		if (window.cordova && window.cordova.plugins.Keyboard) {
@@ -18,6 +18,7 @@ angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', '
 		if (window.StatusBar) {
 			StatusBar.styleDefault();
 		}
+
 
 		// TEST - DESCOMENTAR EN PROD.
 		//$templateCache.removeAll();	
@@ -41,41 +42,32 @@ angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', '
 	// CONFIGURAMOS RUTAS Y VISTAS
 	$stateProvider
 		.state('init', {
-			url: '',
+			url: '/init',
 			template: '<ion-nav-view name="main"></ion-nav-view>',
-			controller: 'InitController',
+			controller: function(LocaliaConfig, $state) {
+				if (LocaliaConfig.getCurrentCity() !== false) {
+					$state.go('home');
+				} else {
+					if (LocaliaConfig.predefinedCityId !== false) {
+						LocaliaConfig.setCurrentCity(LocaliaConfig.predefinedCityId);
+					} else {
+						if (LocaliaConfig.serverConfig !== false && LocaliaConfig.serverConfig.default_city)
+							LocaliaConfig.setCurrentCity(LocaliaConfig.serverConfig.default_city);
+					}
+					$state.go('welcome');
+				}
+			},
 			resolve: {
-				LocaliaConfig: function(LocaliaConfig, $q, $state) {
-					var deferred = $q.defer();
-					if (LocaliaConfig.initiated)
-						return LocaliaConfig;
-					LocaliaConfig.init().then(function(LocaliaConfig) {
-						if (LocaliaConfig.getCurrentCity() !== false) {
-							deferred.resolve(LocaliaConfig);
-							$state.go('app.home', {}, {
-								location: 'replace'
-							});
-						} else {
-							if (LocaliaConfig.predefinedCityId !== false) {
-								LocaliaConfig.setCurrentCity(LocaliaConfig.predefinedCityId);
-							} else {
-								if (LocaliaConfig.serverConfig !== false && LocaliaConfig.serverConfig.default_city)
-									LocaliaConfig.setCurrentCity(LocaliaConfig.serverConfig.default_city);
-							}
-							deferred.resolve(LocaliaConfig);
-							$state.go('welcome', {}, {
-								location: 'replace'
-							});
-						}
-					});
-					return deferred.promise();
+				LocaliaConfig: function(LocaliaConfigService) {
+					if (LocaliaConfigService.initiated)
+						return LocaliaConfigService;
+					return service.init();
 				}
 			}
 		})
 		.state('welcome', {
-			url: '/welcome/:serverError',
+			url: '/welcome',
 			parent: 'init',
-			cache: false,
 			views: {
 				'main': {
 					templateUrl: "templates/welcome.html",
@@ -94,8 +86,9 @@ angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', '
 			},
 			abstract: true
 		})
-		.state('app.home', {
+		.state('home', {
 			url: "/home",
+			parent: 'app',
 			views: {
 				"content": {
 					templateUrl: "templates/home.html",
@@ -103,9 +96,9 @@ angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', '
 				}
 			}
 		})
-
-	.state('app.categories', {
+		.state('categories', {
 			url: "/categories/:id",
+			parent: 'app',
 			views: {
 				"content": {
 					templateUrl: "templates/categories.html",
@@ -113,8 +106,9 @@ angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', '
 				}
 			}
 		})
-		.state('app.ads', {
+		.state('ads', {
 			url: "/ads/:id",
+			parent: 'app',
 			views: {
 				"content": {
 					templateUrl: "templates/ad.html",
@@ -122,8 +116,9 @@ angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', '
 				}
 			}
 		})
-		.state('app.promotions', {
+		.state('promotions', {
 			url: "/promotions",
+			parent: 'app',
 			views: {
 				"content": {
 					templateUrl: "templates/promotions.html",
@@ -131,8 +126,9 @@ angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', '
 				}
 			}
 		})
-		.state('app.promo', {
+		.state('promo', {
 			url: "/promotions/:id",
+			parent: 'app',
 			views: {
 				"content": {
 					templateUrl: "templates/promotion.html",
@@ -140,8 +136,9 @@ angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', '
 				}
 			}
 		})
-		.state('app.events', {
+		.state('events', {
 			url: "/events",
+			parent: 'app',
 			views: {
 				"content": {
 					templateUrl: "templates/events.html",
@@ -149,8 +146,9 @@ angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', '
 				}
 			}
 		})
-		.state('app.event', {
+		.state('event', {
 			url: "/events/:id",
+			parent: 'app',
 			views: {
 				"content": {
 					templateUrl: "templates/event.html",
@@ -158,8 +156,9 @@ angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', '
 				}
 			}
 		})
-		.state('app.places', {
+		.state('places', {
 			url: "/places",
+			parent: 'app',
 			views: {
 				"content": {
 					templateUrl: "templates/places.html",
@@ -167,8 +166,9 @@ angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', '
 				}
 			}
 		})
-		.state('app.place', {
+		.state('place', {
 			url: "/places/:id",
+			parent: 'app',
 			views: {
 				"content": {
 					templateUrl: "templates/place.html",
@@ -176,5 +176,5 @@ angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', '
 				}
 			}
 		})
-	$urlRouterProvider.otherwise('/');
+	$urlRouterProvider.otherwise('/init');
 });
