@@ -5,7 +5,7 @@ angular.module('localia.controllers', ["leaflet-directive"])
 // Welcome Controller 
 .controller('WelcomeController', ['$scope', '$state', '$stateParams', 'LocaliaConfig', function($scope, $state, $stateParams, LocaliaConfig) {
 	$scope.goHome = function() {
-		$state.go('app.home', {}, {
+		$state.go('home', {}, {
 			location: 'replace'
 		});
 	};
@@ -44,42 +44,42 @@ angular.module('localia.controllers', ["leaflet-directive"])
 		});
 	};
 	$scope.goCategory = function(id) {
-		$state.go('app.categories', {
+		$state.go('categories', {
 			id: id
 		});
 	};
 	$scope.goAd = function(id) {
-		$state.go('app.ads', {
+		$state.go('ads', {
 			id: id
 		});
 	};
 	$scope.goEvent = function(id) {
 		if (_.isUndefined(id))
-			$state.go('app.events', {
+			$state.go('events', {
 				id: id
 			});
 		else
-			$state.go('app.event', {
+			$state.go('event', {
 				id: id
 			});
 	};
 	$scope.goPromo = function(id) {
 		if (_.isUndefined(id))
-			$state.go('app.promotions', {
+			$state.go('promotions', {
 				id: id
 			});
 		else
-			$state.go('app.promo', {
+			$state.go('promo', {
 				id: id
 			});
 	};
 	$scope.goPlace = function(id) {
 		if (_.isUndefined(id))
-			$state.go('app.places', {
+			$state.go('places', {
 				id: id
 			});
 		else
-			$state.go('app.place', {
+			$state.go('place', {
 				id: id
 			});
 
