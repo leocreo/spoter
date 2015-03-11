@@ -36,7 +36,11 @@ $button-dark-border:              $dark !default;
 .button.button-large {
 	font-size: 15px !important;
 }
-
+.button.button-stable.activated, .button.button-stable.active {
+	background-color: darken($stable, 10%) !important;
+	border-color:  darken($button-stable-border, 10%) !important;
+	box-shadow: none !important;
+}
 
 .bar.bar-energized.darken {
 	background-color: darken($energized, 15%);
@@ -94,6 +98,8 @@ $button-dark-border:              $dark !default;
 .royal-bg.lighten {
 	background-color: lighten($royal, 5%);
 }
+
+
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Librería Ionicons por fuera de Ionic
 // The path for our ionicons font files, relative to the built CSS in www/css

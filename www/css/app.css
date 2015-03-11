@@ -223,7 +223,6 @@ input, button, select, textarea {
 
 .title .parent {
 	color: rgba(255,255,255, .6);
-	font-size: 17px; 
 }
 .title .parent i{
 	margin: 0 6px;
@@ -401,6 +400,9 @@ input, button, select, textarea {
 .home-categories .col {
 	padding: 3px;
 }
+.home-categories .col .frame {
+	border-radius: 3px;
+}
 .home-categories .col .image{
 	position: relative;
 	height: 100px;
@@ -419,6 +421,7 @@ input, button, select, textarea {
 	margin: 0;
 	opacity: .9;
 	padding: 6px 0;
+	border-radius: 0 0 3px 3px;
 }
 .home-categories.banner h3 {
 	text-transform: none;
@@ -1260,8 +1263,8 @@ small{
 	width: 28px;
 	-webkit-animation: rotate 0.5s infinite linear;
 	animation: rotate 0.5s infinite linear;
-	border: 4px solid rgba(0,0,0,.3);
-	border-right-color: transparent;
+	border: 4px solid rgba(0,0,0,.4);
+	border-right-color: transparent;	
 	border-radius: 50%;
 }
 

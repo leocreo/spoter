@@ -89,33 +89,27 @@ angular.module('localia.controllers', ["leaflet-directive"])
 		var cityList = '<div class="list city-list-selector">';
 		//cityList += '<div class="item item-divider">Recomendadas</div>';
 		_.each(LocaliaConfig.getAvailablesCities(), function(city) {
-			selected = "";
-			if (Number(LocaliaConfig.userData.currentCity.id) == Number(city.id)) {
-				selected = ' checked="checked" ';
-			}
-			cityList += '<label class="item item-radio "><input type="radio"  ng-model="data.new_city" name="data.new_city" value="' + city.id + '"' + selected + '><div class="item-content">' + city.name + '</div><i class="radio-icon ion-ios-checkmark assertive"></i></label>';
+			cityList += '<label class="item item-radio" ng-click="selectCity()"><input type="radio"  ng-model="data.new_city" name="data.new_city" value="' + city.id + '"><div class="item-content">' + city.name + '</div><i class="radio-icon ion-ios-checkmark assertive"></i></label>';
 		});
 		cityList += '</div>';
-		$scope.data = {}
-		var myPopup = $ionicPopup.show({
+		$scope.data = {
+			new_city: LocaliaConfig.userData.currentCity.id
+		};
+		cityPopup = $ionicPopup.show({
 			template: cityList,
 			title: 'Ciudad',
 			subTitle: 'Selecciona tu ciudad:',
 			scope: $scope,
 			buttons: [{
 				text: 'Cancelar'
-			}, {
-				text: '<b>Seleccionar</b>',
-				type: 'button-positive',
-				onTap: function(e) {
-					return $scope.data.new_city;
-				}
 			}]
 		});
-		myPopup.then(function(selected_id) {
-			LocaliaConfig.setCurrentCity(selected_id);
-		});
+		$scope.selectCity = function() {
+			LocaliaConfig.setCurrentCity($scope.data.new_city);
+			cityPopup.close();
+		};
 	};
+
 
 	angular.extend($scope, {
 		map: {
@@ -188,6 +182,9 @@ angular.module('localia.controllers', ["leaflet-directive"])
 // Categories Controller 
 .controller('CategoriesController', ['$scope', '$stateParams', 'LocaliaConfig', 'LocaliaCategories', 'LocaliaAds', function($scope, $stateParams, LocaliaConfig, LocaliaCategories, LocaliaAds) {
 
+	$scope.mainScreen = true;
+	if ($stateParams.id)
+		$scope.mainScreen = false;
 
 	// Obtenemos categoria actual + categoria padre
 	LocaliaCategories.find({

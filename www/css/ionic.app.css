@@ -4,6 +4,11 @@
 .button.button-large {
   font-size: 15px !important; }
 
+.button.button-stable.activated, .button.button-stable.active {
+  background-color: #1597a8 !important;
+  border-color: #1597a8 !important;
+  box-shadow: none !important; }
+
 .bar.bar-energized.darken {
   background-color: #015785; }
 

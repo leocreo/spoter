@@ -10,10 +10,10 @@
 		<ion-content>
 			<ion-list class="main-items">
 				<ion-item nav-clear menu-close class="item item-icon-left">
-					<a href="#/home" class=""> Inicio <i class="icon ion-home"></i></a>
+					<a ui-sref ="home" class=""> Inicio <i class="icon ion-home"></i></a>
 				</ion-item>
 				<ion-item nav-clear menu-close class="item item-icon-left ">
-					<a href="#/places" class="">Atracciones turísticas<i class="icon ion-android-compass"></i></a>
+					<a ui-sref ="places" class="">Atracciones turísticas<i class="icon ion-android-compass"></i></a>
 				</ion-item>
 				<!--
 				<ion-item nav-clear menu-close  class="item item-icon-left">
@@ -27,7 +27,7 @@
 
 			<ion-list class="categories-list">
 				<div class="item item-divider  item-icon-left">
-					<a ui-sref ="app.categories" class="positive-border"  menu-close>Directorio de anuncios<i class="icon ion-ios-book"></i></a>
+					<a ui-sref ="categories" class="positive-border"  menu-close>Directorio de anuncios<i class="icon ion-ios-book"></i></a>
 				</div>
 				<loader ng-show="loader_categories"></loader>
 				<ion-item class="categories-item" menu-close  ng-repeat="category in categories | filter : {parent_id: 0}"  ng-click="goCategory({{category.id}})">
