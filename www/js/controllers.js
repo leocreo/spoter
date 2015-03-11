@@ -189,9 +189,7 @@ angular.module('localia.controllers', ["leaflet-directive"])
 //############################################################################### 
 // Categories Controller 
 .controller('CategoriesController', ['$scope', '$stateParams', 'LocaliaConfig', 'LocaliaCategories', 'LocaliaAds', '$ionicNavBarDelegate', function($scope, $stateParams, LocaliaConfig, LocaliaCategories, LocaliaAds, $ionicNavBarDelegate) {
-	$scope.headerTitleTap = function() {
-		console.log("Tapped!");
-	}
+
 
 	// Si se especifica id de categoría..... sino, se muestran todas las categorias padre
 	if (!_.isUndefined($stateParams.id) && !_.isEmpty($stateParams.id)) {
