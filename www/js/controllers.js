@@ -36,13 +36,14 @@ angular.module('localia.controllers', ["leaflet-directive"])
 		if (reload)
 			LocaliaCategories.clearCache();
 		$scope.loader_categories = true;
+		$scope.errorConnection = false;
 		LocaliaCategories.findAll().then(function(data) {
 			$scope.loader_categories = false;
 			$scope.categories = data;
-		}, function(error_code) {
-			$scope.loader_categories = false;
-			if (error_code == ERROR_NO_CONNECTION)
+		}, function(error, data) {
+			if (error.code > 0)
 				$scope.errorConnection = true;
+			$scope.loader_categories = false;
 		});
 	};
 	$scope.goCategory = function(id) {
@@ -154,19 +155,21 @@ angular.module('localia.controllers', ["leaflet-directive"])
 		$scope.getPlaces();
 	}, $scope);
 
+
 	$scope.getFeatured = function(reload) {
 		if (reload)
 			LocaliaCategories.clearCache();
 		$scope.loader_categories = true;
+		$scope.errorConnection = false;
 		LocaliaCategories.findAll({
 			featured: 1
 		}).then(function(data) {
 			$scope.loader_categories = false;
 			$scope.featuredCategories = data;
-		}, function(error_code) {
-			$scope.loader_categories = false;
-			if (error_code == ERROR_NO_CONNECTION)
+		}, function(error, data) {
+			if (error.code > 0)
 				$scope.errorConnection = true;
+			$scope.loader_categories = false;
 		});
 	};
 	$scope.getPlaces = function(reload) {
@@ -185,61 +188,100 @@ angular.module('localia.controllers', ["leaflet-directive"])
 
 //############################################################################### 
 // Categories Controller 
-.controller('CategoriesController', ['$scope', '$stateParams', 'LocaliaConfig', 'LocaliaCategories', 'LocaliaAds', function($scope, $stateParams, LocaliaConfig, LocaliaCategories, LocaliaAds) {
+.controller('CategoriesController', ['$scope', '$stateParams', 'LocaliaConfig', 'LocaliaCategories', 'LocaliaAds', '$ionicNavBarDelegate', function($scope, $stateParams, LocaliaConfig, LocaliaCategories, LocaliaAds, $ionicNavBarDelegate) {
+	$scope.headerTitleTap = function() {
+		console.log("Tapped!");
+	}
 
-	$scope.mainScreen = true;
-	if ($stateParams.id)
+	// Si se especifica id de categoría..... sino, se muestran todas las categorias padre
+	if (!_.isUndefined($stateParams.id) && !_.isEmpty($stateParams.id)) {
 		$scope.mainScreen = false;
+		$scope.loader_category_ads = true;
+		LocaliaCategories.get(Number($stateParams.id)).then(
+			function(data) {
+				$scope.category = data;
 
-	// Obtenemos categoria actual + categoria padre
-	var params = {};
-	if ($stateParams.id)
-		params.id = Number($stateParams.id);
-	LocaliaCategories.find(params).then(function(data) {
-		$scope.category = data;
-		LocaliaCategories.find({
-			id: Number(data.parent_id)
-		}).then(function(data) {
-			$scope.parentCategory = data;
-		});
-	});
+				// Obtengo categoría padre de la categoría actual
+				LocaliaCategories.get(data.parent_id).then(
+					function(data) {
+						$scope.parentCategory = data;
+					},
+					function(error) {}
+				);
 
-	// Obtenemos las categorías hijas de la categoria actual y si no tiene categorias hijas cargamos la lista de Ads
-	$scope.showBanner = false;
-	LocaliaCategories.findAll({
-		parent_id: Number($stateParams.id)
-	}).then(function(data) {
-		$scope.childrenCategories = data;
-		if ($scope.childrenCategories.length == 0) {
-			$scope.loader_category_ads = true;
-			$scope.showBanner = true;
-			LocaliaAds.findAll({
-				id_categories: Number($stateParams.id)
-			}).then(function(data) {
+				// Obtengo categorias hijas de la categoria actual
+				LocaliaCategories.findAll({
+					parent_id: Number($stateParams.id)
+				}).then(
+					function(data) {
+						$scope.childrenCategories = data;
+						//Cargamos las ADS si no tiene categorias hijas
+						if (data.length == 0) {
+							$scope.showBanner = true;
+							$scope.loader_category_ads = true;
+							LocaliaAds.findAll({
+								id_categories: Number($stateParams.id)
+							}).then(
+								function(data) {
+									$scope.loader_category_ads = false;
+									$scope.ads = data;
+								},
+								function(error) {}
+							);
+						}
+					},
+					function(error) {}
+				);
 				$scope.loader_category_ads = false;
-				$scope.ads = data;
-			});
-		}
-	}, function(error_code) {
-		console.log("*");
-	});
+			},
+			function(error) {}
+		);
+	} else {
+		// Mostrar solo categorias padres
+		$scope.mainScreen = true;
+		LocaliaCategories.findAll({
+			parent_id: 0
+		}).then(
+			function(data) {
+				$scope.childrenCategories = data;
+			},
+			function(error) {}
+		);
+	}
+
 }])
 
 //############################################################################### 
 // Ads Controller 
 .controller('AdsController', ['$scope', '$stateParams', 'LocaliaConfig', 'LocaliaCategories', 'LocaliaAds', '$ionicSlideBoxDelegate', function($scope, $stateParams, LocaliaConfig, LocaliaCategories, LocaliaAds, $ionicSlideBoxDelegate) {
 
-
-	// Traemos data completa del Anuncio
-	LocaliaAds.get(Number($stateParams.id)).then(function(data) {
-		$scope.ad = data;
-		$scope.map.center.lat = data.location.lat;
-		$scope.map.center.lng = data.location.lng;
-		$scope.map.markers.ad.lat = data.location.lat;
-		$scope.map.markers.ad.lng = data.location.lng;
-		$ionicSlideBoxDelegate.update();
+	var ads = LocaliaAds.query({}, function(result) {
+		for (var i in ads) {
+			console.log(ads[i]);
+		}
 	});
+	/*
+	var ad = LocaliaAds.get({
+		id: 92
+	}, function(result) {
+		console.log(result);
+	});
+*/
 
+	/*
+		// Traemos data completa del Anuncio
+		if ($stateParams.id) {
+			LocaliaAds.get(Number($stateParams.id)).then(function(data) {
+				console.log(2);
+				$scope.ad = data;
+				$scope.map.center.lat = data.location.lat;
+				$scope.map.center.lng = data.location.lng;
+				$scope.map.markers.ad.lat = data.location.lat;
+				$scope.map.markers.ad.lng = data.location.lng;
+				$ionicSlideBoxDelegate.update();
+			});
+		}
+	*/
 }])
 
 

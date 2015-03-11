@@ -1,6 +1,7 @@
 angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageModule'])
 
-// Service global para startup de la app y almacenar informacion global
+//##################################################################################################################
+// LOCALIACONFIG: Service global para startup de la app y almacenar informacion global
 .factory("LocaliaConfig", ['EventsService', '$localForage', '$q', '$http', '$timeout', function(EventsService, $localForage, $q, $http, $timeout) {
 	var service = {};
 
@@ -85,300 +86,228 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 	return service;
 }])
 
+//############################################################################################################
+
+
+
 // RESOURCES: Definimos los recursos que se comunicarán con el REST API ##########################################################
 // Resource/Model: CATEGORIES 
-.factory('LocaliaCategories', ['$http', '$q', '_', 'LocaliaConfig', 'DSCacheFactory', function($http, $q, _, LocaliaConfig, DSCacheFactory) {
-	var resource_endpoint = LocaliaConfig.config.api.endpoint + "categories";
-	var localCache = DSCacheFactory('spoterCategoriesCache', {
-		maxAge: ((1000 * 60 * 60) * 1), // Una hora de cache
+.factory('LocaliaCategories', ['_', 'LocaliaConfig', 'LocaliaApiService', 'DSCacheFactory', function(_, LocaliaConfig, LocaliaApiService, DSCacheFactory) {
+
+	var service = new LocaliaApiService();
+	service.endpoint = LocaliaConfig.config.api.endpoint + "categories";
+	service.cache = DSCacheFactory('localiaCategories', {
+		maxAge: ((1000 * 60 * 60) * 1),
 		deleteOnExpire: 'aggressive',
 		storageMode: 'localStorage'
 	});
-	var params = {};
 
-	return {
-		// Devuelve un array de elementos que coincidan con el query dado (object)
-		findAll: function(query) {
-			var deferred = $q.defer();
-			params.city_id = LocaliaConfig.userData.currentCity.id;
-			$http({
-				url: resource_endpoint,
-				method: 'GET',
-				cache: localCache,
-				params: params
-			}).then(function(result) {
-				if (query === undefined)
-					deferred.resolve(result.data);
-				var find = _.where(result.data, query);
-				if (find == undefined)
-					deferred.resolve([]);
-				deferred.resolve(find);
-			}, function() {
-				deferred.reject(ERROR_NO_CONNECTION);
-			});
-			return deferred.promise;
-		},
-
-		// Devuelve un sólo elemento que coincida con el query dado (object)
-		find: function(query) {
-			params.city_id = LocaliaConfig.userData.currentCity.id;
-			return $http({
-				url: resource_endpoint,
-				method: 'GET',
-				cache: localCache,
-				params: params
-			}).then(function(result) {
-				if (query === undefined)
-					return result.data;
-				var find = _.findWhere(result.data, query);
-				return find;
-			});
-		},
-
-		clearCache: function() {
-			return localCache.removeAll();
-		}
+	// Redefinimos findAll  porque  las categorías siempre viene todas y el filtro lo aplico acá en lugar de dejar que lo haga el server
+	service.findAll = function(params) {
+		return service._findAll().then(function(data) {
+			if (!_.isUndefined(params))
+				return _.where(data, params);
+			return data;
+		});
 	};
+
+	// Redefinimos find  porque  las categorías siempre viene todas y el filtro lo aplico acá en lugar de dejar que lo haga el server
+	service.find = function(params) {
+		return service._find().then(function(data) {
+			if (!_.isUndefined(params))
+				return _.findWhere(data, params);
+			return data;
+		});
+	};
+
+	// Redefinimos get, aplicando filtro de id a lo que ya está cacheado
+	service.get = function(id) {
+		return service._findAll().then(function(data) {
+			if (!_.isUndefined(id))
+				return _.findWhere(data, {
+					id: Number(id)
+				});
+			return data;
+		});
+	};
+
+	return service;
 }])
 
 // Resource/Model: ADS 
-.factory('LocaliaAds', ['$http', '$q', '_', 'LocaliaConfig', 'DSCacheFactory', function($http, $q, _, LocaliaConfig, DSCacheFactory) {
+.factory('LocaliaAds', ['_', 'LocaliaConfig', 'DSCacheFactory', 'LocaliaApiService', function(_, LocaliaConfig, DSCacheFactory, LocaliaApiService) {
 
-	var resource_endpoint = LocaliaConfig.config.api.endpoint + "ads";
-	var localCache = DSCacheFactory('spoterAdsCache', {
-		maxAge: ((1000 * 60 * 0)), // 
+	var service = new LocaliaApiService();
+	service.endpoint = LocaliaConfig.config.api.endpoint + "ads";
+	service.cache = DSCacheFactory('localiaAds', {
+		maxAge: ((1000 * 60 * 60) * .2),
 		deleteOnExpire: 'aggressive',
 		storageMode: 'localStorage'
 	});
-	var params = {};
 
-	return {
-		// Devuelve un array de todos los elementos del recurso. Opcionalmente se peude especificar un objeto con variables a enviar
-		findAll: function(query) {
-			params.city_id = LocaliaConfig.userData.currentCity.id;
-			angular.extend(params, query);
-			return $http({
-				url: resource_endpoint,
-				method: 'GET',
-				params: params,
-				cache: localCache
-			}).then(function(result) {
-				return result.data;
-			});
-		},
+	return service;
 
-		find: function(query) {
-			params.city_id = LocaliaConfig.userData.currentCity.id;
-			angular.extend(params, query);
-			return $http({
-				url: resource_endpoint,
-				method: 'GET',
-				params: params,
-				cache: localCache
-			}).then(function(result) {
-				if (result.data.length > 0)
-					return result.data[0];
-				return result.data;
-			});
-		},
-
-		get: function(id) {
-			params.city_id = LocaliaConfig.userData.currentCity.id;
-			return $http({
-				url: resource_endpoint + "/" + id,
-				method: 'GET',
-				params: params,
-				cache: localCache
-			}).then(function(result) {
-				return result.data;
-			});
-		},
-
-		clearCache: function() {
-			return localCache.removeAll();
-		}
-	};
 }])
 
 // Resource/Model: PROMOTIONS 
-.factory('LocaliaPromotions', ['$http', '$q', '_', 'LocaliaConfig', 'DSCacheFactory', function($http, $q, _, LocaliaConfig, DSCacheFactory) {
+.factory('LocaliaPromotions', ['_', 'LocaliaConfig', 'LocaliaApiService', 'DSCacheFactory', function(_, LocaliaConfig, LocaliaApiService, DSCacheFactory) {
 
-	var resource_endpoint = LocaliaConfig.config.api.endpoint + "promotions";
-	var localCache = DSCacheFactory('spoterPromotionsCache', {
-		maxAge: ((1000 * 60 * 0)),
+	var service = new LocaliaApiService();
+	service.endpoint = LocaliaConfig.config.api.endpoint + "promotions";
+	service.cache = DSCacheFactory('localiaPromotions', {
+		maxAge: ((1000 * 60 * 60) * 0),
 		deleteOnExpire: 'aggressive',
 		storageMode: 'localStorage'
 	});
-	var params = {};
 
-	return {
-		// Devuelve un array de todos los elementos del recurso. Opcionalmente se peude especificar un objeto con variables a enviar
-		findAll: function(query) {
-			params.city_id = LocaliaConfig.userData.currentCity.id;
-			angular.extend(params, query);
-			return $http({
-				url: resource_endpoint,
-				method: 'GET',
-				params: params,
-				cache: localCache
-			}).then(function(result) {
-				return result.data;
-			});
-		},
+	return service;
 
-		find: function(query) {
-			params.city_id = LocaliaConfig.userData.currentCity.id;
-			angular.extend(params, query);
-			return $http({
-				url: resource_endpoint,
-				method: 'GET',
-				params: params,
-				cache: localCache
-			}).then(function(result) {
-				if (result.data.length > 0)
-					return result.data[0];
-				return result.data;
-			});
-		},
-
-		get: function(id) {
-			params.city_id = LocaliaConfig.userData.currentCity.id;
-			return $http({
-				url: resource_endpoint + "/" + id,
-				method: 'GET',
-				params: params,
-				cache: localCache
-			}).then(function(result) {
-				return result.data;
-			});
-		},
-
-		clearCache: function() {
-			return localCache.removeAll();
-		}
-	};
 }])
 
 // Resource/Model: EVENTS 
-.factory('LocaliaEvents', ['$http', '$q', '_', 'LocaliaConfig', 'DSCacheFactory', function($http, $q, _, LocaliaConfig, DSCacheFactory) {
+.factory('LocaliaEvents', ['_', 'LocaliaConfig', 'LocaliaApiService', 'DSCacheFactory', function(_, LocaliaConfig, LocaliaApiService, DSCacheFactory) {
 
-	var resource_endpoint = LocaliaConfig.config.api.endpoint + "events";
-	var localCache = DSCacheFactory('spoterEventsCache', {
-		maxAge: ((1000 * 60 * 0)),
+	var service = new LocaliaApiService();
+	service.endpoint = LocaliaConfig.config.api.endpoint + "events";
+	service.cache = DSCacheFactory('localiaEvents', {
+		maxAge: ((1000 * 60 * 60) * 0),
 		deleteOnExpire: 'aggressive',
 		storageMode: 'localStorage'
 	});
-	var params = {};
 
-	return {
-		// Devuelve un array de todos los elementos del recurso. Opcionalmente se peude especificar un objeto con variables a enviar
-		findAll: function(query) {
-			params.city_id = LocaliaConfig.userData.currentCity.id;
-			angular.extend(params, query);
-			return $http({
-				url: resource_endpoint,
-				method: 'GET',
-				params: params,
-				cache: localCache
-			}).then(function(result) {
-				return result.data;
-			});
-		},
+	return service;
 
-		find: function(query) {
-			params.city_id = LocaliaConfig.userData.currentCity.id;
-			angular.extend(params, query);
-			return $http({
-				url: resource_endpoint,
-				method: 'GET',
-				params: params,
-				cache: localCache
-			}).then(function(result) {
-				if (result.data.length > 0)
-					return result.data[0];
-				return result.data;
-			});
-		},
-
-		get: function(id) {
-			params.city_id = LocaliaConfig.userData.currentCity.id;
-			return $http({
-				url: resource_endpoint + "/" + id,
-				method: 'GET',
-				params: params,
-				cache: localCache
-			}).then(function(result) {
-				return result.data;
-			});
-		},
-
-		clearCache: function() {
-			return localCache.removeAll();
-		}
-	};
 }])
 
 
 // Resource/Model: PLACES 
-.factory('LocaliaPlaces', ['$http', '$q', '_', 'LocaliaConfig', 'DSCacheFactory', function($http, $q, _, LocaliaConfig, DSCacheFactory) {
-
-	var resource_endpoint = LocaliaConfig.config.api.endpoint + "places";
-	var localCache = DSCacheFactory('spoterPlacesCache', {
-		maxAge: ((1000 * 60 * 0)),
+.factory('LocaliaPlaces', ['_', 'LocaliaConfig', 'LocaliaApiService', 'DSCacheFactory', function(_, LocaliaConfig, LocaliaApiService, DSCacheFactory) {
+	var service = new LocaliaApiService();
+	service.endpoint = LocaliaConfig.config.api.endpoint + "places";
+	service.cache = DSCacheFactory('localiaPlaces', {
+		maxAge: ((1000 * 60 * 60) * 0),
 		deleteOnExpire: 'aggressive',
 		storageMode: 'localStorage'
 	});
-	var params = {};
 
-	return {
-		// Devuelve un array de todos los elementos del recurso. Opcionalmente se peude especificar un objeto con variables a enviar
-		findAll: function(query) {
-			params.city_id = LocaliaConfig.userData.currentCity.id;
-			angular.extend(params, query);
-			return $http({
-				url: resource_endpoint,
-				method: 'GET',
-				params: params,
-				cache: localCache
-			}).then(function(result) {
-				return result.data;
-			});
-		},
+	return service;
 
-		find: function(query) {
-			params.city_id = LocaliaConfig.userData.currentCity.id;
-			angular.extend(params, query);
-			return $http({
-				url: resource_endpoint,
-				method: 'GET',
-				params: params,
-				cache: localCache
-			}).then(function(result) {
-				if (result.data.length > 0)
-					return result.data[0];
-				return result.data;
-			});
-		},
-
-		get: function(id) {
-			params.city_id = LocaliaConfig.userData.currentCity.id;
-			return $http({
-				url: resource_endpoint + "/" + id,
-				method: 'GET',
-				params: params,
-				cache: localCache
-			}).then(function(result) {
-				return result.data;
-			});
-		},
-
-		clearCache: function() {
-			return localCache.removeAll();
-		}
-	};
 }])
 
+// Master Factory para interactual con el API del Server
+.factory('LocaliaApiService', ['$http', '$q', 'LocaliaConfig', 'EventsService', function($http, $q, LocaliaConfig, EventsService) {
 
+	function parseResponseError(response) {
+		var error = {};
+		error.response = response.data;
+		switch (response.status) {
+			case 404:
+				error.code = service.ERR_NOT_FOUND;
+				error.text = response.statusText;
+				break;
+			case 500:
+				error.code = service.ERR_API_ERROR;
+				error.text = response.statusText;
+				break;
+			default:
+				error.code = service.ERR_NETWORK_ERROR;
+				error.text = "Network error";
+				break;
+		}
+		//service.events.emit("localia:api_error", error);
+		return error;
+	}
+
+	function parseResponseSuccess(response) {
+		return response.data;
+	}
+
+	var globalParams = {
+		city_id: LocaliaConfig.getCurrentCity().id
+	};
+	var service = function() {
+		this.ERR_NETWORK_ERROR = 100;
+		this.ERR_API_ERROR = 101;
+		this.ERR_NOT_FOUND = 102;
+		this.endpoint = null;
+		this.cache = false;
+		this.clearCache = function() {
+			return this.cache.removeAll();
+		}
+		this._findAll = function(params) {
+			var defer = $q.defer();
+			$http({
+				url: this.endpoint,
+				method: 'GET',
+				params: angular.extend({}, globalParams, params),
+				cache: this.cache
+			}).then(
+				function(response) {
+					defer.resolve(parseResponseSuccess(response));
+				},
+				function(response) {
+					defer.reject(parseResponseError(response));
+				});
+			return defer.promise;
+		}
+		this.findAll = function(params) {
+			return this._findAll(params);
+		}
+		this._find = function(params) {
+			var defer = $q.defer();
+			$http({
+				url: this.endpoint,
+				method: 'GET',
+				params: angular.extend({}, globalParams, params),
+				cache: this.cache
+			}).then(
+				function(response) {
+					var data = parseResponseSuccess(response);
+					if (_.isArray(data) && data.length > 0)
+						data = data[0];
+					defer.resolve(data);
+				},
+				function(response) {
+					defer.reject(parseResponseError(response));
+				});
+			return defer.promise;
+		}
+		this.find = function(params) {
+			return this._find(params);
+		}
+		this._get = function(id, params) {
+			var defer = $q.defer();
+			$http({
+				url: this.endpoint + (!_.isUndefined(id) ? "/" + id : ''),
+				method: 'GET',
+				params: angular.extend({}, globalParams, params),
+				cache: this.cache
+			}).then(
+				function(response) {
+					defer.resolve(parseResponseSuccess(response));
+				},
+				function(response) {
+					defer.reject(parseResponseError(response));
+				});
+			return defer.promise;
+		}
+		this.get = function(id) {
+			return this._get(id);
+		}
+		return this;
+	};
+	angular.extend(service, {
+		events: EventsService
+	});
+	return service;
+}])
+
+// ##########################################################################################################
+
+
+
+// GENERAL SERVICES:  ###########################################################################################
+// EventService para agregar capacidad de emitir o recibir eventos a cualquier Servicio o Factory
 .factory('EventsService', ['$rootScope', function($rootScope) {
 	var msgBus = {};
 	msgBus.emit = function(msg, data) {
@@ -392,4 +321,4 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 		}
 	};
 	return msgBus;
-}]);
+}])

@@ -1,8 +1,18 @@
-<ion-view view-title="Categorías" class="view-categories">
+<ion-view view-title="Categorías de anuncios" class="view-categories stable-bg">
 
 	<loader ng-show="loader_category_ads" loader-type="full" loader-opacity=".2"></loader>
 
-	<ion-header-bar  class="bar-subheader bar-stable">	
+		<ion-nav-bar class="bar bar-stable" ng-click="headerTitleTap()">
+			<ion-nav-back-button class="button-clear">
+				<i class="icon  ion-android-arrow-back"></i>
+			</ion-nav-back-button>			
+			<ion-nav-buttons side="left">
+				<button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+			</ion-nav-buttons>
+
+		</ion-nav-bar>
+
+	<ion-header-bar  class="bar-subheader bar-stable">			
 		<h2 class="title" >
 			<div ng-hide="mainScreen">	
 				<span class="parent" ng-if="parentCategory.id" ng-click="goCategory(parentCategory.id)">

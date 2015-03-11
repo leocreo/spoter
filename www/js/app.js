@@ -1,5 +1,3 @@
-var ERROR_NO_CONNECTION = 100;
-
 angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', 'localia.directives', 'imageLoader', 'ngCordova'])
 
 
