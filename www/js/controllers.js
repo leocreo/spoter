@@ -192,9 +192,10 @@ angular.module('localia.controllers', ["leaflet-directive"])
 		$scope.mainScreen = false;
 
 	// Obtenemos categoria actual + categoria padre
-	LocaliaCategories.find({
-		id: Number($stateParams.id)
-	}).then(function(data) {
+	var params = {};
+	if ($stateParams.id)
+		params.id = Number($stateParams.id);
+	LocaliaCategories.find(params).then(function(data) {
 		$scope.category = data;
 		LocaliaCategories.find({
 			id: Number(data.parent_id)
