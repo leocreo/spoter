@@ -30,6 +30,8 @@ angular.module('localia.controllers', ["leaflet-directive"])
 // Main App Layout Controller 
 .controller('AppController', ['$scope', '$state', '$ionicPopup', 'LocaliaCategories', 'LocaliaConfig', function($scope, $state, $ionicPopup, LocaliaCategories, LocaliaConfig) {
 
+	$scope.LocaliaConfig = LocaliaConfig;
+
 	$scope.getAllCategories = function(reload) {
 		if (reload)
 			LocaliaCategories.clearCache();
@@ -85,6 +87,9 @@ angular.module('localia.controllers', ["leaflet-directive"])
 
 	};
 	$scope.changeCity = function() {
+
+		if (LocaliaConfig.getAvailablesCities().length <= 1)
+			return false;
 		// Show the action sheet
 		var cityList = '<div class="list city-list-selector">';
 		//cityList += '<div class="item item-divider">Recomendadas</div>';

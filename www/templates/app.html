@@ -3,8 +3,8 @@
 	<ion-side-menu side="left" width="250">
 		<ion-header-bar class="bar-stable"  ng-click="changeCity()" menu-close>
 			<h1 class="title">
-				<i class="icon ion-location pull-right"></i>Localia
-				<div class="subtitle">{{currentCity.name}}</div>				
+				<i class="icon ion-location pull-right" ng-show="LocaliaConfig.getAvailablesCities().length > 1"></i>Localia
+				<div class="subtitle">{{currentCity.name}} </div>				
 			</h1>
 		</ion-header-bar>
 		<ion-content>
