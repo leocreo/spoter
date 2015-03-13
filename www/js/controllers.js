@@ -253,11 +253,17 @@ angular.module('localia.controllers', ["leaflet-directive"])
 // Ads Controller 
 .controller('AdsController', ['$scope', '$stateParams', 'LocaliaConfig', 'LocaliaCategories', 'LocaliaAds', '$ionicSlideBoxDelegate', function($scope, $stateParams, LocaliaConfig, LocaliaCategories, LocaliaAds, $ionicSlideBoxDelegate) {
 
-	var ads = LocaliaAds.query({}, function(result) {
-		for (var i in ads) {
-			console.log(ads[i]);
-		}
-	});
+	if (!_.isUndefined($stateParams.id) && !_.isEmpty($stateParams.id)) {
+		LocaliaAds.get(Number($stateParams.id)).then(
+			function(data) {
+				$scope.ad = data;
+			},
+			function(error) {
+
+			}
+		);
+	}
+
 	/*
 	var ad = LocaliaAds.get({
 		id: 92

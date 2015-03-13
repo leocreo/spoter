@@ -140,7 +140,7 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 	var service = new LocaliaApiService();
 	service.endpoint = LocaliaConfig.config.api.endpoint + "ads";
 	service.cache = DSCacheFactory('localiaAds', {
-		maxAge: ((1000 * 60 * 60) * .2),
+		maxAge: ((1000 * 60 * 60) * .5),
 		deleteOnExpire: 'aggressive',
 		storageMode: 'localStorage'
 	});
@@ -170,7 +170,7 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 	var service = new LocaliaApiService();
 	service.endpoint = LocaliaConfig.config.api.endpoint + "events";
 	service.cache = DSCacheFactory('localiaEvents', {
-		maxAge: ((1000 * 60 * 60) * 0),
+		maxAge: ((1000 * 60 * 60) * .2),
 		deleteOnExpire: 'aggressive',
 		storageMode: 'localStorage'
 	});
@@ -185,7 +185,7 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 	var service = new LocaliaApiService();
 	service.endpoint = LocaliaConfig.config.api.endpoint + "places";
 	service.cache = DSCacheFactory('localiaPlaces', {
-		maxAge: ((1000 * 60 * 60) * 0),
+		maxAge: ((1000 * 60 * 60) * .2),
 		deleteOnExpire: 'aggressive',
 		storageMode: 'localStorage'
 	});
