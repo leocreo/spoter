@@ -1305,6 +1305,7 @@ small{
 .spinner svg{
 	width: 40px;
 	height: 40px;
+	stroke: #ddd !important;
 }
 .spinner.full {
 	position: absolute;

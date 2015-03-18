@@ -123,7 +123,6 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 		});
 		return deferred.promise;
 	};
-
 	return service;
 }])
 

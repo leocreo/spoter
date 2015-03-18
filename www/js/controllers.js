@@ -64,15 +64,15 @@ angular.module('localia.controllers', ["leaflet-directive"])
 	$scope.getAllCategories = function(reload) {
 		if (reload)
 			LocaliaCategories.clearCache();
-		$scope.loader_categories = true;
+		$scope.loading_categories = true;
 		$scope.errorConnection = false;
 		LocaliaCategories.findAll().then(function(data) {
-			$scope.loader_categories = false;
+			$scope.loading_categories = false;
 			$scope.categories = data;
 		}, function(error, data) {
 			if (error.code > 0)
 				$scope.errorConnection = true;
-			$scope.loader_categories = false;
+			$scope.loading_categories = false;
 		});
 	};
 	$scope.goCategory = function(id) {
@@ -224,7 +224,7 @@ angular.module('localia.controllers', ["leaflet-directive"])
 	// Si se especifica id de categoría..... sino, se muestran todas las categorias padre
 	if (!_.isUndefined($stateParams.id) && !_.isEmpty($stateParams.id)) {
 		$scope.mainScreen = false;
-		$scope.loader_category_ads = true;
+		$scope.loading_category_ads = true;
 		LocaliaCategories.get(Number($stateParams.id)).then(
 			function(data) {
 				$scope.category = data;
@@ -246,12 +246,12 @@ angular.module('localia.controllers', ["leaflet-directive"])
 						//Cargamos las ADS si no tiene categorias hijas
 						if (data.length == 0) {
 							$scope.showBanner = true;
-							$scope.loader_category_ads = true;
+							$scope.loading_category_ads = true;
 							LocaliaAds.findAll({
 								id_categories: Number($stateParams.id)
 							}).then(
 								function(data) {
-									$scope.loader_category_ads = false;
+									$scope.loading_category_ads = false;
 									$scope.ads = data;
 								},
 								function(error) {}
@@ -260,7 +260,7 @@ angular.module('localia.controllers', ["leaflet-directive"])
 					},
 					function(error) {}
 				);
-				$scope.loader_category_ads = false;
+				$scope.loading_category_ads = false;
 			},
 			function(error) {}
 		);

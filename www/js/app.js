@@ -161,5 +161,5 @@ angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', '
 				}
 			}
 		})
-	$urlRouterProvider.otherwise('/init');
+	$urlRouterProvider.otherwise('/');
 });
