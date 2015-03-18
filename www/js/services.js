@@ -28,7 +28,7 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 
 	service.setCurrentCity = function(id) {
 		var city = _.findWhere(service.getAvailablesCities(), {
-			id: id
+			id: Number(id)
 		});
 		if (city) {
 			this.userData.currentCity = city;
@@ -137,7 +137,7 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 	var service = new LocaliaApiService();
 	service.endpoint = LocaliaConfig.config.api.endpoint + "categories";
 	service.cache = DSCacheFactory('localiaCategories', {
-		maxAge: ((1000 * 60 * 60) * 0),
+		maxAge: ((1000 * 60 * 60) * 1),
 		deleteOnExpire: 'aggressive',
 		storageMode: 'localStorage'
 	});
@@ -261,25 +261,29 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 	function parseResponseSuccess(response) {
 		return response.data;
 	}
-
-	var globalParams = {
-		city_id: LocaliaConfig.getCurrentCity().id
-	};
 	var service = function() {
 		this.ERR_NETWORK_ERROR = 100;
 		this.ERR_API_ERROR = 101;
 		this.ERR_NOT_FOUND = 102;
 		this.endpoint = null;
 		this.cache = false;
+
+
 		this.clearCache = function() {
 			return this.cache.removeAll();
 		}
+		this._globalParams = function() {
+			return {
+				city_id: LocaliaConfig.getCurrentCity().id
+			};
+		}
 		this._findAll = function(params) {
+
 			var defer = $q.defer();
 			$http({
 				url: this.endpoint,
 				method: 'GET',
-				params: angular.extend({}, globalParams, params),
+				params: angular.extend({}, this._globalParams(), params),
 				cache: this.cache
 			}).then(
 				function(response) {
@@ -298,7 +302,7 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 			$http({
 				url: this.endpoint,
 				method: 'GET',
-				params: angular.extend({}, globalParams, params),
+				params: angular.extend({}, this._globalParams(), params),
 				cache: this.cache
 			}).then(
 				function(response) {
@@ -320,7 +324,7 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 			$http({
 				url: this.endpoint + (!_.isUndefined(id) ? "/" + id : ''),
 				method: 'GET',
-				params: angular.extend({}, globalParams, params),
+				params: angular.extend({}, this._globalParams(), params),
 				cache: this.cache
 			}).then(
 				function(response) {

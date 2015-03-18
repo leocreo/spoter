@@ -58,7 +58,7 @@ angular.module('localia.controllers', ["leaflet-directive"])
 
 //############################################################################### 
 // Main App Layout Controller 
-.controller('AppController', ['$scope', '$state', '$ionicPopup', 'LocaliaCategories', 'LocaliaConfig', function($scope, $state, $ionicPopup, LocaliaCategories, LocaliaConfig) {
+.controller('AppController', ['_', '$scope', '$state', '$ionicPopup', 'LocaliaCategories', 'LocaliaConfig', function(_, $scope, $state, $ionicPopup, LocaliaCategories, LocaliaConfig) {
 
 
 	$scope.getAllCategories = function(reload) {
@@ -74,6 +74,9 @@ angular.module('localia.controllers', ["leaflet-directive"])
 				$scope.errorConnection = true;
 			$scope.loading_categories = false;
 		});
+	};
+	$scope.goHome = function() {
+		$state.go('home');
 	};
 	$scope.goCategory = function(id) {
 		$state.go('categories', {
@@ -118,8 +121,9 @@ angular.module('localia.controllers', ["leaflet-directive"])
 	};
 	$scope.changeCity = function() {
 
-		if (LocaliaConfig.getAvailablesCities().length <= 1)
+		if (_.isUndefined(LocaliaConfig.getAvailablesCities()) || LocaliaConfig.getAvailablesCities().length <= 1)
 			return false;
+
 		// Show the action sheet
 		var cityList = '<div class="list city-list-selector">';
 		//cityList += '<div class="item item-divider">Recomendadas</div>';
@@ -143,6 +147,7 @@ angular.module('localia.controllers', ["leaflet-directive"])
 		$scope.selectCity = function() {
 			LocaliaConfig.setCurrentCity($scope.data.new_city);
 			cityPopup.close();
+			$state.go('home');
 		};
 	};
 
@@ -266,14 +271,18 @@ angular.module('localia.controllers', ["leaflet-directive"])
 		);
 	} else {
 		// Mostrar solo categorias padres
+		$scope.loading_categories = true;
 		$scope.mainScreen = true;
 		LocaliaCategories.findAll({
 			parent_id: 0
 		}).then(
 			function(data) {
+				$scope.loading_categories = false;
 				$scope.childrenCategories = data;
 			},
-			function(error) {}
+			function(error) {
+				$scope.loading_categories = false;
+			}
 		);
 	}
 

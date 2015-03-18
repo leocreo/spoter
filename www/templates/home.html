@@ -66,8 +66,8 @@
 			<i class="ion-refresh icon"></i>
 			<p>No hay conexion a internet en este momento.</p>
 		</div>
-		<div class="home-categories">  		
-			<ion-spinner ng-show="loading_categories"></ion-spinner>
+		<ion-spinner ng-show="loading_categories"></ion-spinner>
+		<div class="home-categories" ng-hide="loading_categories">  		
 			<div class='row' ng-repeat="category in featuredCategories track by $index" ng-if="$index%3==0">
 				<div class="col" ng-if="(featuredCategories[$index] != null)" ng-click="goCategory(featuredCategories[$index].id)">
 					<div class="frame" style=" background-color: {{featuredCategories[$index].color}}">
