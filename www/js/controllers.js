@@ -1,5 +1,23 @@
 angular.module('localia.controllers', ["leaflet-directive"])
 
+//############################################################################### 
+// Init Controller 
+.controller("InitController", ['LocaliaConfig', '$state', '$scope', function(LocaliaConfig, $state, $scope) {
+
+	$scope.LocaliaConfig = LocaliaConfig;
+
+	if (LocaliaConfig.getCurrentCity() !== false) {
+		$state.go('home');
+	} else {
+		if (LocaliaConfig.predefinedCityId !== false) {
+			LocaliaConfig.setCurrentCity(LocaliaConfig.predefinedCityId);
+		} else {
+			if (LocaliaConfig.serverConfig !== false && LocaliaConfig.serverConfig.default_city)
+				LocaliaConfig.setCurrentCity(LocaliaConfig.serverConfig.default_city);
+		}
+		$state.go('welcome');
+	}
+}])
 
 //############################################################################### 
 // Welcome Controller 
@@ -42,7 +60,6 @@ angular.module('localia.controllers', ["leaflet-directive"])
 // Main App Layout Controller 
 .controller('AppController', ['$scope', '$state', '$ionicPopup', 'LocaliaCategories', 'LocaliaConfig', function($scope, $state, $ionicPopup, LocaliaCategories, LocaliaConfig) {
 
-	$scope.LocaliaConfig = LocaliaConfig;
 
 	$scope.getAllCategories = function(reload) {
 		if (reload)
@@ -172,17 +189,17 @@ angular.module('localia.controllers', ["leaflet-directive"])
 	$scope.getFeatured = function(reload) {
 		if (reload)
 			LocaliaCategories.clearCache();
-		$scope.loader_categories = true;
+		$scope.loading_categories = true;
 		$scope.errorConnection = false;
 		LocaliaCategories.findAll({
 			featured: 1
 		}).then(function(data) {
-			$scope.loader_categories = false;
+			$scope.loading_categories = false;
 			$scope.featuredCategories = data;
 		}, function(error, data) {
 			if (error.code > 0)
 				$scope.errorConnection = true;
-			$scope.loader_categories = false;
+			$scope.loading_categories = false;
 		});
 	};
 	$scope.getPlaces = function(reload) {

@@ -1293,29 +1293,24 @@ small{
 	clear: both;
 }
 
-.loader {
-	display: block;
-	width: 100%;
-	position: relative;	
-	min-height: 40px;
-	min-width: 40px;
-}
-.loader.full {
-	position: absolute;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0;
-	z-index: 9999;
-}
-
-.spinner svg {
+.spinner {
 	width: 40px;
 	height: 40px;
-	position: absolute;
+	position: relative;
 	left: 50%;
 	margin-left: -20px;
 	top: 50%;
 	margin-top: -20px;
-	stroke: #fff;
+}
+.spinner svg{
+	width: 40px;
+	height: 40px;
+}
+.spinner.full {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-left: -20px;
+	margin-top: -20px;
+	z-index: 9999;
 }
