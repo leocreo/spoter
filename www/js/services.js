@@ -2,7 +2,7 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 
 //##################################################################################################################
 // LOCALIACONFIG: Service global para startup de la app y almacenar informacion global
-.factory("LocaliaConfig", ['EventsService', '$localForage', '$q', '$http', '$timeout', function(EventsService, $localForage, $q, $http, $timeout) {
+.factory("LocaliaConfig", ['EventsService', '$localForage', '$q', '$http', '$timeout', '$cordovaGeolocation', function(EventsService, $localForage, $q, $http, $timeout, $cordovaGeolocation) {
 	var service = {};
 
 	angular.extend(service, {
@@ -19,7 +19,8 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 		gaCode: 'UA-60262215-1'
 	};
 	service.userData = {
-		currentCity: false
+		currentCity: false,
+		geolocation: null
 	};
 	service.initiated = false;
 	service.serverConfig = false;
@@ -44,16 +45,23 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 	};
 	service.loadServerStartup = function() {
 		var deferred = $q.defer();
-		console.log("LocaliaConfig loading server config...");
+		console.log("LocaliaConfig: Loading server config...");
 		$http({
 			url: service.config.api.endpoint + "startup",
 			method: 'GET',
-			params: {},
+			params: {
+				lat: service.userData.geolocation.coords.latitude,
+				lon: service.userData.geolocation.coords.longitude,
+				city_id: service.getCurrentCity().id
+			},
 			cache: false
 		}).then(function(result) {
-			service.serverConfig = result.data;
+			console.log("LocaliaConfig: Loading server config DONE.");
+			service.serverConfig = {};
+			service.serverConfig.available_cities = result.data;
 			deferred.resolve(service.serverConfig);
 		}, function(data, status) {
+			console.log("LocaliaConfig: Loading server config DONE.");
 			service.serverConfig = false;
 			deferred.resolve(service.serverConfig);
 		});
@@ -70,15 +78,48 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 		return deferred.promise;
 	};
 
+	service.getGeoLocation = function() {
+		var options = {
+			enableHighAccuracy: false,
+			timeout: 5000
+		};
+		var deferred = $q.defer();
+		if ($cordovaGeolocation) {
+			console.log("LocaliaConfig: Getting geolocation...");
+			return $cordovaGeolocation.getCurrentPosition(options).then(function(position) {
+				console.log("LocaliaConfig: Getting geolocation DONE.");
+				service.userData.geolocation = position;
+				deferred.resolve();
+			}, function(err) {
+				console.log("LocaliaConfig: Getting geolocation FAILED.");
+				deferred.resolve();
+			});
+
+		}
+		service.userData.geolocation = null;
+		return;
+	};
+
 	service.init = function() {
 		var deferred = $q.defer();
-		console.log("LocaliaConfig loading local data...");
+		console.log("LocaliaConfig: Initializing app...");
 		service.loadUserData().then(function() {
-			service.loadServerStartup().then(function() {
-				console.log("LocaliaConfig initiated...");
+			if (service.getCurrentCity() === false) {
+				console.log("LocaliaConfig: Initializing app DONE (first time).");
+				service.getGeoLocation().then(function() {
+					service.loadServerStartup().then(function() {
+						service.initiated = true;
+						deferred.resolve(service);
+					});
+				});
+			} else {
+				console.log("LocaliaConfig: Initializing app DONE.");
 				service.initiated = true;
 				deferred.resolve(service);
-			});
+				service.getGeoLocation().then(function() {
+					service.loadServerStartup();
+				});
+			}
 		});
 		return deferred.promise;
 	};

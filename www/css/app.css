@@ -2,6 +2,9 @@
 
 body {
 	font-family: 'Roboto';	
+	font-weight: 300;
+	background-image: url(../img/welcome-background.jpg);
+	background-size: cover;
 }
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 	font-family: 'Roboto';	
@@ -1079,14 +1082,34 @@ ion-content {
 	background-image: url(../img/welcome-background.jpg);
 	background-size: 100%;
 }
+.view-welcome .slider {
+	position: absolute;
+	bottom: 1px;
+	left: 0;
+	right: 0;
+	top: 208px;
+}
+.view-welcome .slider-pager {
+	margin-bottom: 60px;	
+}
+.view-welcome .slider-pager .slider-pager-page {
+	color: #fff;
+	font-size: 11px;
+}
+.view-welcome .scroll {
+	height: 99%;	
+}
+.view-welcome ion-content {
+	background-color: transparent;	
+}
 .view-welcome .logo {
-	width: 50%;
-	margin-left: 25%;
+	width: 40%;
+	margin-left: 30%;
 	margin-top: 40px;
-	margin-bottom: 40px
+	margin-bottom: 30px
 }
 .view-welcome h1 {
-	font-size: 23px;	
+	font-size: 31px;	
 	font-weight: 300;
 	color: #fff;
 	margin: 0;
@@ -1094,7 +1117,7 @@ ion-content {
 }
 .view-welcome h2 {
 	font-size: 32px;	
-	font-weight:300;
+	font-weight: 300;
 	text-align: center;
 	color: #fff;
 	margin: 0 0 20px 0;
@@ -1105,7 +1128,7 @@ ion-content {
 	text-align: center;
 	width: 70%;	
 	margin-left: 15%;
-	font-size: 17px;	
+	font-size: 16px;	
 	font-weight: 300;
 	color: #fff;
 }
@@ -1114,7 +1137,22 @@ ion-content {
 	padding-bottom: 0;
 	background-color: transparent;
 }
-
+.view-welcome .bar-footer .button{
+	font-size: 15px;
+	border-color: rgba(255,255,255,0);
+}
+.view-welcome .list {
+	width: 80%;
+	margin: 0 auto;
+	border-bottom: 1px solid rgba(255,255,255,.5);
+}
+.view-welcome .item {
+	background-color: transparent;
+	border: 0;
+	border-top: 1px solid rgba(255,255,255,.5);
+	color: #fff;
+	text-align: center;
+}
 
 .cover-gallery, .cover-gallery .layout {
 	position: relative;
@@ -1203,7 +1241,9 @@ small{
 .network-error {
 	color: #fff;
 	text-align: left;
-	font-size: 14px;
+	font-size: 13px;
+	font-weight: 400;
+	line-height: 16px;
 	padding: 14px;	
 }
 .network-error .icon{
@@ -1216,7 +1256,7 @@ small{
 	border-radius: 40px;
 	font-size: 23px;
 	text-align: center;
-	padding-left: 4px;
+	padding-left: 3px;
 	margin-left: 15px;
 }
 .network-error.dark {
@@ -1253,38 +1293,14 @@ small{
 	right: 0;
 	z-index: 9999;
 }
-.spinner {
+
+.spinner svg {
+	width: 40px;
+	height: 40px;
 	position: absolute;
 	left: 50%;
-	margin-left: -14px;
+	margin-left: -20px;
 	top: 50%;
-	margin-top: -14px;
-	height: 28px;
-	width: 28px;
-	-webkit-animation: rotate 0.5s infinite linear;
-	animation: rotate 0.5s infinite linear;
-	border: 4px solid rgba(0,0,0,.4);
-	border-right-color: transparent;	
-	border-radius: 50%;
-}
-
-@keyframes rotate {
-	0%    { 
-		-webkit-transform: rotate(0deg); 
-		transform: rotate(0deg); 
-	}
-	100%  { 
-		-webkit-transform: rotate(360deg); 
-		transform: rotate(360deg); 
-	}
-}
-@-webkit-keyframes rotate {
-	0%    { 
-		-webkit-transform: rotate(0deg); 
-		transform: rotate(0deg); 
-	}
-	100%  { 
-		-webkit-transform: rotate(360deg); 
-		transform: rotate(360deg); 
-	}
+	margin-top: -20px;
+	stroke: #fff;
 }

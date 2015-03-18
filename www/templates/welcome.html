@@ -1,22 +1,36 @@
 
 <ion-nav-view>
 	<ion-view class="view-welcome">
-		<ion-content style="">					
-			<img src="img/welcome-localia-logo.png" class="logo">
-			<h1 class="positive text-center">Bienvenido a Localia</h1>
-			<h2>{{currentCity.name}}</h2>			
-			<p>
-				Bienvenido a la guía local donde podrás encontrar servicios, comercios, atracciones y eventos en tu ciudad.
-			</p>
-		</ion-content>		
-		<div class="bar bar-footer bar-light" ng-show="serverError && !loading" ng-click="reload()" style="height: auto;">
-			<div class="network-error">
-				<i class="ion-refresh icon"></i>
-				No podemos conectarnos con los servicios de Localia. Revisa tu conexión a internet.
-			</div>
-		</div>
-		<div class="bar bar-footer" ng-hide="serverError">
-			<button class="button button-large button-light button-block" ng-click="goHome()">Comenzar</button>
-		</div>
+		<ion-content>
+			<img src="img/welcome-localia-logo.png" class="logo"> 
+			<ion-slide-box show-pager="true">
+				 <ion-slide>			 
+					<h1 class="positive text-center">Bienvenido a Localia {{currentSlide}}</h1>
+					<h2>{{currentCity.name}}</h2>			
+					<p>
+						Bienvenido a la guía local donde podrás encontrar servicios, comercios, atracciones y eventos en tu ciudad.
+					</p>
+					<div class="bar bar-footer">			
+						<div class="network-error" ng-show="serverError && !loading" ng-click="reload()" >
+							<i class="ion-refresh icon"></i>
+							No podemos conectarnos con los servicios de Localia. Revisa tu conexión a internet.
+						</div>								
+						<button class="button button-outline button-light button-block"  ng-hide="serverError || loading" ng-click="continue()">Continuar... </button>
+					</div>
+				</ion-slide>
+				 <ion-slide ng-if="!serverError">			 
+						<h2>Selecciona tu ciudad</h2>
+						<ion-list>
+							<ion-item ng-repeat="city in cities" ng-click="start(city.id)">
+								{{city.city}}
+							</ion-item>
+						</ion-list>
+				</ion-slide>
+			</ion-slide-box>
+		</ion-content>
 	</ion-view>
+<!--
+	<ion-view class="view-welcome">
+	</ion-view>
+-->
 </ion-nav-view>

@@ -3,7 +3,8 @@ angular.module('localia.controllers', ["leaflet-directive"])
 
 //############################################################################### 
 // Welcome Controller 
-.controller('WelcomeController', ['$scope', '$state', '$stateParams', 'LocaliaConfig', function($scope, $state, $stateParams, LocaliaConfig) {
+.controller('WelcomeController', ['$scope', '$state', '$stateParams', 'LocaliaConfig', '$ionicSlideBoxDelegate', function($scope, $state, $stateParams, LocaliaConfig, $ionicSlideBoxDelegate) {
+
 	$scope.goHome = function() {
 		$state.go('home', {}, {
 			location: 'replace'
@@ -16,9 +17,20 @@ angular.module('localia.controllers', ["leaflet-directive"])
 			setup();
 		});
 	};
+	$scope.continue = function() {
+		$ionicSlideBoxDelegate.slide(1);
+	}
+	$scope.start = function(city_id) {
+		LocaliaConfig.setCurrentCity(city_id);
+		$state.go('home', {}, {
+			location: 'replace'
+		});
+	}
 
 	function setup() {
 		$scope.currentCity = LocaliaConfig.userData.currentCity;
+		$scope.cities = LocaliaConfig.getAvailablesCities();
+		$ionicSlideBoxDelegate.update();
 		$scope.serverError = false;
 		if (LocaliaConfig.serverConfig === false)
 			$scope.serverError = true;
