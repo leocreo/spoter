@@ -107,7 +107,7 @@ angular.module('localia.controllers', ["leaflet-directive"])
 		var cityList = '<div class="list city-list-selector">';
 		//cityList += '<div class="item item-divider">Recomendadas</div>';
 		_.each(LocaliaConfig.getAvailablesCities(), function(city) {
-			cityList += '<label class="item item-radio" ng-click="selectCity()"><input type="radio"  ng-model="data.new_city" name="data.new_city" value="' + city.id + '"><div class="item-content">' + city.name + '</div><i class="radio-icon ion-ios-checkmark assertive"></i></label>';
+			cityList += '<label class="item item-radio" ng-click="selectCity()"><input type="radio"  ng-model="data.new_city" name="data.new_city" value="' + city.id + '"><div class="item-content">' + city.city + '</div><i class="radio-icon ion-ios-checkmark assertive"></i></label>';
 		});
 		cityList += '</div>';
 		$scope.data = {
@@ -115,6 +115,7 @@ angular.module('localia.controllers', ["leaflet-directive"])
 		};
 		cityPopup = $ionicPopup.show({
 			template: cityList,
+			cssClass: 'popup-city-selector',
 			title: 'Ciudad',
 			subTitle: 'Selecciona tu ciudad:',
 			scope: $scope,

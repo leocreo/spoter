@@ -89,6 +89,10 @@ ion-content {
 	font-weight: 300;
 	margin: 0;
 }
+.popup .popup-body {
+	width: 98%;
+	margin: 0 1%;
+}
 
 .image-loader{
 	background-image: url(../img/default-back-image.png);	
@@ -139,6 +143,9 @@ ion-content {
 	font-size: 30px;
 	line-height: 30px;
 	padding: 12px;
+}
+.city-list-selector .item-radio input:checked~.item-content {
+	background-color: transparent !important;
 }
 
 /* COLORES Y ESTILOS */
@@ -235,8 +242,8 @@ ion-content {
 }
 
 /*### SIDE MENU */
-.menu {
-	background-color: #F2F2F2;
+.menu .scroll-content{
+	background-color: #fafafa !important;	
 }
 .menu .bar-header {
 	box-shadow: 0 1px 10px rgba(0,0,0,0.1);
@@ -260,8 +267,8 @@ ion-content {
 	color: rgba(255,255,255,.7) !important;
 	padding-top: 15px;
 	height: 92px;
-	font-size: 14px;
-	line-height: 30px
+	font-size: 14px !important;
+	line-height: 30px !important;
 }
 .menu .has-header {
 	top: 92px;
@@ -276,10 +283,17 @@ ion-content {
 	white-space: nowrap;
 	overflow: hidden;
 }
+.menu .main-items {
+	background-color: #f00;
+}
 .menu .main-items .list {
 	box-shadow: 0 0 10px rgba(0,0,0,.1);
 	z-index: 1000;
 	border-bottom: 1px solid #000;
+	background-color: #fff;
+}
+.menu .main-items .item {
+	background-color: #fff;
 }
 .menu .main-items .item-icon-left .icon , .categories-list  .item-icon-left .icon {
 	left: 18px;
@@ -299,6 +313,7 @@ ion-content {
 	padding-left: 40px;
 	padding-bottom: 0;
 	border: 0;		
+	font-weight: 400;
 }
 
 .menu .categories-list .categories-item{	
