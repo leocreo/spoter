@@ -117,7 +117,12 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 				service.initiated = true;
 				deferred.resolve(service);
 				service.getGeoLocation().then(function() {
-					service.loadServerStartup();
+					service.loadServerStartup().then(function() {
+						if (service.getCurrentCity() !== false) {
+							// Refrescamos data nueva de la ciudad (si hay) previamente seleccionada
+							service.setCurrentCity(service.getCurrentCity().id);
+						}
+					});
 				});
 			}
 		});
