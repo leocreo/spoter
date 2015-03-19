@@ -1,4 +1,4 @@
-angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', 'localia.directives', 'imageLoader', 'ngCordova'])
+angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', 'localia.directives', 'lazyImageLoader', 'ngCordova'])
 
 
 // Underscore service

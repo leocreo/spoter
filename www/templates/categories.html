@@ -17,7 +17,7 @@
 		</h2>
 	</ion-header-bar>
 
-	<ion-content image-loader-scroll>			
+	<ion-content>			
 		<div class="home-categories">  					
 			<div class='row' ng-repeat="category in childrenCategories track by $index" ng-if="$index%2==0">
 				<div class="col col-50" ng-if="(childrenCategories[$index] != null)" ng-click="goCategory(childrenCategories[$index].id)" >
@@ -47,7 +47,7 @@
 		</div>		
 		<ion-list type="" class="ad-list">
 			<ion-item ng-repeat="ad in ads" class="item-thumbnail-left" ng-click="goAd(ad.id)">
-				<div class="image image-loader" image-loader-background="{{ad.banner}}"  image-loader-lazy></div>
+				<div class="image image-loader" lazy-image-background="{{ad.banner}}"></div>
 				<h2>{{ad.title}}</h2>
 				<h3>{{ad.address}}</h3>
     				<p>{{ad.description}}</p>	

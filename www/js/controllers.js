@@ -151,8 +151,8 @@ angular.module('localia.controllers', ["leaflet-directive"])
 		};
 	};
 
-	$scope.searchFunction = function() {
-		console.log("GOOOOO!");
+	$scope.searchFunction = function(key) {
+		console.log("Buscar: " + key);
 	};
 
 	angular.extend($scope, {

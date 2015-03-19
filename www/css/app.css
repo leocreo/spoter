@@ -95,14 +95,14 @@ ion-content {
 	margin: 0 1%;
 }
 
-.image-loader{
+.lazy-image-background{
 	background-image: url(../img/default-back-image.png);	
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: 25%;
 	position: relative;
 }
-.image-content {
+.lazy-image-background-content{
 	position: absolute; 
 	top: 0; 
 	left: 0; 
@@ -115,7 +115,7 @@ ion-content {
 	transition: opacity .5s ease-in-out;
 	-moz-transition: opacity .5s ease-in-out;
 	-webkit-transition: opacity .5s ease-in-out;
-	z-index: 10;
+	z-index: 1;
 }
 
 
@@ -378,6 +378,7 @@ ion-content {
 	left: 10px;
 	right: 10px;
 	text-shadow: 0 0 5px rgba(0,0,0,.7);
+	z-index: 100;
 }
 .header-city h3 span {
 	font-size: 13px;
@@ -399,6 +400,7 @@ ion-content {
 	background: -webkit-gradient(linear, left bottom, left top, color-stop(0%,rgba(0,0,0,.7)), color-stop(100%,rgba(0,0,0,.36))); /* Chrome,Safari4+ */
 	background: -webkit-linear-gradient(bottom,  rgba(0,0,0,.7) 0%,rgba(0,0,0,.36) 100%); /* Chrome10+,Safari5.1+ */
 	background: linear-gradient(to top,  rgba(0,0,0,.7) 0%,rgba(0,0,0,.36) 100%); /* W3C */
+	z-index: 10;
 }
 .header-city .logo {
 	width: 30%;
@@ -449,7 +451,7 @@ ion-content {
 	padding: 9px 0;
 	z-index: 11;
 }
-.home-categories.banner .image-loader{
+.home-categories.banner .lazy-image-background{
 	background-image: none;
 }
 .home-categories i {

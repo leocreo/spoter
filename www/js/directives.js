@@ -30,9 +30,9 @@ angular.module('localia.directives', [])
 				'<div class="search-box" ng-if="showbox"><div class="box">',
 				'<i class="icon ion-android-arrow-back btn-back" ng-click="searchBoxHide()"></i>',
 				'<label class="item item-input">',
-				'<input type="search" placeholder="Buscar" ng-model="search.keyword" >',
+				'<input type="search" placeholder="Buscar" ng-model="search.keyword" focus>',
 				'</label>',
-				'<i class="icon ion-ios-search-strong btn-search" ng-click="doSearch()" ></i>',
+				'<i class="icon ion-ios-search-strong btn-search" ng-click="doSearch(search.keyword)" ></i>',
 				'</div><div class="backdrop" ng-click="searchBoxHide()"></div></div>'
 			].join(''),
 			replace: true,
@@ -41,6 +41,7 @@ angular.module('localia.directives', [])
 			},
 			controller: function($scope, $attrs) {
 				$scope.showbox = false;
+				$scope.focus = true;
 				$scope.search = {
 					keyword: ''
 				};
@@ -50,13 +51,44 @@ angular.module('localia.directives', [])
 				$scope.$parent.searchBoxHide = function() {
 					$scope.showbox = false;
 				};
-				$scope.doSearch = function() {
-					console.log("Buscar: " + $scope.search.keyword);
-					searchFunction();
+				$scope.$parent.doSearch = function(keyword) {
+					$scope.$parent.searchFunction(keyword);
+					$scope.$parent.searchBoxHide();
 				}
 			},
-			link: function(scope, element, attrs) {
-				console.log(element);
+			link: function($scope, $element, $attrs) {
+				$scope.keyword = "bbbb";
+
 			}
 		};
-	});
+	})
+	.directive('focus', function($timeout, $parse) {
+		return {
+			scope: {
+				focus: '@'
+			},
+			link: function(scope, element) {
+				function doFocus() {
+					$timeout(function() {
+						element[0].focus();
+					});
+				}
+				if (scope.focus != null) {
+					// focus unless attribute evaluates to 'false'
+					if (scope.focus !== 'false') {
+						doFocus();
+					}
+					// focus if attribute value changes to 'true'
+					scope.$watch('focus', function(value) {
+						if (value === 'true') {
+							doFocus();
+						}
+					});
+				} else {
+					// if attribute value is not provided - always focus
+					doFocus();
+				}
+
+			}
+		};
+	})

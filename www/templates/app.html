@@ -6,7 +6,7 @@
 			<h1 class="title">
 				<i class="icon ion-location pull-right" ng-show="LocaliaConfig.getAvailablesCities().length > 1"></i>Localia
 				<div class="subtitle">{{currentCity.city}} </div>				
-			</h1>
+			</h1> 
 		</ion-header-bar>
 		<ion-content>
 			<ion-list class="main-items">
@@ -53,7 +53,7 @@
 			</ion-nav-buttons>
 		</ion-nav-bar>
 
-		<ion-nav-view name="content"></ion-nav-view>
+		<ion-nav-view name="content"  lazy-image-scroll></ion-nav-view>
 
 	</ion-side-menu-content>
 

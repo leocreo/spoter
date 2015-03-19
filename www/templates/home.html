@@ -12,8 +12,8 @@
 		</ion-pane>
 	</ion-nav-bar>
 
-	<ion-content header-scroll-fade header-scroll-reference="header-city" header-scroll-header="bar-scroll" >		
-		<div class="header-city" ng-style="{'background-image':'url('+currentCity.banners[0].url+')'}">		
+	<ion-content header-scroll-fade header-scroll-reference="header-city" header-scroll-header="bar-scroll">		
+		<div class="header-city" lazy-image-background="{{currentCity.banners[0].url}}" >		
 			<div class="overlay"></div>
 			<h3>
 				<img src="img/welcome-localia-logo.png" class="logo">

@@ -27,6 +27,8 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 	service.predefinedCityId = false;
 
 	service.setCurrentCity = function(id) {
+		if (Number(id) == Number(service.getCurrentCity().id))
+			return;
 		var city = _.findWhere(service.getAvailablesCities(), {
 			id: Number(id)
 		});
@@ -119,6 +121,7 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 				service.getGeoLocation().then(function() {
 					service.loadServerStartup().then(function() {
 						if (service.getCurrentCity() !== false) {
+							// Tareas en background con la info de STARTUP
 							// Refrescamos data nueva de la ciudad (si hay) previamente seleccionada
 							service.setCurrentCity(service.getCurrentCity().id);
 						}
