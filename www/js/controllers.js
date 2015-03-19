@@ -58,7 +58,7 @@ angular.module('localia.controllers', ["leaflet-directive"])
 
 //############################################################################### 
 // Main App Layout Controller 
-.controller('AppController', ['_', '$scope', '$state', '$ionicPopup', 'LocaliaCategories', 'LocaliaConfig', function(_, $scope, $state, $ionicPopup, LocaliaCategories, LocaliaConfig) {
+.controller('AppController', ['_', '$scope', '$state', '$ionicPopup', 'LocaliaCategories', 'LocaliaConfig', '$ionicBackdrop', function(_, $scope, $state, $ionicPopup, LocaliaCategories, LocaliaConfig, $ionicBackdrop) {
 
 
 	$scope.getAllCategories = function(reload) {
@@ -151,6 +151,9 @@ angular.module('localia.controllers', ["leaflet-directive"])
 		};
 	};
 
+	$scope.searchFunction = function() {
+		console.log("GOOOOO!");
+	};
 
 	angular.extend($scope, {
 		map: {
@@ -177,7 +180,7 @@ angular.module('localia.controllers', ["leaflet-directive"])
 		$scope.getAllCategories(true);
 	}, $scope);
 
-	$scope.currentCity = LocaliaConfig.userData.currentCity;
+	$scope.currentCity = LocaliaConfig.getCurrentCity();
 	$scope.getAllCategories();
 }])
 

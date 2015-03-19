@@ -23,3 +23,40 @@ angular.module('localia.directives', [])
 			}
 		}
 	})
+	.directive('searchBox', function() {
+		return {
+			restrict: 'E',
+			template: [
+				'<div class="search-box" ng-if="showbox"><div class="box">',
+				'<i class="icon ion-android-arrow-back btn-back" ng-click="searchBoxHide()"></i>',
+				'<label class="item item-input">',
+				'<input type="search" placeholder="Buscar" ng-model="search.keyword" >',
+				'</label>',
+				'<i class="icon ion-ios-search-strong btn-search" ng-click="doSearch()" ></i>',
+				'</div><div class="backdrop" ng-click="searchBoxHide()"></div></div>'
+			].join(''),
+			replace: true,
+			scope: {
+				searchFunction: '&'
+			},
+			controller: function($scope, $attrs) {
+				$scope.showbox = false;
+				$scope.search = {
+					keyword: ''
+				};
+				$scope.$parent.searchBoxShow = function() {
+					$scope.showbox = true;
+				};
+				$scope.$parent.searchBoxHide = function() {
+					$scope.showbox = false;
+				};
+				$scope.doSearch = function() {
+					console.log("Buscar: " + $scope.search.keyword);
+					searchFunction();
+				}
+			},
+			link: function(scope, element, attrs) {
+				console.log(element);
+			}
+		};
+	});
