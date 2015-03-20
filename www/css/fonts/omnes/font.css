@@ -1,0 +1,83 @@
+
+
+@font-face {
+	font-family: 'Omnes';
+	src: url('OmnesLight-webfont.eot');
+	src: url('OmnesLight-webfont.eot?#iefix') format('embedded-opentype'),
+		 url('OmnesLight-webfont.woff2') format('woff2'),
+		 url('OmnesLight-webfont.woff') format('woff'),
+		 url('OmnesLight-webfont.ttf') format('truetype'),
+		 url('OmnesLight-webfont.svg#omneslight') format('svg');
+	font-weight: 300;
+	font-style: normal;
+
+}
+
+@font-face {
+	font-family: 'Omnes';
+	src: url('OmnesLight-Italic-webfont.eot');
+	src: url('OmnesLight-Italic-webfont.eot?#iefix') format('embedded-opentype'),
+		 url('OmnesLight-Italic-webfont.woff2') format('woff2'),
+		 url('OmnesLight-Italic-webfont.woff') format('woff'),
+		 url('OmnesLight-Italic-webfont.ttf') format('truetype'),
+		 url('OmnesLight-Italic-webfont.svg#omnes_lightregular') format('svg');
+	font-weight: 300;
+	font-style: italic;
+
+}
+
+
+@font-face {
+	font-family: 'Omnes';
+	src: url('Omnes-Regular-webfont.eot');
+	src: url('Omnes-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+		 url('Omnes-Regular-webfont.woff2') format('woff2'),
+		 url('Omnes-Regular-webfont.woff') format('woff'),
+		 url('Omnes-Regular-webfont.ttf') format('truetype'),
+		 url('Omnes-Regular-webfont.svg#omnesregular') format('svg');
+	font-weight: normal;
+	font-style: normal;
+
+}
+
+
+@font-face {
+	font-family: 'Omnes';
+	src: url('Omnes-Italic-webfont.eot');
+	src: url('Omnes-Italic-webfont.eot?#iefix') format('embedded-opentype'),
+		 url('Omnes-Italic-webfont.woff2') format('woff2'),
+		 url('Omnes-Italic-webfont.woff') format('woff'),
+		 url('Omnes-Italic-webfont.ttf') format('truetype'),
+		 url('Omnes-Italic-webfont.svg#omnesitalic') format('svg');
+	font-weight: normal;
+	font-style: italic;
+
+}
+
+
+@font-face {
+	font-family: 'Omnes';
+	src: url('OmnesMedium-webfont.eot');
+	src: url('OmnesMedium-webfont.eot?#iefix') format('embedded-opentype'),
+		 url('OmnesMedium-webfont.woff2') format('woff2'),
+		 url('OmnesMedium-webfont.woff') format('woff'),
+		 url('OmnesMedium-webfont.ttf') format('truetype'),
+		 url('OmnesMedium-webfont.svg#omnessemibold') format('svg');
+	font-weight: 700;
+	font-style: normal;
+
+}
+
+
+@font-face {
+	font-family: 'Omnes';
+	src: url('OmnesMedium-Italic-webfont.eot');
+	src: url('OmnesMedium-Italic-webfont.eot?#iefix') format('embedded-opentype'),
+		 url('OmnesMedium-Italic-webfont.woff2') format('woff2'),
+		 url('OmnesMedium-Italic-webfont.woff') format('woff'),
+		 url('OmnesMedium-Italic-webfont.ttf') format('truetype'),
+		 url('OmnesMedium-Italic-webfont.svg#omnessemibold_italic') format('svg');
+	font-weight: 700;
+	font-style: italic;
+
+}

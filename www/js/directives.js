@@ -30,7 +30,7 @@ angular.module('localia.directives', [])
 				'<div class="search-box" ng-if="showbox"><div class="box">',
 				'<i class="icon ion-android-arrow-back btn-back" ng-click="searchBoxHide()"></i>',
 				'<label class="item item-input">',
-				'<input type="search" placeholder="Buscar" ng-model="search.keyword" focus>',
+				'<input type="search" placeholder="Buscar" ng-model="search.keyword" ng-enter="doSearch(search.keyword)" focus>',
 				'</label>',
 				'<i class="icon ion-ios-search-strong btn-search" ng-click="doSearch(search.keyword)" ></i>',
 				'</div><div class="backdrop" ng-click="searchBoxHide()"></div></div>'
@@ -54,7 +54,7 @@ angular.module('localia.directives', [])
 				$scope.$parent.doSearch = function(keyword) {
 					$scope.$parent.searchFunction(keyword);
 					$scope.$parent.searchBoxHide();
-				}
+				};
 			},
 			link: function($scope, $element, $attrs) {
 				$scope.keyword = "bbbb";
@@ -90,5 +90,18 @@ angular.module('localia.directives', [])
 				}
 
 			}
+		};
+	})
+	.directive('ngEnter', function() {
+		return function(scope, element, attrs) {
+			element.bind("keydown keypress", function(event) {
+				if (event.which === 13) {
+					scope.$apply(function() {
+						scope.$eval(attrs.ngEnter);
+					});
+
+					event.preventDefault();
+				}
+			});
 		};
 	})

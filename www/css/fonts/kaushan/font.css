@@ -1,9 +1,0 @@
-@font-face {
-    font-family: 'Kaushan';
-    src: url('fonts/KaushanScriptRegular.eot');
-    src: url('fonts/KaushanScriptRegular.eot') format('embedded-opentype'),
-         url('fonts/KaushanScriptRegular.woff2') format('woff2'),
-         url('fonts/KaushanScriptRegular.woff') format('woff'),
-         url('fonts/KaushanScriptRegular.ttf') format('truetype'),
-         url('fotns/KaushanScriptRegular.svg#KaushanScriptRegular') format('svg');
-}

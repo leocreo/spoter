@@ -30,6 +30,9 @@ angular.module('lazyImageLoader')
 		return {
 			restrict: 'A',
 			replace: false,
+			scope: {
+				lazyImageBackground: '@'
+			},
 			link: function(scope, element, attributes) {
 				var lazyTolerance = 150;
 				var template = '<div class="lazy-image-background-content" style="background-image: url({{backgrounImage}}); opacity: {{opacity}}"></div>';
@@ -39,7 +42,7 @@ angular.module('lazyImageLoader')
 					var image = new Image();
 					image.onload = function(event) {
 						element[0].querySelector(".lazy-image-background-content").style.opacity = 1;
-						element[0].style.backgroundImage = "none";
+						//element[0].style.backgroundImage = "none";
 					};
 					image.src = src;
 					scope.backgrounImage = src;
@@ -76,6 +79,11 @@ angular.module('lazyImageLoader')
 						}
 					}
 				}, 500);
+				attributes.$observe('lazyImageBackground', function(newSrc) {
+					scope.opacity = 0;
+					scope.backgrounImage = '';
+					preloadImage(newSrc);
+				});
 				var linkFn = $compile(template);
 				var content = linkFn(scope);
 				element.append(content);

@@ -1,16 +1,16 @@
 /*### GLOBALS */
 
 body {
-	font-family: 'Roboto';	
+	font-family: 'Omnes';	
 	font-weight: 300;
 	background-image: url(../img/welcome-background.jpg);
 	background-size: cover;
 }
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-	font-family: 'Roboto';	
+	font-family: 'Omnes';	
 }
 input, button, select, textarea {
-	font-family: 'Roboto';		
+	font-family: 'Omnes';		
 }
 
 ion-content {
@@ -24,7 +24,7 @@ ion-content {
 }
 .item {
 	letter-spacing: -1px;
-	color: #666;
+	color: #727272;
 }
 .item p{
 	font-size: 15px;
@@ -68,8 +68,9 @@ ion-content {
 	display: block;
 }
 .list .item-divider {
-	text-transform: uppercase;
-	font-size: 13px;
+	font-size: 16px;
+	letter-spacing: 0;
+	font-weight: 400;
 }
 .button-small {
 	padding: 2px 11px 1px;
@@ -79,15 +80,16 @@ ion-content {
 }
 .popup-container .popup{
 	border-radius: 2px;
+	width: 85%;
 	box-shadow: 0 0 10px rgba(0,0,0,.1);
 }
 .popup-title {
 	font-size: 20px;
+	font-weight: 700;
 	color: #555;
 }
 .popup-sub-title {
 	font-size: 14px;
-	font-weight: 300;
 	margin: 0;
 }
 .popup .popup-body {
@@ -127,6 +129,9 @@ ion-content {
 .city-list-selector .item-radio {
 	border-color: #eee;
 }
+.item-radio .item-content {
+	padding-right: 30px !important;	
+}
 /*
 .city-list-selector .overlay {
 	position: absolute;
@@ -153,9 +158,12 @@ ion-content {
 .bar {
 	border: 0;
 }
+.button {
+	font-weight: 700;
+}
 .button.button-small {
 	text-transform: uppercase;
-	font-size: 11px;
+	font-size: 12px;
 	font-weight: 700;
 	line-height: 25px;
 	border-radius: 2px;;
@@ -191,6 +199,7 @@ ion-content {
 	font-size: 24px;
 	color: #fff;
 	line-height: 40px;
+	padding-right: 1px;
 }
 .categories-list .categories-item span{
 	vertical-align: middle;
@@ -258,6 +267,8 @@ ion-content {
 	color: inherit;
 	display: block;
 	padding: 15px;
+	font-size: 16px;
+	letter-spacing: 0;	
 	/*
 	border-left-style: solid;
 	border-left-width: 4px;	*/
@@ -269,7 +280,7 @@ ion-content {
 	padding-top: 15px;
 	height: 92px;
 	font-size: 14px !important;
-	line-height: 30px !important;
+	line-height: 26px !important;
 }
 .menu .has-header {
 	top: 92px;
@@ -277,12 +288,13 @@ ion-content {
 .menu .subtitle {
 	color: #fff;
 	font-size: 20px;
-	line-height: 32px;
-	font-weight: 300;
+	line-height: 20px;
+	font-weight: 700;
 	text-transform: none;
-	text-overflow: ellipsis;
+	white-space: normal;
+	/*text-overflow: ellipsis;
 	white-space: nowrap;
-	overflow: hidden;
+	overflow: hidden;*/
 }
 .menu .main-items {
 	background-color: #f00;
@@ -292,12 +304,15 @@ ion-content {
 	z-index: 1000;
 	border-bottom: 1px solid #000;
 	background-color: #fff;
+	padding-top: 6px;
+	padding-bottom: 6px;
 }
 .menu .main-items .item {
 	background-color: #fff;
+	padding-left: 35px;
 }
 .menu .main-items .item-icon-left .icon , .categories-list  .item-icon-left .icon {
-	left: 18px;
+	left: 12px;
 }
 .menu .main-items .list:last-child {
 	border-bottom: 0;
@@ -368,13 +383,14 @@ ion-content {
 	background-size: cover;
 }
 .header-city h3 {
-	font-weight: 300;
-	font-size: 28px;
+	font-weight: 700;
+	font-size: 31px;
+	line-height: 30px;
 	letter-spacing: -1px;
 	text-align: center;
 	color: rgba(255,255,255,1);
 	position: absolute;
-	bottom: 20px;
+	bottom: 10px;
 	left: 10px;
 	right: 10px;
 	text-shadow: 0 0 5px rgba(0,0,0,.7);
@@ -416,6 +432,7 @@ ion-content {
 	bottom: 0;
 	background-size: 100% 100%;
 	background-image: url(../img/cityline-vgb.png);
+	z-index: 20;
 }
 
 .home-categories .col {
@@ -433,6 +450,7 @@ ion-content {
 	color: #fff;
 	text-align: center;
 	font-size: 12px;
+	font-weight: 700;
 	text-transform: uppercase;
 	position: absolute;
 	bottom: 0;
@@ -727,16 +745,21 @@ ion-content {
 }
 .ad-list h2 {
 	font-size: 18px;
-	color: #666;
-	margin-top: 0;
-	margin-bottom: 4px;
+	font-weight: 700;	
+	color: #444;
+	margin-top: 2px;
 }
 .ad-list h3 {
-	font-size: 11px;	
+	font-size: 12px;	
 	letter-spacing: 0;
 	text-transform: uppercase;
-	margin: 0;
+	margin: 0 0 6px 0;
 	color: #aaa;
+}
+.ad-list p {
+	letter-spacing: 0;
+	white-space: normal;
+	color: #333;
 }
 .ad-list .item-thumbnail-left, .ad-list  .item-thumbnail-left .item-content {
 	padding-left: 133px;
