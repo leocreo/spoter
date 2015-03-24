@@ -7,7 +7,7 @@ angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', '
 	return (_);
 }])
 
-.run(function($ionicPlatform, $state, $templateCache, LocaliaConfig, $ionicHistory, $cordovaGoogleAnalytics) {
+.run(function($ionicPlatform, $state, $templateCache, $ionicHistory, $cordovaGoogleAnalytics) {
 	$ionicPlatform.ready(function() {
 
 		if (window.cordova && window.cordova.plugins.Keyboard) {
@@ -43,10 +43,11 @@ angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', '
 			template: '<ion-nav-view name="main"></ion-nav-view>',
 			controller: 'InitController',
 			resolve: {
-				LocaliaConfig: function(LocaliaConfig) {
-					if (LocaliaConfig.initiated)
-						return LocaliaConfig;
-					return LocaliaConfig.init();
+				config: function(LocaliaConfig, $rootScope) {
+					console.log("Resolving...");
+					return LocaliaConfig.init().then(function(config) {
+						$rootScope.LocaliaConfig = config;
+					});
 				}
 			}
 		})
@@ -161,5 +162,5 @@ angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', '
 				}
 			}
 		})
-	$urlRouterProvider.otherwise('/');
+	$urlRouterProvider.otherwise('/init');
 });

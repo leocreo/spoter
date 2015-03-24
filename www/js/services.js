@@ -13,8 +13,7 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 		appName: 'Localia',
 		appVersion: '1.0',
 		api: {
-			endpoint: 'http://spoter-server/api/' // DEV
-				// endpoint: 'http://localia.mobi/api/' // PRODUCCION
+			endpoint: 'http://www.localia.com.ar/api/'
 		},
 		gaCode: 'UA-60262215-1'
 	};
@@ -27,10 +26,10 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 	service.predefinedCityId = false;
 
 	service.setCurrentCity = function(id) {
-		if (Number(id) == Number(service.getCurrentCity().id))
+		if (String(id) == String(service.getCurrentCity().id))
 			return;
 		var city = _.findWhere(service.getAvailablesCities(), {
-			id: Number(id)
+			id: String(id)
 		});
 		if (city) {
 			this.userData.currentCity = city;
@@ -140,10 +139,11 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 
 // RESOURCES: Definimos los recursos que se comunicarán con el REST API ##########################################################
 // Resource/Model: CATEGORIES 
-.factory('LocaliaCategories', ['_', 'LocaliaConfig', 'LocaliaApiService', 'DSCacheFactory', function(_, LocaliaConfig, LocaliaApiService, DSCacheFactory) {
+.factory('LocaliaCategories', ['_', 'LocaliaApiService', 'DSCacheFactory', function(_, LocaliaApiService, DSCacheFactory) {
 
-	var service = new LocaliaApiService();
-	service.endpoint = LocaliaConfig.config.api.endpoint + "categories";
+	var service = LocaliaApiService();
+
+	service.endpoint = "categories";
 	service.cache = DSCacheFactory('localiaCategories', {
 		maxAge: ((1000 * 60 * 60) * 1),
 		deleteOnExpire: 'aggressive',
@@ -183,10 +183,10 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 }])
 
 // Resource/Model: ADS 
-.factory('LocaliaAds', ['_', 'LocaliaConfig', 'DSCacheFactory', 'LocaliaApiService', function(_, LocaliaConfig, DSCacheFactory, LocaliaApiService) {
+.factory('LocaliaAds', ['_', 'DSCacheFactory', 'LocaliaApiService', function(_, DSCacheFactory, LocaliaApiService) {
 
 	var service = new LocaliaApiService();
-	service.endpoint = LocaliaConfig.config.api.endpoint + "ads";
+	service.endpoint = "ads";
 	service.cache = DSCacheFactory('localiaAds', {
 		maxAge: ((1000 * 60 * 60) * .5),
 		deleteOnExpire: 'aggressive',
@@ -198,10 +198,10 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 }])
 
 // Resource/Model: PROMOTIONS 
-.factory('LocaliaPromotions', ['_', 'LocaliaConfig', 'LocaliaApiService', 'DSCacheFactory', function(_, LocaliaConfig, LocaliaApiService, DSCacheFactory) {
+.factory('LocaliaPromotions', ['_', 'LocaliaApiService', 'DSCacheFactory', function(_, LocaliaApiService, DSCacheFactory) {
 
 	var service = new LocaliaApiService();
-	service.endpoint = LocaliaConfig.config.api.endpoint + "promotions";
+	service.endpoint = "promotions";
 	service.cache = DSCacheFactory('localiaPromotions', {
 		maxAge: ((1000 * 60 * 60) * 0),
 		deleteOnExpire: 'aggressive',
@@ -213,10 +213,10 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 }])
 
 // Resource/Model: EVENTS 
-.factory('LocaliaEvents', ['_', 'LocaliaConfig', 'LocaliaApiService', 'DSCacheFactory', function(_, LocaliaConfig, LocaliaApiService, DSCacheFactory) {
+.factory('LocaliaEvents', ['_', 'LocaliaApiService', 'DSCacheFactory', function(_, LocaliaApiService, DSCacheFactory) {
 
 	var service = new LocaliaApiService();
-	service.endpoint = LocaliaConfig.config.api.endpoint + "events";
+	service.endpoint = "events";
 	service.cache = DSCacheFactory('localiaEvents', {
 		maxAge: ((1000 * 60 * 60) * .2),
 		deleteOnExpire: 'aggressive',
@@ -229,9 +229,9 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 
 
 // Resource/Model: PLACES 
-.factory('LocaliaPlaces', ['_', 'LocaliaConfig', 'LocaliaApiService', 'DSCacheFactory', function(_, LocaliaConfig, LocaliaApiService, DSCacheFactory) {
+.factory('LocaliaPlaces', ['_', 'LocaliaApiService', 'DSCacheFactory', function(_, LocaliaApiService, DSCacheFactory) {
 	var service = new LocaliaApiService();
-	service.endpoint = LocaliaConfig.config.api.endpoint + "places";
+	service.endpoint = "places";
 	service.cache = DSCacheFactory('localiaPlaces', {
 		maxAge: ((1000 * 60 * 60) * .2),
 		deleteOnExpire: 'aggressive',
@@ -243,7 +243,7 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 }])
 
 // Master Factory para interactual con el API del Server
-.factory('LocaliaApiService', ['$http', '$q', 'LocaliaConfig', 'EventsService', function($http, $q, LocaliaConfig, EventsService) {
+.factory('LocaliaApiService', ['$rootScope', '$http', '$q', 'EventsService', function($rootScope, $http, $q, EventsService) {
 
 	function parseResponseError(response) {
 		var error = {};
@@ -269,7 +269,7 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 	function parseResponseSuccess(response) {
 		return response.data;
 	}
-	var service = function() {
+	var service = function(config) {
 		this.ERR_NETWORK_ERROR = 100;
 		this.ERR_API_ERROR = 101;
 		this.ERR_NOT_FOUND = 102;
@@ -282,14 +282,14 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 		}
 		this._globalParams = function() {
 			return {
-				city_id: LocaliaConfig.getCurrentCity().id
+				city_id: $rootScope.LocaliaConfig.getCurrentCity().id
 			};
 		}
 		this._findAll = function(params) {
 
 			var defer = $q.defer();
 			$http({
-				url: this.endpoint,
+				url: $rootScope.LocaliaConfig.config.api.endpoint + this.endpoint,
 				method: 'GET',
 				params: angular.extend({}, this._globalParams(), params),
 				cache: this.cache

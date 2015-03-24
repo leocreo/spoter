@@ -2,18 +2,17 @@ angular.module('localia.controllers', ["leaflet-directive"])
 
 //############################################################################### 
 // Init Controller 
-.controller("InitController", ['LocaliaConfig', '$state', '$scope', function(LocaliaConfig, $state, $scope) {
+.controller("InitController", ['$rootScope', '$state', '$scope', function($rootScope, $state, $scope) {
 
-	$scope.LocaliaConfig = LocaliaConfig;
-
-	if (LocaliaConfig.getCurrentCity() !== false) {
-		$state.go('home');
+	if ($rootScope.LocaliaConfig.getCurrentCity() !== false) {
+		//if ($state.current.name !== "home")
+		//	$state.go('home');
 	} else {
-		if (LocaliaConfig.predefinedCityId !== false) {
-			LocaliaConfig.setCurrentCity(LocaliaConfig.predefinedCityId);
+		if ($rootScope.LocaliaConfig.predefinedCityId !== false) {
+			$rootScope.LocaliaConfig.setCurrentCity($rootScope.LocaliaConfig.predefinedCityId);
 		} else {
-			if (LocaliaConfig.serverConfig !== false && LocaliaConfig.serverConfig.default_city)
-				LocaliaConfig.setCurrentCity(LocaliaConfig.serverConfig.default_city);
+			if ($rootScope.LocaliaConfig.serverConfig !== false && $rootScope.LocaliaConfig.serverConfig.default_city)
+				$rootScope.LocaliaConfig.setCurrentCity($rootScope.LocaliaConfig.serverConfig.default_city);
 		}
 		$state.go('welcome');
 	}
@@ -21,7 +20,7 @@ angular.module('localia.controllers', ["leaflet-directive"])
 
 //############################################################################### 
 // Welcome Controller 
-.controller('WelcomeController', ['$scope', '$state', '$stateParams', 'LocaliaConfig', '$ionicSlideBoxDelegate', function($scope, $state, $stateParams, LocaliaConfig, $ionicSlideBoxDelegate) {
+.controller('WelcomeController', ['$rootScope', '$scope', '$state', '$stateParams', '$ionicSlideBoxDelegate', function($rootScope, $scope, $state, $stateParams, $ionicSlideBoxDelegate) {
 
 	$scope.goHome = function() {
 		$state.go('home', {}, {
@@ -30,7 +29,7 @@ angular.module('localia.controllers', ["leaflet-directive"])
 	};
 	$scope.reload = function() {
 		$scope.loading = true;
-		LocaliaConfig.loadServerStartup().then(function() {
+		$rootScope.LocaliaConfig.loadServerStartup().then(function() {
 			$scope.loading = false;
 			setup();
 		});
@@ -39,18 +38,18 @@ angular.module('localia.controllers', ["leaflet-directive"])
 		$ionicSlideBoxDelegate.slide(1);
 	}
 	$scope.start = function(city_id) {
-		LocaliaConfig.setCurrentCity(city_id);
+		$rootScope.LocaliaConfig.setCurrentCity(city_id);
 		$state.go('home', {}, {
 			location: 'replace'
 		});
 	}
 
 	function setup() {
-		$scope.currentCity = LocaliaConfig.userData.currentCity;
-		$scope.cities = LocaliaConfig.getAvailablesCities();
+		$scope.currentCity = $rootScope.LocaliaConfig.userData.currentCity;
+		$scope.cities = $rootScope.LocaliaConfig.getAvailablesCities();
 		$ionicSlideBoxDelegate.update();
 		$scope.serverError = false;
-		if (LocaliaConfig.serverConfig === false)
+		if ($rootScope.LocaliaConfig.serverConfig === false)
 			$scope.serverError = true;
 	}
 	setup();
@@ -58,12 +57,11 @@ angular.module('localia.controllers', ["leaflet-directive"])
 
 //############################################################################### 
 // Main App Layout Controller 
-.controller('AppController', ['_', '$scope', '$state', '$ionicPopup', 'LocaliaCategories', 'LocaliaConfig', '$ionicBackdrop', function(_, $scope, $state, $ionicPopup, LocaliaCategories, LocaliaConfig, $ionicBackdrop) {
-
+.controller('AppController', ['_', '$rootScope', '$scope', '$state', '$ionicPopup', 'LocaliaCategories', '$ionicBackdrop', function(_, $rootScope, $scope, $state, $ionicPopup, LocaliaCategories, $ionicBackdrop) {
 
 	$scope.getAllCategories = function(reload) {
 		if (reload)
-			LocaliaCategories.clearCache();
+			categories.clearCache();
 		$scope.loading_categories = true;
 		$scope.errorConnection = false;
 		LocaliaCategories.findAll().then(function(data) {
@@ -121,18 +119,18 @@ angular.module('localia.controllers', ["leaflet-directive"])
 	};
 	$scope.changeCity = function() {
 
-		if (_.isUndefined(LocaliaConfig.getAvailablesCities()) || LocaliaConfig.getAvailablesCities().length <= 1)
+		if (_.isUndefined($rootScope.LocaliaConfig.getAvailablesCities()) || $rootScope.LocaliaConfig.getAvailablesCities().length <= 1)
 			return false;
 
 		// Show the action sheet
 		var cityList = '<div class="list city-list-selector">';
 		//cityList += '<div class="item item-divider">Recomendadas</div>';
-		_.each(LocaliaConfig.getAvailablesCities(), function(city) {
+		_.each($rootScope.LocaliaConfig.getAvailablesCities(), function(city) {
 			cityList += '<label class="item item-radio" ng-click="selectCity()"><input type="radio"  ng-model="data.new_city" name="data.new_city" value="' + city.id + '"><div class="item-content">' + city.city + '</div><i class="radio-icon ion-ios-checkmark assertive"></i></label>';
 		});
 		cityList += '</div>';
 		$scope.data = {
-			new_city: LocaliaConfig.userData.currentCity.id
+			new_city: $rootScope.LocaliaConfig.userData.currentCity.id
 		};
 		cityPopup = $ionicPopup.show({
 			template: cityList,
@@ -145,7 +143,7 @@ angular.module('localia.controllers', ["leaflet-directive"])
 			}]
 		});
 		$scope.selectCity = function() {
-			LocaliaConfig.setCurrentCity($scope.data.new_city);
+			$rootScope.LocaliaConfig.setCurrentCity($scope.data.new_city);
 			cityPopup.close();
 			$state.go('home');
 		};
@@ -175,20 +173,20 @@ angular.module('localia.controllers', ["leaflet-directive"])
 		}
 	});
 
-	LocaliaConfig.events.on("localia:city.change", function(event, currentCity) {
+	$rootScope.LocaliaConfig.events.on("localia:city.change", function(event, currentCity) {
 		$scope.currentCity = currentCity;
 		$scope.getAllCategories(true);
 	}, $scope);
 
-	$scope.currentCity = LocaliaConfig.getCurrentCity();
+	$scope.currentCity = $rootScope.LocaliaConfig.getCurrentCity();
 	$scope.getAllCategories();
 }])
 
 //############################################################################### 
 // Home Front Controller 
-.controller('HomeController', ['$scope', '$state', 'LocaliaConfig', 'LocaliaCategories', 'LocaliaPlaces', '$ionicSlideBoxDelegate', function($scope, $state, LocaliaConfig, LocaliaCategories, LocaliaPlaces, $ionicSlideBoxDelegate) {
+.controller('HomeController', ['$rootScope', '$scope', '$state', 'LocaliaCategories', 'LocaliaPlaces', '$ionicSlideBoxDelegate', function($rootScope, $scope, $state, LocaliaCategories, LocaliaPlaces, $ionicSlideBoxDelegate) {
 
-	LocaliaConfig.events.on("localia:city.change", function(event, currentCity) {
+	$rootScope.LocaliaConfig.events.on("localia:city.change", function(event, currentCity) {
 		$scope.getFeatured();
 		$scope.getPlaces();
 	}, $scope);
@@ -226,7 +224,7 @@ angular.module('localia.controllers', ["leaflet-directive"])
 
 //############################################################################### 
 // Categories Controller 
-.controller('CategoriesController', ['$scope', '$stateParams', 'LocaliaConfig', 'LocaliaCategories', 'LocaliaAds', '$ionicNavBarDelegate', function($scope, $stateParams, LocaliaConfig, LocaliaCategories, LocaliaAds, $ionicNavBarDelegate) {
+.controller('CategoriesController', ['$rootScope', '$scope', '$stateParams', 'LocaliaCategories', 'LocaliaAds', '$ionicNavBarDelegate', function($rootScope, $scope, $stateParams, LocaliaCategories, LocaliaAds, $ionicNavBarDelegate) {
 
 
 	// Si se especifica id de categoría..... sino, se muestran todas las categorias padre
@@ -293,7 +291,7 @@ angular.module('localia.controllers', ["leaflet-directive"])
 
 //############################################################################### 
 // Ads Controller 
-.controller('AdsController', ['$scope', '$stateParams', 'LocaliaConfig', 'LocaliaCategories', 'LocaliaAds', '$ionicSlideBoxDelegate', function($scope, $stateParams, LocaliaConfig, LocaliaCategories, LocaliaAds, $ionicSlideBoxDelegate) {
+.controller('AdsController', ['$scope', '$stateParams', 'LocaliaCategories', 'LocaliaAds', '$ionicSlideBoxDelegate', function($scope, $stateParams, LocaliaCategories, LocaliaAds, $ionicSlideBoxDelegate) {
 
 	if (!_.isUndefined($stateParams.id) && !_.isEmpty($stateParams.id)) {
 		LocaliaAds.get(Number($stateParams.id)).then(
@@ -306,34 +304,12 @@ angular.module('localia.controllers', ["leaflet-directive"])
 		);
 	}
 
-	/*
-	var ad = LocaliaAds.get({
-		id: 92
-	}, function(result) {
-		console.log(result);
-	});
-*/
-
-	/*
-		// Traemos data completa del Anuncio
-		if ($stateParams.id) {
-			LocaliaAds.get(Number($stateParams.id)).then(function(data) {
-				console.log(2);
-				$scope.ad = data;
-				$scope.map.center.lat = data.location.lat;
-				$scope.map.center.lng = data.location.lng;
-				$scope.map.markers.ad.lat = data.location.lat;
-				$scope.map.markers.ad.lng = data.location.lng;
-				$ionicSlideBoxDelegate.update();
-			});
-		}
-	*/
 }])
 
 
 //############################################################################### 
 // Promotions Controller 
-.controller('PromotionsController', ['$scope', '$stateParams', 'LocaliaConfig', 'LocaliaPromotions', '$ionicSlideBoxDelegate', function($scope, $stateParams, LocaliaConfig, LocaliaPromotions, $ionicSlideBoxDelegate) {
+.controller('PromotionsController', ['$scope', '$stateParams', 'LocaliaPromotions', '$ionicSlideBoxDelegate', function($scope, $stateParams, LocaliaPromotions, $ionicSlideBoxDelegate) {
 
 	if ($stateParams.id) {
 		LocaliaPromotions.get($stateParams.id).then(function(data) {
@@ -354,7 +330,7 @@ angular.module('localia.controllers', ["leaflet-directive"])
 
 //############################################################################### 
 // Events Controller 
-.controller('EventsController', ['$scope', '$stateParams', 'LocaliaConfig', 'LocaliaEvents', '$ionicSlideBoxDelegate', function($scope, $stateParams, LocaliaConfig, LocaliaEvents, $ionicSlideBoxDelegate) {
+.controller('EventsController', ['$scope', '$stateParams', 'LocaliaEvents', '$ionicSlideBoxDelegate', function($scope, $stateParams, LocaliaEvents, $ionicSlideBoxDelegate) {
 	if ($stateParams.id) {
 		LocaliaEvents.get($stateParams.id).then(function(data) {
 			$scope.event = data;
@@ -373,7 +349,7 @@ angular.module('localia.controllers', ["leaflet-directive"])
 
 //############################################################################### 
 // Placess Controller 
-.controller('PlacesController', ['$scope', '$stateParams', 'LocaliaConfig', 'LocaliaPlaces', '$ionicSlideBoxDelegate', function($scope, $stateParams, LocaliaConfig, LocaliaPlaces, $ionicSlideBoxDelegate) {
+.controller('PlacesController', ['$scope', '$stateParams', 'LocaliaPlaces', '$ionicSlideBoxDelegate', function($scope, $stateParams, LocaliaPlaces, $ionicSlideBoxDelegate) {
 	if ($stateParams.id) {
 		LocaliaPlaces.get($stateParams.id).then(function(data) {
 			$scope.place = data;
