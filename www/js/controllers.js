@@ -308,6 +308,7 @@ angular.module('localia.controllers', ["leaflet-directive"])
 					lng: Number(data.lon),
 					zoom: 16
 				};
+				$ionicSlideBoxDelegate.update();
 			},
 			function(error) {
 				$scope.loading_ad = false;

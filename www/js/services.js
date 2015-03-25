@@ -188,7 +188,7 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 	var service = new LocaliaApiService();
 	service.endpoint = "ads";
 	service.cache = DSCacheFactory('localiaAds', {
-		maxAge: ((1000 * 60 * 60) * .5),
+		maxAge: ((1000 * 60 * 60) * 0),
 		deleteOnExpire: 'aggressive',
 		storageMode: 'localStorage'
 	});

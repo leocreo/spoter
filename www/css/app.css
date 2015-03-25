@@ -824,8 +824,8 @@ ion-content {
 	height: 180px;	
 	background-size: cover;
 	background-position: center;
-	position: relative;
-	width: 100%;
+	position: relative;	
+	z-index: 10;
 }
 .view-ad .slider-pager .slider-pager-page {
 	font-size: 11px;

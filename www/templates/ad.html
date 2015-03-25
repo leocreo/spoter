@@ -11,13 +11,13 @@
 
 	<ion-spinner ng-show="loading_ad" class="full"></ion-spinner>
 	
-	<ion-content >			
+	<ion-content >				
 		<div ng-show="!loading_ad" >
 			<div class="ad-image">	
 				<ion-slide-box>
 					<ion-slide ng-repeat="image in ad.banners">
-						<div class="overlay"></div>
-						<div class="image" lazy-image-background="{{ad.banners[0].url}}"></div>
+						<div class="overlay"></div>						
+						<div class="image" lazy-image-background="{{image.url}}"></div>
 					</ion-slide>
 				</ion-slide-box>
 			</div>		
