@@ -92,6 +92,16 @@ angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', '
 				}
 			}
 		})
+		.state('categories/root', {
+			url: "/categories/root",
+			parent: 'app',
+			views: {
+				"content": {
+					templateUrl: "templates/categories.html",
+					controller: 'CategoriesController'
+				}
+			}
+		})
 		.state('ads', {
 			url: "/ads/:id",
 			parent: 'app',

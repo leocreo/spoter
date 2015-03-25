@@ -458,9 +458,10 @@ ion-content {
 	right: 0;
 	line-height: 15px;
 	margin: 0;
-	opacity: .9;
+	opacity: 1;
 	padding: 6px 0;
 	border-radius: 0 0 3px 3px;
+	z-index: 100;
 }
 .home-categories.banner h3 {
 	text-transform: none;
@@ -486,7 +487,8 @@ ion-content {
 	font-size: 33px;
 	text-align: center;
 	line-height: 50px;
-	opacity: .9;
+	opacity: 1;
+	text-shadow: 0 1px 1px rgba(0,0,0,.2);
 }
 
 
@@ -794,9 +796,8 @@ ion-content {
 }
 .ad-list .item .badge{
 	right: auto;
-	left: 10px;
-	top: auto;
-	bottom: 20px;
+	left: 8px;
+	top: 12px;
 	font-size: 10px;
 	letter-spacing: 0;
 	text-transform: uppercase;
@@ -811,7 +812,6 @@ ion-content {
 	background-color: #ccc;
 	position: relative;
 }
-
 .view-ad .ad-image .slider {
 	position: absolute;
 	bottom: 0;
@@ -824,6 +824,8 @@ ion-content {
 	height: 180px;	
 	background-size: cover;
 	background-position: center;
+	position: relative;
+	width: 100%;
 }
 .view-ad .slider-pager .slider-pager-page {
 	font-size: 11px;
@@ -839,6 +841,7 @@ ion-content {
 	position: relative;
 	padding: 17px 20px;
 	box-shadow: 0 -5px 5px rgba(0,0,0,.2);
+	background-color: #444;
 }
 .view-ad .ad-info h4{
 	margin: 0 0 0 0;
@@ -862,6 +865,7 @@ ion-content {
 }
 .view-ad p{
 	padding: 15px 20px;
+	font-size: 16px;
 	color: #222;
 	font-weight: 300;
 }
@@ -887,7 +891,7 @@ ion-content {
 	display: inline-block;
 }
 .view-ad .categories-list .categories-item i{
-	box-shadow: 0 0 10px rgba(0,0,0,.3);
+	box-shadow: 0 1px 5px rgba(0,0,0,.2);
 	width: 50px;
 	height: 50px;
 	line-height: 50px;
@@ -896,8 +900,7 @@ ion-content {
 	padding: 20px 20px 0 20px;	
 }
 .view-ad .ad-catinfo span{
-	font-weight: 600;
-	color: #aaa;
+	font-weight: 600;	
 	border: 1px solid #eee;
 	border-radius: 2px;
 	padding: 1px 8px;
@@ -1256,24 +1259,24 @@ ion-content {
 }
 .extra-info div  {
 	text-align: center;
-	font-weight: 300;
-	
-	font-size: 17px;
-	letter-spacing: -1px;
+	font-weight: 300;	
+	font-size: 22px;
 	border-left: 1px solid #eee;
 }
 .extra-info div:first-child {
 	border-left: 0;
 } 
-.extra-info div  i {
-	display: block;
-	
-	font-size:22px; 
+.extra-info i {
+	display: block;	
+	font-size:24px; 
 }
-small{
-	font-size: 11px;
-	letter-spacing: 0;
-	
+.extra-info.ad-map-actions i {
+	float: left;
+	margin: 7px 10px 7px 3px;
+}
+.extra-info small{
+	font-size: 13px;
+	letter-spacing: 0;	
 	font-weight: 800;
 	display: block;
 	text-transform: uppercase;
@@ -1397,3 +1400,6 @@ small{
 	display: inline-block;
 	float: right;
 }	
+
+.leaflet-tile {
+}

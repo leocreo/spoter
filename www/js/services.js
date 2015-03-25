@@ -308,7 +308,7 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 		this._find = function(params) {
 			var defer = $q.defer();
 			$http({
-				url: this.endpoint,
+				url: $rootScope.LocaliaConfig.config.api.endpoint + this.endpoint,
 				method: 'GET',
 				params: angular.extend({}, this._globalParams(), params),
 				cache: this.cache
@@ -330,7 +330,7 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 		this._get = function(id, params) {
 			var defer = $q.defer();
 			$http({
-				url: this.endpoint + (!_.isUndefined(id) ? "/" + id : ''),
+				url: $rootScope.LocaliaConfig.config.api.endpoint + this.endpoint + (!_.isUndefined(id) ? "/" + id : ''),
 				method: 'GET',
 				params: angular.extend({}, this._globalParams(), params),
 				cache: this.cache

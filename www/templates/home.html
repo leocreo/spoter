@@ -67,10 +67,10 @@
 		</div>
 		<ion-spinner ng-show="loading_categories"></ion-spinner>
 		<div class="home-categories" ng-hide="loading_categories">  		
-			<div class='row' ng-repeat="category in featuredCategories track by $index" ng-if="$index%3==0">
+			<div class='row' ng-repeat="category in featuredCategories track by $index" ng-if="$index%2==0">
 				<div class="col" ng-if="(featuredCategories[$index] != null)" ng-click="goCategory(featuredCategories[$index].id)">
 					<div class="frame" style=" background-color: {{featuredCategories[$index].color}}">
-						<div class="image" style="background-image: url({{featuredCategories[$index].banner.url}});">
+						<div class="image"  lazy-image-background="{{featuredCategories[$index].banners[0].url}}" lazy-image-opacity=".8">
 							<i class="{{featuredCategories[$index].icon}}" style="background-color: {{featuredCategories[$index].color}};"></i>
 							<h3 style="background-color: {{featuredCategories[$index].color}}">{{featuredCategories[$index].name}}</h3>
 						</div>
@@ -78,20 +78,22 @@
 				</div>
 				<div class="col" ng-if="(featuredCategories[$index+1] != null)"  ng-click="goCategory(featuredCategories[$index+1].id)">
 					<div class="frame"  style="background-color: {{featuredCategories[$index+1].color}}">
-						<div class="image" style="background-image: url({{featuredCategories[$index+1].banner.url}}); ">
+						<div class="image" lazy-image-background="{{featuredCategories[$index+1].banners[0].url}}" lazy-image-opacity=".8">
 							<i class="{{featuredCategories[$index+1].icon}}" style="background-color: {{featuredCategories[$index+1].color}};"></i>
 							<h3 style="background-color: {{featuredCategories[$index+1].color}}">{{featuredCategories[$index+1].name}}</h3>
 						</div>
 					</div>
 				</div>
+				<!--
 				<div class="col" ng-if="(featuredCategories[$index+2] != null)"  ng-click="goCategory(featuredCategories[$index+2].id)">
 					<div class="frame" style="background-color: {{featuredCategories[$index+2].color}}">
-						<div class="image" style="background-image: url({{featuredCategories[$index+2].banner.url}}); ">
+						<div class="image"lazy-image-background="{{featuredCategories[$index+2].banners[0].url}}" lazy-image-opacity=".5">
 							<i class="{{featuredCategories[$index+2].icon}}" style="background-color: {{featuredCategories[$index+2].color}};"></i>
 							<h3 style="background-color: {{featuredCategories[$index+2].color}}">{{featuredCategories[$index+2].name}}</h3>
 						</div>
 					</div>
 				</div>
+				-->
 			 </div>
 		</div>
 

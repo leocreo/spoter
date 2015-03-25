@@ -1,4 +1,4 @@
-<ion-view view-title="{{ad.title}}" class="view-ad">
+<ion-view view-title="{{ad.place_name}}" class="view-ad">
 	
 	<ion-nav-bar class="bar bar-stable">
 		<ion-nav-back-button class="button-clear">
@@ -9,52 +9,54 @@
 		</ion-nav-buttons>		
 	</ion-nav-bar>
 
-
+	<ion-spinner ng-show="loading_ad" class="full"></ion-spinner>
 	
 	<ion-content >			
-		<div class="ad-image">	
-			<ion-slide-box>
-				<ion-slide ng-repeat="image in ad.banners">
-					<div class="overlay"></div>
-					<div class="image" style="background-image: url({{image.url}})"></div>
-				</ion-slide>
-			</ion-slide-box>
-		</div>		
-		<div class="ad-info positive-bg">
-	  		<div class="categories-list">  		
-				<div class="categories-item" ng-repeat="category in ad.categories"><i class="{{category.icon}}" style="background-color: {{category.color}};"></i></div>
+		<div ng-show="!loading_ad" >
+			<div class="ad-image">	
+				<ion-slide-box>
+					<ion-slide ng-repeat="image in ad.banners">
+						<div class="overlay"></div>
+						<div class="image" lazy-image-background="{{ad.banners[0].url}}"></div>
+					</ion-slide>
+				</ion-slide-box>
+			</div>		
+			<div class="ad-info">
+		  		<div class="categories-list">  		
+					<div class="categories-item" ng-repeat="category in ad.categories"><i class="{{category.icon}}" style="background-color: {{category.color}};"></i></div>
+				</div>
+				<h4>{{ad.place_name}}</h4>
+				<h5>{{ad.address}} <span ng-show="ad.phone">- {{ad.phone}}</span></h5>
+			</div>	
+			<div class="ad-catinfo">
+				<span  ng-repeat="category in ad.categories" class="dark">{{category.name}}</span>
 			</div>
-			<h4>{{ad.title}}</h4>
-			<h5>{{ad.address}} - {{ad.phone}}</h5>
-		</div>	
-		<div class="ad-catinfo">
-			<span  ng-repeat="category in ad.categories">{{category.name}}</span>
-		</div>
 
-		<p>{{ad.description}}</p>
-		
-		<div class="extra-info bottom row dark">
-			<div class="col" ng-if="ad.website">
-				<i class="ion-home"></i>
-				<small>Sitio web</small>
-				{{ad.website}}
+			<p>{{ad.description}}</p>
+			
+			<div class="extra-info bottom row dark" ng-show="ad.phone || ad.website">
+				<div class="col" ng-if="ad.website">
+					<i class="ion-home"></i>
+					<small>Sitio web</small>
+					<!--{{ad.website}}-->
+				</div>
+				<div class="col" ng-if="ad.phone">
+					<i class="ion-android-call"></i>
+					<small>Teléfono</small>
+					{{ad.phone}}
+				</div>
 			</div>
-			<div class="col" ng-if="ad.phone">
-				<i class="ion-android-call"></i>
-				<small>Teléfono</small>
-				{{ad.phone}}
+
+			<div class="extra-info ad-map-actions dark">
+				<button class="button button-small button-calm pull-right">
+					¿Cómo llegar?
+				</button>
+				<i class="ion-ios-location"></i>
+				<small>Dirección:</small>
+				<p>{{ad.address}}</p>
 			</div>
-		</div>
-
-		<div class="ad-map-actions dark">
-			<button class="button button-small button-calm pull-right">
-				<i class="ion-location"></i>¿Cómo llegar?
-			</button>
-			<small>Dirección:</small>
-			<p>{{ad.address}}</p>
-		</div>
-
-		<leaflet center="map.center" markers="map.markers" defaults="map.defaults" height="200px" width="100%"></leaflet>
+			<leaflet id ="ad-map" center="map_center" defaults="map_defaults" markers="map_markers" height="200px" width="100%"></leaflet>
+		</div>			
 
 	</ion-content>
 

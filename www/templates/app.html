@@ -28,7 +28,7 @@
 
 			<ion-list class="categories-list">
 				<div class="item item-divider  item-icon-left">
-					<a ui-sref ="categories" class="positive-border"  menu-close>Directorio de anuncios<i class="icon ion-ios-book"></i></a>
+					<a ui-sref ="categories/root" class="positive-border"  menu-close>Directorio de anuncios<i class="icon ion-ios-book"></i></a>
 				</div>
 				<ion-spinner ng-show="loading_categories"></ion-spinner>
 				<ion-item class="categories-item" menu-close  ng-repeat="category in categories | filter : {parent_id: 0}"  ng-click="goCategory({{category.id}})">

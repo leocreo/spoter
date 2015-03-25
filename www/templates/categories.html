@@ -22,16 +22,16 @@
 			<div class='row' ng-repeat="category in childrenCategories track by $index" ng-if="$index%2==0">
 				<div class="col col-50" ng-if="(childrenCategories[$index] != null)" ng-click="goCategory(childrenCategories[$index].id)" >
 					<div class="frame" style=" background-color: {{childrenCategories[$index].color}}">
-						<div class="image" style="background-image: url({{childrenCategories[$index].banner.url}});"> 
-							<i class="{{childrenCategories[$index].icon}}" style="background-color: {{childrenCategories[$index].color}};"></i>
+						<div class="image"  lazy-image-background="{{childrenCategories[$index].banners[0].url}}" lazy-image-opacity=".5">
+							<i class="{{childrenCategories[$index].icon}}" ></i>
 							<h3 style="background-color: {{childrenCategories[$index].color}}">{{childrenCategories[$index].name}}</h3>
 						</div>
 					</div>
 				</div>
 				<div class="col col-50" ng-if="(childrenCategories[$index+1] != null)"  ng-click="goCategory(childrenCategories[$index+1].id)">
 					<div class="frame" style=" background-color: {{childrenCategories[$index+1].color}}">
-						<div class="image" style="background-image: url({{childrenCategories[$index+1].banner.url}}); ">
-							<i class="{{childrenCategories[$index+1].icon}}" style="background-color: {{childrenCategories[$index+1].color}};"></i>
+						<div class="image"  lazy-image-background="{{childrenCategories[$index+1].banners[0].url}}" lazy-image-opacity=".5">
+							<i class="{{childrenCategories[$index+1].icon}}" ></i>
 							<h3 style="background-color: {{childrenCategories[$index+1].color}}">{{childrenCategories[$index+1].name}}</h3>
 						</div>
 					</div>
@@ -40,17 +40,17 @@
 		</div>
 
 		<div class="home-categories banner" ng-if="showBanner" style="background-color: {{category.color}};"> 
-			<div class="image image-loader" style="background-color: rgba(255,255,255,.2)"  image-loader-background="{{category.banner.url}}">
+			<div class="image image-loader" style="background-color: rgba(255,255,255,.2)"  lazy-image-background="{{category.banners[0].url}}">
 				<i class="{{category.icon}}" style="background-color: {{category.color}};"></i>
 				<h3 style="background-color: {{category.color}}">{{category.name}}</h3>
 			</div>
 		</div>		
 		<ion-list type="" class="ad-list">
 			<ion-item ng-repeat="ad in ads" class="item-thumbnail-left" ng-click="goAd(ad.id)">
-				<div class="image image-loader" lazy-image-background="{{ad.banner}}"></div>
+				<div class="image image-loader" lazy-image-background="{{ad.banners[0].url}}"></div>
 				<h2>{{ad.title}}</h2>
 				<h3>{{ad.address}}</h3>
-    				<p>{{ad.description}}</p>	
+    				<p>{{ad.description_short}}</p>	
     				<span class="badge badge-assertive">Nuevo</span>	
 			</ion-item>
 		</ion-list>

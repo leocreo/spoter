@@ -31,7 +31,8 @@ angular.module('lazyImageLoader')
 			restrict: 'A',
 			replace: false,
 			scope: {
-				lazyImageBackground: '@'
+				lazyImageBackground: '@',
+				lazyImageOpacity: '@'
 			},
 			link: function(scope, element, attributes) {
 				var lazyTolerance = 150;
@@ -41,7 +42,9 @@ angular.module('lazyImageLoader')
 				function preloadImage(src) {
 					var image = new Image();
 					image.onload = function(event) {
-						element[0].querySelector(".lazy-image-background-content").style.opacity = 1;
+						if (angular.isUndefined(attributes.lazyImageOpacity))
+							attributes.lazyImageOpacity = 1;
+						element[0].querySelector(".lazy-image-background-content").style.opacity = attributes.lazyImageOpacity;
 						//element[0].style.backgroundImage = "none";
 					};
 					image.src = src;

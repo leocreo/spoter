@@ -5,8 +5,9 @@ angular.module('localia.controllers', ["leaflet-directive"])
 .controller("InitController", ['$rootScope', '$state', '$scope', function($rootScope, $state, $scope) {
 
 	if ($rootScope.LocaliaConfig.getCurrentCity() !== false) {
-		//if ($state.current.name !== "home")
-		//	$state.go('home');
+		console.log($state.current.name);
+		if ($state.current.name == "init")
+			$state.go('home');
 	} else {
 		if ($rootScope.LocaliaConfig.predefinedCityId !== false) {
 			$rootScope.LocaliaConfig.setCurrentCity($rootScope.LocaliaConfig.predefinedCityId);
@@ -153,26 +154,6 @@ angular.module('localia.controllers', ["leaflet-directive"])
 		console.log("Buscar: " + key);
 	};
 
-	angular.extend($scope, {
-		map: {
-			center: {
-				lat: -63.4350586,
-				lng: -35.4427709,
-				zoom: 15
-			},
-			markers: {
-				ad: {
-					lat: -63.4350586,
-					lng: -35.4427709,
-					draggable: false
-				}
-			},
-			defaults: {
-				scrollWheelZoom: true
-			}
-		}
-	});
-
 	$rootScope.LocaliaConfig.events.on("localia:city.change", function(event, currentCity) {
 		$scope.currentCity = currentCity;
 		$scope.getAllCategories(true);
@@ -291,15 +272,45 @@ angular.module('localia.controllers', ["leaflet-directive"])
 
 //############################################################################### 
 // Ads Controller 
-.controller('AdsController', ['$scope', '$stateParams', 'LocaliaCategories', 'LocaliaAds', '$ionicSlideBoxDelegate', function($scope, $stateParams, LocaliaCategories, LocaliaAds, $ionicSlideBoxDelegate) {
+.controller('AdsController', ['$scope', '$stateParams', 'LocaliaCategories', 'LocaliaAds', '$ionicSlideBoxDelegate', 'leafletData', function($scope, $stateParams, LocaliaCategories, LocaliaAds, $ionicSlideBoxDelegate, leafletData) {
+
+	angular.extend($scope, {
+		map_defaults: {
+			zoom: 16,
+			tileLayerOptions: {
+				//detectRetina: true,
+				attribution: '© OpenStreetMap</a>'
+			}
+		},
+		map_markers: {},
+		map_center: {
+			autoDiscover: true
+		},
+
+	});
+
+	$scope.loading_ad = false;
 
 	if (!_.isUndefined($stateParams.id) && !_.isEmpty($stateParams.id)) {
+		$scope.loading_ad = true;
 		LocaliaAds.get(Number($stateParams.id)).then(
 			function(data) {
+				$scope.loading_ad = false;
 				$scope.ad = data;
+				$scope.map_markers = {
+					m1: {
+						lat: Number(data.lat),
+						lng: Number(data.lon),
+					}
+				};
+				$scope.map_center = {
+					lat: Number(data.lat),
+					lng: Number(data.lon),
+					zoom: 16
+				};
 			},
 			function(error) {
-
+				$scope.loading_ad = false;
 			}
 		);
 	}
