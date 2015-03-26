@@ -233,7 +233,7 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 	var service = new LocaliaApiService();
 	service.endpoint = "places";
 	service.cache = DSCacheFactory('localiaPlaces', {
-		maxAge: ((1000 * 60 * 60) * .2),
+		maxAge: ((1000 * 60 * 60) * 0),
 		deleteOnExpire: 'aggressive',
 		storageMode: 'localStorage'
 	});

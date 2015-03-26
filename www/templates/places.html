@@ -1,6 +1,6 @@
 <ion-view view-title="Puntos de interés" class="view-places">
 	
-	<ion-nav-bar class="bar bar-balanced darken">
+	<ion-nav-bar class="bar bar-balanced">
 		<ion-nav-back-button class="button-clear">
 			<i class="icon ion-android-arrow-back"></i>
 		</ion-nav-back-button>
@@ -16,11 +16,15 @@
  
 			<div class="item item-body">
 				<div class="overlay"></div>
-				<div class="image" style="background-image: url({{place.banners[0].url}})"></div>
+				<div class="image" lazy-image-background="{{place.banners[0].url}}">
+					<div class="data">
+						<p class="title">{{place.title}}</p>
+						<p>{{place.address}}</p>					
+					</div>
+				</div>
 				<div class="border balanced-bg"></div>
-				<p class="title">{{place.title}}</p>
-				<i class="icon ion-forward pull-right"></i>
-				<p>{{place.short_description}}</p>
+				<i class="icon ion-plus-circled"></i>
+				<p>{{place.description}}</p>
 			</div>
 
 		</div>

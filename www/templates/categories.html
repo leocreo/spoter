@@ -7,6 +7,7 @@
 	<ion-header-bar  class="bar-subheader bar-stable">			
 		<h2 class="title" >
 			<div ng-hide="mainScreen">	
+				<span  class="parent all" ng-click="goCategory()"><i class="ion-grid"></i><i class="ion-ios-arrow-right"></i></span>				
 				<span class="parent" ng-if="parentCategory.id" ng-click="goCategory(parentCategory.id)">
 					{{parentCategory.name}}
 					<i class="ion-ios-arrow-right"></i>
@@ -23,7 +24,7 @@
 				<div class="col col-50" ng-if="(childrenCategories[$index] != null)" ng-click="goCategory(childrenCategories[$index].id)" >
 					<div class="frame" style=" background-color: {{childrenCategories[$index].color}}">
 						<div class="image"  lazy-image-background="{{childrenCategories[$index].banners[0].url}}" lazy-image-opacity=".5">
-							<i class="{{childrenCategories[$index].icon}}" ></i>
+							<i class="{{childrenCategories[$index].icon}}" style="background-color: {{childrenCategories[$index].color}};"></i>
 							<h3 style="background-color: {{childrenCategories[$index].color}}">{{childrenCategories[$index].name}}</h3>
 						</div>
 					</div>
@@ -31,7 +32,7 @@
 				<div class="col col-50" ng-if="(childrenCategories[$index+1] != null)"  ng-click="goCategory(childrenCategories[$index+1].id)">
 					<div class="frame" style=" background-color: {{childrenCategories[$index+1].color}}">
 						<div class="image"  lazy-image-background="{{childrenCategories[$index+1].banners[0].url}}" lazy-image-opacity=".5">
-							<i class="{{childrenCategories[$index+1].icon}}" ></i>
+							<i class="{{childrenCategories[$index+1].icon}}" style="background-color: {{childrenCategories[$index+1].color}};"></i>
 							<h3 style="background-color: {{childrenCategories[$index+1].color}}">{{childrenCategories[$index+1].name}}</h3>
 						</div>
 					</div>

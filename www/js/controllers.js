@@ -1,11 +1,10 @@
 angular.module('localia.controllers', ["leaflet-directive"])
 
 //############################################################################### 
-// Init Controller 
+// Init Controller  
 .controller("InitController", ['$rootScope', '$state', '$scope', function($rootScope, $state, $scope) {
 
 	if ($rootScope.LocaliaConfig.getCurrentCity() !== false) {
-		console.log($state.current.name);
 		if ($state.current.name == "init")
 			$state.go('home');
 	} else {
@@ -190,12 +189,14 @@ angular.module('localia.controllers', ["leaflet-directive"])
 		});
 	};
 	$scope.getPlaces = function(reload) {
-		LocaliaPlaces.clearCache();
-		/*
+		if (reload)
+			LocaliaPlaces.clearCache();
+		$scope.loading_places = true;
 		LocaliaPlaces.findAll().then(function(data) {
-			$scope.promotions = data;
+			$scope.places = data;
+			$scope.loading_places = false;
 			$ionicSlideBoxDelegate.update();
-		});*/
+		});
 	}
 
 	$scope.getPlaces();
@@ -255,6 +256,7 @@ angular.module('localia.controllers', ["leaflet-directive"])
 		// Mostrar solo categorias padres
 		$scope.loading_categories = true;
 		$scope.mainScreen = true;
+		$scope.childrenCategories = [];
 		LocaliaCategories.findAll({
 			parent_id: 0
 		}).then(
@@ -372,6 +374,7 @@ angular.module('localia.controllers', ["leaflet-directive"])
 			$ionicSlideBoxDelegate.update();
 		});
 	} else {
+		$scope.places = [];
 		LocaliaPlaces.findAll().then(function(data) {
 			$scope.places = data;
 		});

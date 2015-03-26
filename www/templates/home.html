@@ -32,25 +32,19 @@
 
 
 		<ion-list class="">
-			<div class="item item-divider  item-icon-right "  ng-click="goPromo()">
-				<span class="balanced">Atracciones turísticas<i class="icon ion-ios-more"></i></span>
+			<div class="item item-divider  item-icon-right "  ng-click="goPlace()">
+				<span class="balanced">Atracciones turísticas<i class="icon ion-ios-plus-outline"></i></span>
 			</div>
 		</ion-list>
-		<ion-slide-box class="promotions" show-pager="false" does-continue="true" auto-play="true">
-			<ion-slide ng-repeat="promo in promotions" style="background-color: {{promo.categories[0].color}}">				
-				<!--<div class="image" style="background-image: url({{promo.banner.url}})"></div>
-				<div class="overlay"></div>-->
-				<div class="category">				
-					<i class="{{promo.categories[0].icon}}" style="background-color: {{promo.categories[0].color}}"></i>
-					<p style="color: {{promo.categories[0].color}}">{{promo.categories[0].name}}</p>					
-				</div>				
+		<ion-spinner ng-show="loading_places"></ion-spinner>
+		<ion-slide-box class="promotions" show-pager="true" does-continue="true" auto-play="true">
+			<ion-slide ng-repeat="place in places"  ng-click="goPlace(place.id)">
+				<div class="image" lazy-image-background="{{place.banners[0].url}}"></div>
+				<div class="overlay"></div>
 				<div class="info">
-					<p>{{promo.title}}</p>					
-					<h1 style="color: {{promo.categories[0].color}}">
-						<!--<i class="icon-hot ion-ios-flame"></i>-->
-						{{promo.promo_title}}
-					</h1>
-					<h2>{{promo.promo_text}}</h2>
+					<h1>{{place.title}}</h1>
+					<p>{{place.address}}</p>					
+					<!--<h2>{{place.description}}</h2>-->
 				</div>
 			</ion-slide>
 		</ion-slide-box>
@@ -58,7 +52,7 @@
 
 		<ion-list>
 			<div class="item item-divider  item-icon-right stable-border"  ui-sref ="categories">
-				<span class="stable">Directorio de anuncios<i class="icon ion-ios-more"></i></span>
+				<span class="stable">Directorio de anuncios<i class="icon ion-ios-plus-outline"></i></span>
 			</div>
 		</ion-list>				
 		<div class="network-error dark center" ng-show="errorConnection" ng-click="getFeatured(true)">

@@ -1,20 +1,20 @@
 /*### GLOBALS */
 
 body {
-	font-family: 'Omnes';	
+	font-family: 'Omnes';
 	font-weight: 300;
 	background-image: url(../img/welcome-background.jpg);
 	background-size: cover;
 }
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-	font-family: 'Omnes';	
+	font-family: 'Omnes';
 }
 input, button, select, textarea {
-	font-family: 'Omnes';		
+	font-family: 'Omnes';
 }
 
 ion-content {
-	background-color: #fff;
+	background-color: #ffffff;
 }
 .pull-right {
 	float: right;
@@ -55,7 +55,7 @@ ion-content {
 	padding: 8px;
 }
 .bar .title {
-	line-height: 48px;
+	line-height: 48px !important;
 	font-size: 18px;
 	font-weight: 300;
 }
@@ -68,9 +68,12 @@ ion-content {
 	display: block;
 }
 .list .item-divider {
-	font-size: 16px;
+	font-size: 15px;
 	letter-spacing: 0;
 	font-weight: 400;
+}
+.item-divider .icon{
+	font-size: 24px;
 }
 .button-small {
 	padding: 2px 11px 1px;
@@ -242,13 +245,17 @@ ion-content {
 }
 
 .title .parent {
-	color: rgba(255,255,255, .6);
+	color: rgba(255,255,255, .7);
+	font-size: 16px;
 }
 .title .parent i{
 	margin: 0 6px;
 	font-size: 24px;
 	line-height: 20px;
 	vertical-align: middle;
+}
+.title .parent.all i{
+	font-size: 18px;
 }
 
 /*### SIDE MENU */
@@ -436,7 +443,7 @@ ion-content {
 }
 
 .home-categories .col {
-	padding: 3px;
+	padding: 5px;
 }
 .home-categories .col .frame {
 	border-radius: 3px;
@@ -445,11 +452,16 @@ ion-content {
 	position: relative;
 	height: 100px;
 	background-color: rgba(255,255,255,.2);
+	border-radius: 3px;
+}
+.home-categories .col .lazy-image-background-content {
+	border-radius: 3px;
 }
 .home-categories h3 {
 	color: #fff;
 	text-align: center;
 	font-size: 12px;
+	text-shadow: 1px 1px 1px rgba(0,0,0,.1);
 	font-weight: 700;
 	text-transform: uppercase;
 	position: absolute;
@@ -466,7 +478,7 @@ ion-content {
 .home-categories.banner h3 {
 	text-transform: none;
 	font-size: 22px;
-	font-weight: 300;
+	font-weight: 400;
 	padding: 9px 0;
 	z-index: 11;
 }
@@ -538,7 +550,7 @@ ion-content {
 .view-home .promotions {
 	height: 100px;
 	background-color: #fff;	
-	padding-bottom: 10px;
+	padding-bottom:  0;
 	margin-bottom: 10px;
 }
 
@@ -548,13 +560,13 @@ ion-content {
 }
 .promotions .image{
 	position: absolute;
-	z-index: 35;
+	z-index: 10;
 	left: 0;
 	bottom: 0;
 	top: 0; 
-	width: 35%;
+	width: 100%;
 	background-size: cover;
-	background-position: center;	
+	background-position: center;		
 }
 .promotions .category {
 	position: absolute;
@@ -587,29 +599,28 @@ ion-content {
 }
 .promotions .info{ 
 	position: absolute;
-	z-index: 20;
-	left: 30%;
-	top: 0;
+	z-index: 30;
+	left: 10px;
+	top: auto;
 	bottom: 0;
-	right: 0;
+	right: 10px;
 	overflow: hidden;
 	padding: 10px;
-	background-color: #eee;
 }
 .promotions .info h2{ 
 	font-size: 13px;
-	color: #888;
+	color: #fff;
 	margin:  0 6px 0 0;
 	letter-spacing: -1px;	
 }
 .promotions .info h1{ 
-	font-size: 18px;
-	color: #EC0F0F;
+	font-size: 22px;
+	color: #fff;
 	margin:  0 6px 0 0;
 	letter-spacing: -1px;	
 }
 .promotions .info p{
-	color: #bbb;
+	color: #fff;
 	text-transform: uppercase;
 	font-size: 11px;
 	font-weight: bold;
@@ -619,16 +630,16 @@ ion-content {
 	letter-spacing: 0;
 }
 .promotions .overlay {
-	z-index: 30;
+	z-index: 20;
 	position: absolute;
 	bottom: 0;
 	left: 0;
 	right: 0;
-	top: 30px;
-	background: -moz-linear-gradient(bottom,  rgba(255,255,255,1) 0%, rgba(255,255,255,.16) 50%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left bottom, left top, color-stop(0%,rgba255,255,255,1), color-stop(50%,rgba(255,255,255,.16))); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(bottom,  rgba(255,255,255,1) 0%,rgba(255,255,255,.16) 50%); /* Chrome10+,Safari5.1+ */
-	background: linear-gradient(to top,  rgba(255,255,255,1) 0%,rgba(255,255,255,.16) 50%); /* W3C */
+	top: 0;	
+	background: -moz-linear-gradient(bottom,  rgba(0,0,0,.7) 0%, rgba(0,0,0,.1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left bottom, left top, color-stop(0%,rgba0,0,0,.7), color-stop(100%,rgba(0,0,0,.1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(bottom,  rgba(0,0,0,.7) 0%,rgba(0,0,0,.1) 100%); /* Chrome10+,Safari5.1+ */
+	background: linear-gradient(to top,  rgba(0,0,0,.7) 0%,rgba(0,0,0,.1) 100%); /* W3C */
 }
 .promotions .categories-list {
 	position: absolute;
@@ -663,6 +674,17 @@ ion-content {
 	line-height: 23px;
 	text-align: center;	
 }
+.promotions .slider-pager {
+	bottom: 12px;
+	right: 12px;
+	text-align: right;
+}
+.promotions .slider-pager .slider-pager-page {
+	width: 10px;
+	color: #fff;
+	font-size: 10px;
+}
+
 .view-promotions .promotions .item {
 	padding: 0;
 }
@@ -915,7 +937,7 @@ ion-content {
 	padding: 0;
 	position: relative;
 }
-.view-events  .item-body  .image {
+.view-events  .v {
 	height: 150px;
 	background-size: cover;
 	background-position: center;	
@@ -1034,6 +1056,8 @@ ion-content {
 	background-size: cover;
 	background-position: center;	
 	border-radius: 3px 4px 0 0;
+	overflow: hidden;
+	position: relative;
 }
 .view-places  .item-body  .overlay{
 	position: absolute;
@@ -1050,28 +1074,42 @@ ion-content {
 	font-size: 25px;
 	color: #aaa;	
 	margin: 0 10px;
-	background-color: #f4f4f4;
-	border: 1px solid #E9E9E9;
 	width: 50px;
 	height: 50px;
 	line-height: 50px;
 	border-radius: 50px;
 	text-align: center;
 	display: block;	
+	float: right;
+}
+.view-places  .image .data {
+	bottom: 0;
+	position: absolute;
+	z-index: 1000;
+}
+.view-places  .image p {
+	color: #fff;
+	font-size: 14px;
+	font-weight: 700;
+	letter-spacing: 0;
+	text-transform: uppercase;
 }
 .view-places  .item-body p {
-	margin: 0;
+	margin: 0 7px;
+	letter-spacing: 0;
 	padding: 6px 12px 12px 10px;
 }
 .view-places  .item-body p.title {
+	text-transform: none;
 	color: #fff;
-	font-size: 25px;
+	font-size: 28px;
+	line-height: 23px;
 	font-weight: 300;
 	padding-top: 13px;
-	padding-bottom: 35px	;
-	margin-top: -55px;
+	padding-bottom: 5px;
 	z-index: 1000;
 	position: relative;
+	text-shadow: 1px 1px 1px rgba(0,0,0,.2);
 }
 .view-places .list .border {
 	height: 5px;
@@ -1334,7 +1372,7 @@ ion-content {
 .spinner svg{
 	width: 40px;
 	height: 40px;
-	stroke: #ddd !important;
+	stroke: #b9c833 !important;
 }
 .spinner.full {
 	position: absolute;
