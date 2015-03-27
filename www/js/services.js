@@ -218,7 +218,7 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 	var service = new LocaliaApiService();
 	service.endpoint = "events";
 	service.cache = DSCacheFactory('localiaEvents', {
-		maxAge: ((1000 * 60 * 60) * .2),
+		maxAge: ((1000 * 60 * 60) * 0),
 		deleteOnExpire: 'aggressive',
 		storageMode: 'localStorage'
 	});
@@ -238,6 +238,34 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 		storageMode: 'localStorage'
 	});
 
+	// Redefinimos findAll  porque  las categorías siempre viene todas y el filtro lo aplico acá en lugar de dejar que lo haga el server
+	service.findAll = function(params) {
+		return service._findAll().then(function(data) {
+			if (!_.isUndefined(params))
+				return _.where(data, params);
+			return data;
+		});
+	};
+
+	// Redefinimos find  porque  las categorías siempre viene todas y el filtro lo aplico acá en lugar de dejar que lo haga el server
+	service.find = function(params) {
+		return service._find().then(function(data) {
+			if (!_.isUndefined(params))
+				return _.findWhere(data, params);
+			return data;
+		});
+	};
+
+	// Redefinimos get, aplicando filtro de id a lo que ya está cacheado
+	service.get = function(id) {
+		return service._findAll().then(function(data) {
+			if (!_.isUndefined(id))
+				return _.findWhere(data, {
+					id: Number(id)
+				});
+			return data;
+		});
+	};
 	return service;
 
 }])
@@ -282,7 +310,9 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 		}
 		this._globalParams = function() {
 			return {
-				city_id: $rootScope.LocaliaConfig.getCurrentCity().id
+				lat: $rootScope.LocaliaConfig.userData.geolocation.coords.latitude,
+				lon: $rootScope.LocaliaConfig.userData.geolocation.coords.longitude,
+				city_id: $rootScope.LocaliaConfig.getCurrentCity().id,
 			};
 		}
 		this._findAll = function(params) {

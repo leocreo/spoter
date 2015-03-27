@@ -1,4 +1,4 @@
-<ion-view view-title="Puntos de interés" class="view-places">
+<ion-view view-title="Atracciones turísticas" class="view-places">
 	
 	<ion-nav-bar class="bar bar-balanced">
 		<ion-nav-back-button class="button-clear">
@@ -23,8 +23,9 @@
 					</div>
 				</div>
 				<div class="border balanced-bg"></div>
-				<i class="icon ion-plus-circled"></i>
-				<p>{{place.description}}</p>
+				<!--<i class="icon ion-plus-circled"></i>-->
+				<p>{{place.description_short}}</p>
+				<button ui-sref ="places/{{place.id}}" class="button button-small">Conocer <i class="ion-ios-plus-outline"></i></button>
 			</div>
 
 		</div>

@@ -1,6 +1,6 @@
 <ion-view view-title="{{place.title}}" class="view-ad view-places">
 
-	<ion-nav-bar class="bar bar-balanced darken">
+	<ion-nav-bar class="bar bar-balanced">
 		<ion-nav-back-button class="button-clear">
 			<i class="icon ion-android-arrow-back"></i>
 		</ion-nav-back-button>
@@ -16,30 +16,32 @@
 
 			<div class="ad-info">
 				<h4>{{place.title}}</h4>
-				<h5>{{place.short_description}}</h5>
+				<h5>{{place.description_short}}</h5>
 			</div>
 
 			<div class="layout layout-1" ng-if="place.banners.length==1">
 				<div class="row">
-					<div class="col"><div class="image" style="background-image: url({{place.banners[0].url}})"></div></div>
+					<div class="col"><div class="image" lazy-image-background="{{place.banners[0].url}}"></div></div>
 				</div>
 			</div>
 
 			<div class="layout layout-2" ng-if="place.banners.length==2">
 				<div class="row">
-					<div class="col col-67"><div class="image" style="background-image: url({{place.banners[0].url}})"></div></div>
-					<div class="col"><div class="image" style="background-image: url({{place.banners[1].url}})"></div></div>
+					<div class="col"><div class="image" lazy-image-background="{{place.banners[0].url}}"></div></div>
+				</div>
+				<div class="row">
+					<div class="col"><div class="image" lazy-image-background="{{place.banners[1].url}}"></div></div>
 				</div>
 			</div>
 
 			<div class="layout layout-3" ng-if="place.banners.length>=3">
 				<div class="row">
-					<div class="col col-67"><div class="image" style="background-image: url({{place.banners[1].url}})"></div></div>
-					<div class="col"><div class="image" style="background-image: url({{place.banners[2].url}})"></div></div>
+					<div class="col col-67"><div class="image" lazy-image-background="{{place.banners[1].url}}"></div></div>
+					<div class="col"><div class="image" lazy-image-background="{{place.banners[2].url}}"></div></div>
 				</div>
 
 				<div class="row">
-					<div class="col"><div class="image" style="background-image: url({{place.banners[0].url}})"></div></div>
+					<div class="col"><div class="image" lazy-image-background="{{place.banners[0].url}}"></div></div>
 				</div>
 			</div>
 
@@ -67,7 +69,7 @@
 					<i class="ion-images balanced-bg"></i>						
 				</span>
 			</div>
-			<div class="extra-info row balanced-bg light">
+			<div class="extra-info row dark-bg light">
 				<div class="col">
 					<i class="ion-clock"></i>
 					<small>Horario</small>
@@ -80,10 +82,10 @@
 				</div>
 			</div>
 
-			<p ng-bind-html="place.description"></p>
+			<p ng-bind-html="place.description" class="description"></p>
 		</div> 
 
-		<div class="extra-info bottom row dark">
+		<div class="extra-info bottom row dark" ng-show="place.phone || place.website">
 			<div class="col" ng-if="place.website">
 				<i class="ion-home"></i>
 				<small>Sitio web</small>
@@ -96,15 +98,16 @@
 			</div>
 		</div>
 
-		<div class="ad-map-actions dark">
+		<div class="extra-info ad-map-actions dark" ng-show="place.address">
 			<button class="button button-small button-calm pull-right">
-				<i class="ion-location"></i>¿Cómo llegar?
+				¿Cómo llegar?
 			</button>
+			<i class="ion-ios-location"></i>
 			<small class="dark">Dirección:</small>
 			<p>{{place.address}}</p>
 		</div>
+		<leaflet ng-if="place.address" center="map.center" markers="map.markers" defaults="map.defaults" height="200px" width="100%"></leaflet>
 
-		<leaflet center="map.center" markers="map.markers" defaults="map.defaults" height="200px" width="100%"></leaflet>
 
 	</ion-content>
 
