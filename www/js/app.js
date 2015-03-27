@@ -105,10 +105,13 @@ angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', '
 		.state('ads', {
 			url: "/ads/:id",
 			parent: 'app',
+			params: {
+				'preloaded_data': null
+			},
 			views: {
 				"content": {
 					templateUrl: "templates/ad.html",
-					controller: 'AdsController'
+					controller: 'AdsController',
 				}
 			}
 		})

@@ -459,8 +459,11 @@ ion-content {
 }
 .home-categories h3 {
 	color: #fff;
+	background-color: rgba(100,100,100,1);
 	text-align: center;
 	font-size: 12px;
+	border-top-style: solid;
+	border-top-width: 2px; 
 	text-shadow: 1px 1px 1px rgba(0,0,0,.1);
 	font-weight: 700;
 	text-transform: uppercase;
@@ -481,6 +484,7 @@ ion-content {
 	font-weight: 400;
 	padding: 9px 0;
 	z-index: 11;
+	border-top: 0;
 }
 .home-categories.banner .lazy-image-background{
 	background-image: none;
@@ -496,11 +500,11 @@ ion-content {
 	height: 50px;
 	border-radius: 50px;
 	color: #fff;
-	font-size: 33px;
+	font-size: 40px;
 	text-align: center;
 	line-height: 50px;
 	opacity: 1;
-	text-shadow: 0 1px 1px rgba(0,0,0,.2);
+	text-shadow: 0 1px 1px rgba(0,0,0,.3);
 }
 
 
@@ -725,7 +729,7 @@ ion-content {
 	position: relative;
 	background-position: center;
 	background-size: cover;
-	height: 100px;	
+	height: 130px;	
 }
 .home-categories h2{
 	color: #fff;

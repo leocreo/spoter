@@ -195,6 +195,7 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 
 	return service;
 
+
 }])
 
 // Resource/Model: PROMOTIONS 

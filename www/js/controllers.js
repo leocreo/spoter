@@ -81,10 +81,17 @@ angular.module('localia.controllers', ["leaflet-directive"])
 			id: id
 		});
 	};
-	$scope.goAd = function(id) {
-		$state.go('ads', {
-			id: id
-		});
+	$scope.goAd = function(data) {
+		if (angular.isObject(data) && !angular.isUndefined(data.id))
+			$state.go('ads', {
+				id: data.id,
+				preloaded_data: data
+			});
+		else
+			$state.go('ads', {
+				id: data
+			});
+
 	};
 	$scope.goEvent = function(id) {
 		if (_.isUndefined(id))
@@ -290,32 +297,40 @@ angular.module('localia.controllers', ["leaflet-directive"])
 		},
 
 	});
-
 	$scope.loading_ad = false;
 
-	if (!_.isUndefined($stateParams.id) && !_.isEmpty($stateParams.id)) {
-		$scope.loading_ad = true;
-		LocaliaAds.get(Number($stateParams.id)).then(
-			function(data) {
-				$scope.loading_ad = false;
-				$scope.ad = data;
-				$scope.map_markers = {
-					m1: {
-						lat: Number(data.lat),
-						lng: Number(data.lon),
-					}
-				};
-				$scope.map_center = {
-					lat: Number(data.lat),
-					lng: Number(data.lon),
-					zoom: 16
-				};
-				$ionicSlideBoxDelegate.update();
-			},
-			function(error) {
-				$scope.loading_ad = false;
+	if ($stateParams.preloaded_data !== null) {
+		updateView($stateParams.preloaded_data);
+	} else {
+		if (!_.isUndefined($stateParams.id) && !_.isEmpty($stateParams.id)) {
+			$scope.loading_ad = true;
+			LocaliaAds.get(Number($stateParams.id)).then(
+				function(data) {
+					updateView(data);
+					$scope.loading_ad = false;
+				},
+				function(error) {
+					$scope.loading_ad = false;
+				}
+			);
+		}
+	}
+
+	function updateView(data) {
+		$scope.ad = data;
+		$scope.map_markers = {
+			m1: {
+				lat: Number($scope.ad.lat),
+				lng: Number($scope.ad.lon),
 			}
-		);
+		};
+		$scope.map_center = {
+			lat: Number($scope.ad.lat),
+			lng: Number($scope.ad.lon),
+			zoom: 16
+		};
+		$ionicSlideBoxDelegate.update();
+
 	}
 
 }])

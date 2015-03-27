@@ -1,6 +1,6 @@
 <ion-view class="view-categories stable-bg">
 	
-	<ion-nav-title >Categorías</ion-nav-title>
+	<ion-nav-title >Directorio de anuncios</ion-nav-title>
 
 	<ion-spinner ng-show="loading_category_ads || loading_categories" class="full"></ion-spinner>
 
@@ -23,17 +23,17 @@
 			<div class='row' ng-repeat="category in childrenCategories track by $index" ng-if="$index%2==0">
 				<div class="col col-50" ng-if="(childrenCategories[$index] != null)" ng-click="goCategory(childrenCategories[$index].id)" >
 					<div class="frame" style=" background-color: {{childrenCategories[$index].color}}">
-						<div class="image"  lazy-image-background="{{childrenCategories[$index].banners[0].url}}" lazy-image-opacity=".5">
-							<i class="{{childrenCategories[$index].icon}}" style="background-color: {{childrenCategories[$index].color}};"></i>
-							<h3 style="background-color: {{childrenCategories[$index].color}}">{{childrenCategories[$index].name}}</h3>
+						<div class="image"  lazy-image-background="{{childrenCategories[$index].banners[0].url}}" lazy-image-opacity=".6">
+							<i class="{{childrenCategories[$index].icon}}"></i>
+							<h3 style="border-top-color:  {{childrenCategories[$index].color}}"> {{childrenCategories[$index].name}}</h3>
 						</div>
 					</div>
 				</div>
 				<div class="col col-50" ng-if="(childrenCategories[$index+1] != null)"  ng-click="goCategory(childrenCategories[$index+1].id)">
 					<div class="frame" style=" background-color: {{childrenCategories[$index+1].color}}">
-						<div class="image"  lazy-image-background="{{childrenCategories[$index+1].banners[0].url}}" lazy-image-opacity=".5">
-							<i class="{{childrenCategories[$index+1].icon}}" style="background-color: {{childrenCategories[$index+1].color}};"></i>
-							<h3 style="background-color: {{childrenCategories[$index+1].color}}">{{childrenCategories[$index+1].name}}</h3>
+						<div class="image"  lazy-image-background="{{childrenCategories[$index+1].banners[0].url}}" lazy-image-opacity=".6">
+							<i class="{{childrenCategories[$index+1].icon}}"></i>
+							<h3 style="border-top-color:  {{childrenCategories[$index+1].color}}">{{childrenCategories[$index+1].name}}</h3>
 						</div>
 					</div>
 				</div>				
@@ -47,7 +47,7 @@
 			</div>
 		</div>		
 		<ion-list type="" class="ad-list">
-			<ion-item ng-repeat="ad in ads" class="item-thumbnail-left" ng-click="goAd(ad.id)">
+			<ion-item ng-repeat="ad in ads" class="item-thumbnail-left" ng-click="goAd(ad)">
 				<div class="image image-loader" lazy-image-background="{{ad.banners[0].url}}"></div>
 				<h2>{{ad.title}}</h2>
 				<h3>{{ad.address}}</h3>
