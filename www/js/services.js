@@ -212,7 +212,7 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 	};
 
 	service.get = function(id) {
-		return service._findAll().then(function(data) {
+		return service._get(id).then(function(data) {
 			return data;
 		});
 	};

@@ -306,6 +306,7 @@ angular.module('localia.controllers', ["leaflet-directive"])
 			$scope.loading_ad = true;
 			LocaliaAds.get(Number($stateParams.id)).then(
 				function(data) {
+					console.log(data);
 					updateView(data);
 					$scope.loading_ad = false;
 				},
