@@ -1,6 +1,6 @@
 <ion-view class="view-categories stable-bg">
 	
-	<ion-nav-title >Directorio de anuncios</ion-nav-title>
+	<ion-nav-title >Anuncios</ion-nav-title>
 
 	<ion-spinner ng-show="loading_category_ads || loading_categories" class="full"></ion-spinner>
 
@@ -49,10 +49,10 @@
 		<ion-list type="" class="ad-list">
 			<ion-item ng-repeat="ad in ads" class="item-thumbnail-left" ng-click="goAd(ad)">
 				<div class="image image-loader" lazy-image-background="{{ad.banners[0].url}}"></div>
-				<h2>{{ad.title}}</h2>
+				<h2>{{ad.place_name}}<span class="distance">25km</span></h2>
 				<h3>{{ad.address}}</h3>
     				<p>{{ad.description_short}}</p>	
-    				<span class="badge badge-assertive">Nuevo</span>	
+    				<span class="badge badge-assertive" ng-show="ad.nuevo">Nuevo</span>	
 			</ion-item>
 		</ion-list>
 

@@ -25,16 +25,19 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 	service.serverConfig = false;
 	service.predefinedCityId = false;
 
-	service.setCurrentCity = function(id) {
-		if (String(id) == String(service.getCurrentCity().id))
+	service.setCurrentCity = function(id, force_update) {
+		if (String(id) == String(service.getCurrentCity().id) && (angular.isUndefined(force_update) || force_update !== true))
 			return;
 		var city = _.findWhere(service.getAvailablesCities(), {
 			id: String(id)
 		});
 		if (city) {
+			var old_city_id = service.getCurrentCity().id;
 			this.userData.currentCity = city;
 			$localForage.setItem("userData", this.userData);
-			this.events.emit("localia:city.change", this.userData.currentCity);
+			if (String(old_city_id) != String(service.getCurrentCity().id)) {
+				this.events.emit("localia:city.change", this.userData.currentCity);
+			}
 		}
 	};
 	service.getCurrentCity = function() {
@@ -122,7 +125,7 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 						if (service.getCurrentCity() !== false) {
 							// Tareas en background con la info de STARTUP
 							// Refrescamos data nueva de la ciudad (si hay) previamente seleccionada
-							service.setCurrentCity(service.getCurrentCity().id);
+							service.setCurrentCity(service.getCurrentCity().id, true);
 						}
 					});
 				});
@@ -192,6 +195,27 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 		deleteOnExpire: 'aggressive',
 		storageMode: 'localStorage'
 	});
+
+	service.findAll = function(params) {
+		return service._findAll().then(function(data) {
+			angular.forEach(data, function(value, key, data) {
+				data[key].nuevo = false;
+			});
+			return data;
+		});
+	};
+
+	service.find = function(params) {
+		return service._find().then(function(data) {
+			return data;
+		});
+	};
+
+	service.get = function(id) {
+		return service._findAll().then(function(data) {
+			return data;
+		});
+	};
 
 	return service;
 
@@ -311,8 +335,8 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 		}
 		this._globalParams = function() {
 			return {
-				lat: $rootScope.LocaliaConfig.userData.geolocation.coords.latitude,
-				lon: $rootScope.LocaliaConfig.userData.geolocation.coords.longitude,
+				//	lat: $rootScope.LocaliaConfig.userData.geolocation.coords.latitude,
+				//	lon: $rootScope.LocaliaConfig.userData.geolocation.coords.longitude,
 				city_id: $rootScope.LocaliaConfig.getCurrentCity().id,
 			};
 		}
@@ -394,7 +418,8 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 .factory('EventsService', ['$rootScope', function($rootScope) {
 	var msgBus = {};
 	msgBus.emit = function(msg, data) {
-		data = data || {}
+		data = data || {};
+		console.log("Event emit ->" + msg);
 		$rootScope.$emit(msg, data);
 	};
 	msgBus.on = function(msg, func, scope) {

@@ -61,7 +61,7 @@ angular.module('localia.controllers', ["leaflet-directive"])
 
 	$scope.getAllCategories = function(reload) {
 		if (reload)
-			categories.clearCache();
+			LocaliaCategories.clearCache();
 		$scope.loading_categories = true;
 		$scope.errorConnection = false;
 		LocaliaCategories.findAll().then(function(data) {
@@ -174,7 +174,7 @@ angular.module('localia.controllers', ["leaflet-directive"])
 .controller('HomeController', ['$rootScope', '$scope', '$state', 'LocaliaCategories', 'LocaliaPlaces', '$ionicSlideBoxDelegate', function($rootScope, $scope, $state, LocaliaCategories, LocaliaPlaces, $ionicSlideBoxDelegate) {
 
 	$rootScope.LocaliaConfig.events.on("localia:city.change", function(event, currentCity) {
-		$scope.getFeatured();
+		$scope.getFeatured(true);
 		$scope.getPlaces();
 	}, $scope);
 

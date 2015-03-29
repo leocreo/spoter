@@ -16,7 +16,7 @@
  
 			<div class="item item-body">
 				<div class="overlay"></div>
-				<div class="image" lazy-image-background="{{place.banners[0].url}}">
+				<div class="image header" lazy-image-background="{{place.banners[0].url}}">
 					<div class="data">
 						<p class="title">{{place.title}}</p>
 						<p>{{place.address}}</p>					
@@ -24,8 +24,12 @@
 				</div>
 				<div class="border balanced-bg"></div>
 				<!--<i class="icon ion-plus-circled"></i>-->
-				<p>{{place.description_short}}</p>
-				<button ui-sref ="places/{{place.id}}" class="button button-small">Conocer <i class="ion-ios-plus-outline"></i></button>
+				<p class="description">
+					{{place.description_short}}
+				</p>
+				<span class="distance">A <strong>25km</strong> de distancia</span>
+				<button ui-sref ="places/{{place.id}}" class="button button-small">&nbsp;&nbsp;Conocer&nbsp;&nbsp;</button>
+				
 			</div>
 
 		</div>

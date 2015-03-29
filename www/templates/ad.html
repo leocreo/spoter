@@ -23,13 +23,13 @@
 			</div>		
 			<div class="ad-info">
 		  		<div class="categories-list">  		
-					<div class="categories-item" ng-repeat="category in ad.categories"><i class="{{category.icon}}" style="background-color: {{category.color}};"></i></div>
+					<div class="categories-item" ng-repeat="category in ad.categories" ng-click="goCategory(category.id)"><i class="{{category.icon}}" style="background-color: {{category.color}};"></i></div>
 				</div>
 				<h4>{{ad.place_name}}</h4>
 				<h5>{{ad.address}} <span ng-show="ad.phone">- {{ad.phone}}</span></h5>
 			</div>	
 			<div class="ad-catinfo">
-				<span  ng-repeat="category in ad.categories" class="dark">{{category.name}}</span>
+				<span  ng-repeat="category in ad.categories" class="dark" ng-click="goCategory(category.id)">{{category.name}}</span>
 			</div>
 
 			<p>{{ad.description}}</p>

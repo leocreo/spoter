@@ -44,7 +44,6 @@ angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', '
 			controller: 'InitController',
 			resolve: {
 				config: function(LocaliaConfig, $rootScope) {
-					console.log("Resolving...");
 					return LocaliaConfig.init().then(function(config) {
 						$rootScope.LocaliaConfig = config;
 					});
