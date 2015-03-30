@@ -32,9 +32,8 @@
 				<span  ng-repeat="category in ad.categories" class="dark" ng-click="goCategory(category.id)">{{category.name}}</span>
 			</div>
 
-			<p class="ad-description" ng-class="{'opened': descriptionExpanded}">
-				{{ad.description}}
-				<span class="more" ng-click="toggleDescription()"><i class="icon ion-chevron-down" ng-show="!descriptionExpanded"></i><i class="icon ion-chevron-up" ng-show="descriptionExpanded"></i></span>
+			<p class="ad-description" collapsible-element="250">
+				{{ad.description}}				
 			</p>
 						
 			<div class="extra-info bottom row dark" ng-show="ad.phone || ad.website">

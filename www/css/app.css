@@ -961,36 +961,6 @@ hr {
 	border-top: 1px solid #eee;
 	text-align: right;
 }
-.view-ad .ad-description {
-	max-height: 250px;
-	overflow: hidden;
-	position: relative;
-}
-.view-ad .ad-description.opened {
-	max-height: none;
-	padding-bottom: 30px;
-} 
-.view-ad .ad-description .more{
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	height: 60px;
-	background: -webkit-gradient(linear, left bottom, left top, color-stop(45%,rgba(255,255,255,1)),  color-stop(100%,rgba(255,255,255,.5))); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(bottom,  rgba(255,255,255,1) 45%, rgba(255,255,255,.5) 100%); /* Chrome10+,Safari5.1+ */
-	background: linear-gradient(to top,  rgba(255,255,255,1) 45%rgba(255,255,255,.5) 100%); /* W3C */
-	display: block;
-	text-align: center;
-	font-size: 22px;	
-	color: #aaa;
-}
-.view-ad .ad-description.opened .more{
-	background: transparent;
-}
-.view-ad .ad-description .more i{
-	position: absolute;
-	bottom: 0;
-}
 
 /* EVENTS */
 .view-events  .item-body  {
@@ -1526,5 +1496,35 @@ hr {
 	float: right;
 }	
 
-.leaflet-tile {
+
+.collapsible-element{	
+	overflow: hidden;
+	position: relative;
+}
+.collapsible-element.opened {
+	max-height: none !important;
+	padding-bottom: 30px;
+} 
+.collapsible-element .more{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 60px;
+	background: -webkit-gradient(linear, left bottom, left top, color-stop(45%,rgba(255,255,255,1)),  color-stop(100%,rgba(255,255,255,.5))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(bottom,  rgba(255,255,255,1) 45%, rgba(255,255,255,.5) 100%); /* Chrome10+,Safari5.1+ */
+	background: linear-gradient(to top,  rgba(255,255,255,1) 45%rgba(255,255,255,.5) 100%); /* W3C */
+	display: block;
+	text-align: center;
+	font-size: 22px;	
+	color: #aaa;
+}
+.collapsible-element.opened .more{
+	background: transparent;
+}
+.collapsible-element .more i{
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	margin-left: -5px;
 }

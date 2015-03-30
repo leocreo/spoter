@@ -57,8 +57,7 @@ angular.module('localia.directives', [])
 				};
 			},
 			link: function($scope, $element, $attrs) {
-				$scope.keyword = "bbbb";
-
+				$scope.keyword = "";
 			}
 		};
 	})
@@ -104,4 +103,47 @@ angular.module('localia.directives', [])
 				}
 			});
 		};
+	})
+	.directive('collapsibleElement', function($compile, $ionicScrollDelegate) {
+		return {
+			restrict: 'A',
+			replace: false,
+			scope: {
+				collapsibleElement: '@',
+			},
+			controller: function($scope, $element) {
+				$scope.descriptionExpanded = false;
+				$scope.collapsibleElementAvail = false;
+				if (!angular.isNumber($scope.collapsibleElement) || $scope.collapsibleElement <= 0)
+					$scope.collapsibleElement = 250;
+				$scope.toggleDescription = function() {
+					$scope.descriptionExpanded = !$scope.descriptionExpanded;
+					angular.element($element).removeClass('opened');
+					$ionicScrollDelegate.resize();
+					if ($scope.descriptionExpanded) {
+						angular.element($element).addClass('opened');
+						angular.element($element).css('max-height', "none");
+					} else {
+						$ionicScrollDelegate.scrollTop(true);
+						angular.element($element).css('max-height', $scope.collapsibleElement + "px");
+					}
+				};
+				$scope.$watch(function() {
+					return $element[0].offsetHeight;
+				}, function(newValue, oldValue) {
+					if (newValue > $scope.collapsibleElement) {
+						$element.addClass('collapsible-element');
+						$element.css('max-height', $scope.collapsibleElement + "px");
+						$scope.collapsibleElementAvail = true;
+					}
+
+				});
+			},
+			link: function($scope, $element, $attrs) {
+				var template = '<span class="more" ng-click="toggleDescription()" ng-show="collapsibleElementAvail"><i class="icon ion-chevron-down" ng-show="!descriptionExpanded"></i><i class="icon ion-chevron-up" ng-show="descriptionExpanded"></i></span>';
+				var linkFn = $compile(template);
+				var content = linkFn($scope);
+				$element.append(content);
+			}
+		}
 	})

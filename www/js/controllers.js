@@ -281,7 +281,7 @@ angular.module('localia.controllers', ["leaflet-directive"])
 
 //############################################################################### 
 // Ads Controller 
-.controller('AdsController', ['$scope', '$stateParams', 'LocaliaCategories', 'LocaliaAds', '$ionicSlideBoxDelegate', 'leafletData', '$ionicScrollDelegate', function($scope, $stateParams, LocaliaCategories, LocaliaAds, $ionicSlideBoxDelegate, leafletData, $ionicScrollDelegate) {
+.controller('AdsController', ['$scope', '$stateParams', 'LocaliaCategories', 'LocaliaAds', '$ionicSlideBoxDelegate', 'leafletData', '$ionicScrollDelegate', '$timeout', function($scope, $stateParams, LocaliaCategories, LocaliaAds, $ionicSlideBoxDelegate, leafletData, $ionicScrollDelegate, $timeout) {
 
 	angular.extend($scope, {
 		map_defaults: {
@@ -307,7 +307,6 @@ angular.module('localia.controllers', ["leaflet-directive"])
 			$scope.loading_ad = true;
 			LocaliaAds.get(Number($stateParams.id)).then(
 				function(data) {
-					console.log(data);
 					updateView(data);
 					$scope.loading_ad = false;
 				},
@@ -316,11 +315,6 @@ angular.module('localia.controllers', ["leaflet-directive"])
 				}
 			);
 		}
-	}
-
-	$scope.toggleDescription = function() {
-		$scope.descriptionExpanded = !$scope.descriptionExpanded;
-		$ionicScrollDelegate.resize();
 	}
 
 	function updateView(data) {
@@ -337,7 +331,6 @@ angular.module('localia.controllers', ["leaflet-directive"])
 			zoom: 16
 		};
 		$ionicSlideBoxDelegate.update();
-
 	}
 
 }])
