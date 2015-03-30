@@ -16,6 +16,11 @@ input, button, select, textarea {
 ion-content {
 	background-color: #ffffff;
 }
+hr {
+	border: 0;
+	border-top: 1px solid rgba(0,0,0,.1);
+	background: transparent;
+}
 .pull-right {
 	float: right;
 }
@@ -68,7 +73,7 @@ ion-content {
 	display: block;
 }
 .list .item-divider {
-	font-size: 15px;
+	font-size: 16px;
 	letter-spacing: 0;
 	font-weight: 400;
 }
@@ -556,12 +561,15 @@ ion-content {
 	background-color: transparent;
 	border: 0;
 }
-
+.view-home .item-divider {
+	margin: 6px 0 0 0;
+}
 .view-home .promotions {
-	height: 100px;
+	height: 120px;
+	margin-top: 6px;
 	background-color: #fff;	
 	padding-bottom:  0;
-	margin-bottom: 10px;
+	margin-bottom: 0;
 }
 
 .promotions .slider-slide {

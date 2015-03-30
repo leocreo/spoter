@@ -33,7 +33,7 @@
 
 		<ion-list class="">
 			<div class="item item-divider  item-icon-right "  ng-click="goPlace()">
-				<span class="balanced">Atracciones turísticas<i class="icon ion-ios-plus-outline"></i></span>
+				<span class="balanced">Atracciones turísticas<i class="icon ion-ios-arrow-right"></i></span>
 			</div>
 		</ion-list>
 		<ion-spinner ng-show="loading_places"></ion-spinner>
@@ -52,7 +52,7 @@
 
 		<ion-list>
 			<div class="item item-divider  item-icon-right stable-border"  ui-sref ="categories">
-				<span class="stable">Directorio de anuncios<i class="icon ion-ios-plus-outline"></i></span>
+				<span class="stable">Directorio de anuncios<i class="icon ion-ios-arrow-right"></i></span>
 			</div>
 		</ion-list>				
 		<div class="network-error dark center" ng-show="errorConnection" ng-click="getFeatured(true)">
@@ -95,10 +95,16 @@
 			<br>
 			<button ui-sref ="categories" class="button button-stable button-small">Más categorías...</button>
 			<br>
-			<br>
 			<br>					
 		</div>
 		
+		<div class="text-center">
+			<hr>
+			<br>
+			<p><strong>Publicá</strong> tu negocio acá...</p>
+			<br>
+			<br>
+		</div>
 
 	</ion-content>
 
