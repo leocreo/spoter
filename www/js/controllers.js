@@ -281,7 +281,7 @@ angular.module('localia.controllers', ["leaflet-directive"])
 
 //############################################################################### 
 // Ads Controller 
-.controller('AdsController', ['$scope', '$stateParams', 'LocaliaCategories', 'LocaliaAds', '$ionicSlideBoxDelegate', 'leafletData', function($scope, $stateParams, LocaliaCategories, LocaliaAds, $ionicSlideBoxDelegate, leafletData) {
+.controller('AdsController', ['$scope', '$stateParams', 'LocaliaCategories', 'LocaliaAds', '$ionicSlideBoxDelegate', 'leafletData', '$ionicScrollDelegate', function($scope, $stateParams, LocaliaCategories, LocaliaAds, $ionicSlideBoxDelegate, leafletData, $ionicScrollDelegate) {
 
 	angular.extend($scope, {
 		map_defaults: {
@@ -298,6 +298,7 @@ angular.module('localia.controllers', ["leaflet-directive"])
 
 	});
 	$scope.loading_ad = false;
+	$scope.descriptionExpanded = false;
 
 	if ($stateParams.preloaded_data !== null) {
 		updateView($stateParams.preloaded_data);
@@ -315,6 +316,11 @@ angular.module('localia.controllers', ["leaflet-directive"])
 				}
 			);
 		}
+	}
+
+	$scope.toggleDescription = function() {
+		$scope.descriptionExpanded = !$scope.descriptionExpanded;
+		$ionicScrollDelegate.resize();
 	}
 
 	function updateView(data) {

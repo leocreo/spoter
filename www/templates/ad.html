@@ -32,8 +32,11 @@
 				<span  ng-repeat="category in ad.categories" class="dark" ng-click="goCategory(category.id)">{{category.name}}</span>
 			</div>
 
-			<p>{{ad.description}}</p>
-			
+			<p class="ad-description" ng-class="{'opened': descriptionExpanded}">
+				{{ad.description}}
+				<span class="more" ng-click="toggleDescription()"><i class="icon ion-chevron-down" ng-show="!descriptionExpanded"></i><i class="icon ion-chevron-up" ng-show="descriptionExpanded"></i></span>
+			</p>
+						
 			<div class="extra-info bottom row dark" ng-show="ad.phone || ad.website">
 				<div class="col" ng-if="ad.website">
 					<i class="ion-home"></i>
@@ -48,7 +51,7 @@
 			</div>
 
 			<div class="extra-info ad-map-actions dark">
-				<button class="button button-small button-calm pull-right">
+				<button class="button button-small pull-right">
 					¿Cómo llegar?
 				</button>
 				<i class="ion-ios-location"></i>
@@ -56,6 +59,11 @@
 				<p>{{ad.address}}</p>
 			</div>
 			<leaflet id ="ad-map" center="map_center" defaults="map_defaults" markers="map_markers" height="200px" width="100%"></leaflet>
+
+			<p class="ad-share">
+				<button class="button button-small">Compartir</button>
+			</p>
+
 		</div>			
 
 	</ion-content>
