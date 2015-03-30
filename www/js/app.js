@@ -7,7 +7,7 @@ angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', '
 	return (_);
 }])
 
-.run(function($ionicPlatform, $state, $templateCache, $ionicHistory, $cordovaGoogleAnalytics) {
+.run(function($ionicPlatform, $state, $templateCache, $ionicHistory, $cordovaGoogleAnalytics, $ionicSideMenuDelegate) {
 	$ionicPlatform.ready(function() {
 
 		if (window.cordova && window.cordova.plugins.Keyboard) {
@@ -17,6 +17,8 @@ angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', '
 			StatusBar.styleDefault();
 		}
 
+		document.addEventListener("menubutton", onHardwareMenuKeyDown, false);
+
 		// TEST - DESCOMENTAR EN PROD.
 		//$templateCache.removeAll();	
 
@@ -24,6 +26,10 @@ angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', '
 		//	$cordovaGoogleAnalytics.startTrackerWithId(LocaliaConfig.config.gaCode);
 		//}
 	});
+
+	function onHardwareMenuKeyDown() {
+		$ionicSideMenuDelegate.toggleLeft();
+	}
 })
 
 .config(function($stateProvider, $urlRouterProvider, $localForageProvider) {
