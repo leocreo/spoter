@@ -37,8 +37,8 @@
 			</div>
 		</ion-list>
 		<ion-spinner ng-show="loading_places"></ion-spinner>
-		<ion-slide-box class="promotions" show-pager="true" does-continue="true" auto-play="true">
-			<ion-slide ng-repeat="place in places"  ng-click="goPlace(place.id)">
+		<ion-slide-box class="promotions" show-pager="true" does-continue="true" auto-play="false">
+			<ion-slide ng-repeat="place in places track by $index"  ng-click="goPlace(place.id)">
 				<div class="image" lazy-image-background="{{place.banners[0].url}}"></div>
 				<div class="overlay"></div>
 				<div class="info">
@@ -64,7 +64,7 @@
 			<div class='row' ng-repeat="category in featuredCategories track by $index" ng-if="$index%2==0">
 				<div class="col" ng-if="(featuredCategories[$index] != null)" ng-click="goCategory(featuredCategories[$index].id)">
 					<div class="frame" style=" background-color: {{featuredCategories[$index].color}}">
-						<div class="image"  lazy-image-background="{{featuredCategories[$index].banners[0].url}}" lazy-image-opacity=".6">
+						<div class="image"  lazy-image-background="{{featuredCategories[$index].banners[0].url}}" lazy-image-opacity=".9">
 							<i class="{{featuredCategories[$index].icon}}" ></i>
 							<h3 style="border-top-color: {{featuredCategories[$index].color}}">{{featuredCategories[$index].name}}</h3>
 						</div>
@@ -72,7 +72,7 @@
 				</div>
 				<div class="col" ng-if="(featuredCategories[$index+1] != null)"  ng-click="goCategory(featuredCategories[$index+1].id)">
 					<div class="frame"  style="background-color: {{featuredCategories[$index+1].color}}">
-						<div class="image" lazy-image-background="{{featuredCategories[$index+1].banners[0].url}}" lazy-image-opacity=".6">
+						<div class="image" lazy-image-background="{{featuredCategories[$index+1].banners[0].url}}" lazy-image-opacity=".9">
 							<i class="{{featuredCategories[$index+1].icon}}"></i>
 							<h3 style="border-top-color: {{featuredCategories[$index+1].color}}">{{featuredCategories[$index+1].name}}</h3>
 						</div>
