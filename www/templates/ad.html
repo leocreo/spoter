@@ -15,7 +15,7 @@
 		<div ng-show="!loading_ad" >
 			<div class="ad-image">	
 				<ion-slide-box>
-					<ion-slide ng-repeat="image in ad.banners">
+					<ion-slide ng-repeat="image in ad.banners track by $index" ng-click="openGallery($index)">
 						<div class="overlay"></div>						
 						<div class="image" lazy-image-background="{{image.url}}"></div>
 					</ion-slide>

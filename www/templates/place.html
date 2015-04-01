@@ -12,14 +12,14 @@
 	
 	<ion-content >			
 		<div class="cover-gallery">
-			<div class="overlay"></div>
+			<div class="overlay" ng-click="openGallery()"></div>
 
 			<div class="ad-info">
 				<h4>{{place.title}}</h4>
 				<h5>{{place.address}}</h5>
 			</div>
 
-			<div class="layout layout-1" ng-if="place.banners.length==1">
+			<div class="layout layout-1" ng-if="place.banners.length==1" >
 				<div class="row">
 					<div class="col"><div class="image" lazy-image-background="{{place.banners[0].url}}"></div></div>
 				</div>
@@ -66,7 +66,7 @@
 		<div class="body">
 			<div class="icon-actions">
 				<span>
-					<i class="ion-images balanced-bg"></i>						
+					<i class="ion-images balanced-bg" ng-click="openGallery()"></i>						
 				</span>
 			</div>
 			<div class="extra-info row dark-bg light">

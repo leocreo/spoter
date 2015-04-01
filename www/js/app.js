@@ -1,4 +1,4 @@
-angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', 'localia.directives', 'lazyImageLoader', 'ngCordova'])
+angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', 'localia.directives', 'lazyImageLoader', 'ngCordova', 'imageSlideshow'])
 
 
 // Underscore service
@@ -182,3 +182,68 @@ angular.module('localia', ['ionic', 'localia.controllers', 'localia.services', '
 		})
 	$urlRouterProvider.otherwise('/init');
 });
+
+
+
+angular.module('imageSlideshow', [])
+	.factory('imageSlideshow', ['$ionicModal', '$ionicSlideBoxDelegate', '$timeout', function($ionicModal, $ionicSlideBoxDelegate, $timeout) {
+		var service = {};
+		var scope;
+		var modal;
+
+		service.open = function(images, options) {
+			scope = options.scope;
+			scope.images = images;
+			console.log(options);
+			if (_.isUndefined(options.actualIndex))
+				scope.imageSlideshowSlideIndex = 0;
+			else
+				scope.imageSlideshowSlideIndex = options.actualIndex;
+			$ionicModal.fromTemplateUrl('templates/image-slideshow.html', {
+				scope: scope,
+				backdropClickToClose: false,
+				animation: 'slide-in-up'
+			}).then(function(newModal) {
+				modal = newModal;
+				scope.openModal();
+			});
+
+			scope.openModal = function() {
+				modal.show();
+			};
+
+			scope.closeModal = function() {
+				modal.remove();
+				modal.hide();
+			};
+
+			scope.next = function() {
+				$ionicSlideBoxDelegate.next();
+			};
+
+			scope.previous = function() {
+				$ionicSlideBoxDelegate.previous();
+			};
+
+			scope.slideChanged = function(index) {
+				scope.imageSlideshowSlideIndex = index;
+			};
+
+			scope.$on('$destroy', function() {
+				modal.remove();
+			});
+
+			scope.$on('modal.hide', function() {
+				modal.remove();
+			});
+
+			scope.$on('modal.shown', function() {
+				$ionicSlideBoxDelegate.slide(scope.imageSlideshowSlideIndex, 0);
+			});
+
+
+
+		};
+
+		return service;
+	}])

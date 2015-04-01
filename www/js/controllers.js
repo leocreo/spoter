@@ -281,7 +281,7 @@ angular.module('localia.controllers', ["leaflet-directive"])
 
 //############################################################################### 
 // Ads Controller 
-.controller('AdsController', ['$scope', '$stateParams', 'LocaliaCategories', 'LocaliaAds', '$ionicSlideBoxDelegate', 'leafletData', '$ionicScrollDelegate', '$timeout', function($scope, $stateParams, LocaliaCategories, LocaliaAds, $ionicSlideBoxDelegate, leafletData, $ionicScrollDelegate, $timeout) {
+.controller('AdsController', ['$scope', '$stateParams', 'LocaliaCategories', 'LocaliaAds', '$ionicSlideBoxDelegate', 'leafletData', '$ionicScrollDelegate', '$timeout', 'imageSlideshow', function($scope, $stateParams, LocaliaCategories, LocaliaAds, $ionicSlideBoxDelegate, leafletData, $ionicScrollDelegate, $timeout, imageSlideshow) {
 
 	angular.extend($scope, {
 		map_defaults: {
@@ -317,9 +317,15 @@ angular.module('localia.controllers', ["leaflet-directive"])
 		}
 	}
 
+	$scope.openGallery = function(actualImageIndex) {
+		imageSlideshow.open($scope.ad.banners, {
+			scope: $scope,
+			actualIndex: actualImageIndex
+		});
+	}
+
 	function updateView(data) {
 		$scope.ad = data;
-		console.log(data);
 		$scope.map_markers = {
 			m1: {
 				lat: Number($scope.ad.lat),
@@ -333,6 +339,7 @@ angular.module('localia.controllers', ["leaflet-directive"])
 		};
 		$ionicSlideBoxDelegate.update();
 	}
+
 
 }])
 
@@ -379,7 +386,7 @@ angular.module('localia.controllers', ["leaflet-directive"])
 
 //############################################################################### 
 // Placess Controller 
-.controller('PlacesController', ['$scope', '$stateParams', 'LocaliaPlaces', '$ionicSlideBoxDelegate', function($scope, $stateParams, LocaliaPlaces, $ionicSlideBoxDelegate) {
+.controller('PlacesController', ['$scope', '$stateParams', 'LocaliaPlaces', '$ionicSlideBoxDelegate', 'imageSlideshow', function($scope, $stateParams, LocaliaPlaces, $ionicSlideBoxDelegate, imageSlideshow) {
 	if ($stateParams.id) {
 		LocaliaPlaces.get($stateParams.id).then(function(data) {
 			$scope.place = data;
@@ -395,4 +402,11 @@ angular.module('localia.controllers', ["leaflet-directive"])
 			$scope.places = data;
 		});
 	}
+
+	$scope.openGallery = function() {
+		imageSlideshow.open($scope.place.banners, {
+			scope: $scope
+		});
+	}
+
 }])
