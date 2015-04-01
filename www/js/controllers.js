@@ -319,6 +319,7 @@ angular.module('localia.controllers', ["leaflet-directive"])
 
 	function updateView(data) {
 		$scope.ad = data;
+		console.log(data);
 		$scope.map_markers = {
 			m1: {
 				lat: Number($scope.ad.lat),

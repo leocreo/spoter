@@ -25,6 +25,7 @@
 		  		<div class="categories-list">  		
 					<div class="categories-item" ng-repeat="category in ad.categories" ng-click="goCategory(category.id)"><i class="{{category.icon}}" style="background-color: {{category.color}};"></i></div>
 				</div>
+				<!--<span class="badge badge-assertive" ng-show="ad.nuevo">Nuevo</span>-->
 				<h4>{{ad.place_name}}</h4>
 				<h5>{{ad.address}} <span ng-show="ad.phone">- {{ad.phone}}</span></h5>
 			</div>	

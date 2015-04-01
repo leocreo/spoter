@@ -186,7 +186,7 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 }])
 
 // Resource/Model: ADS 
-.factory('LocaliaAds', ['_', 'DSCacheFactory', 'LocaliaApiService', function(_, DSCacheFactory, LocaliaApiService) {
+.factory('LocaliaAds', ['_', 'DSCacheFactory', 'LocaliaApiService', '$filter', function(_, DSCacheFactory, LocaliaApiService, $filter) {
 
 	var service = new LocaliaApiService();
 	service.endpoint = "ads";
@@ -197,24 +197,40 @@ angular.module('localia.services', ['angular-data.DSCacheFactory', 'LocalForageM
 	});
 
 	service.findAll = function(params) {
-		return service._findAll().then(function(data) {
+		return service._findAll(params).then(function(data) {
+			var now = (new Date()).getTime();
 			angular.forEach(data, function(value, key, data) {
-				data[key].nuevo = false;
+				data[key].nuevo = service.isNew((new Date(value.created_at)).getTime(), now);
 			});
 			return data;
 		});
 	};
 
 	service.find = function(params) {
-		return service._find().then(function(data) {
+		return service._find(params).then(function(data) {
+			var now = (new Date()).getTime();
+			angular.forEach(data, function(value, key, data) {
+				data[key].nuevo = service.isNew((new Date(value.created_at)).getTime(), now);
+			});
 			return data;
 		});
 	};
 
 	service.get = function(id) {
 		return service._get(id).then(function(data) {
+			var now = (new Date()).getTime();
+			data.nuevo = service.isNew((new Date(data.created_at)).getTime(), now);
 			return data;
 		});
+	};
+
+	service.isNew = function(timeMs, nowMs) {
+		var daysToBeOld = 10;
+		if (_.isNumber(timeMs)) {
+			if (Math.round((nowMs - timeMs) / 1000 / 60 / 60 / 24) <= daysToBeOld)
+				return true;
+		}
+		return false;
 	};
 
 	return service;

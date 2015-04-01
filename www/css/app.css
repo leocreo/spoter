@@ -891,6 +891,11 @@ hr {
 	box-shadow: 0 -5px 5px rgba(0,0,0,.2);
 	background-color: #444;
 }
+.view-ad .badge {
+	position: absolute;
+	bottom: 20px;
+	right: 20px;
+}
 .view-ad .ad-info h4{
 	margin: 0 0 0 0;
 	font-size: 25px;
